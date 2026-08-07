@@ -53,7 +53,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 1. RENDERIZADO DINÁMICO DE LA WEB
+    // 1. MENÚ HAMBURGUESA MÓVIL
+    // ==========================================
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const navMenu = document.getElementById('nav-menu');
+
+    if (mobileMenuBtn && navMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            mobileMenuBtn.innerText = navMenu.classList.contains('active') ? '✕' : '☰';
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                mobileMenuBtn.innerText = '☰';
+            });
+        });
+    }
+
+    // ==========================================
+    // 2. RENDERIZADO DINÁMICO DE LA WEB
     // ==========================================
     function renderAllContent() {
         // Ticker
@@ -67,10 +87,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const logoImg = document.getElementById('main-logo-img');
         if(logoImg && siteData.logoPath) logoImg.src = siteData.logoPath;
 
-        // Banners Slider
+        // Banners
         renderBanners();
 
-        // Catálogo & Productos
+        // Productos
         renderCatalog();
 
         // Sobre Nosotros
@@ -86,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .join('');
         }
 
-        // Enlaces de Contacto
+        // Redes
         renderContactGrid();
     }
 
@@ -166,15 +186,13 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.innerHTML = config.map(item => {
             let url = links[item.key] && links[item.key].trim() !== '' ? links[item.key].trim() : item.defaultUrl;
 
-            // Auto-corrección para Gmail: Convertir a URL de redacción directa en Gmail Web
             if (item.key === 'gmail') {
                 if (!url.startsWith('https://mail.google.com')) {
-                    const cleanEmail = url.replace('mailto:', '').trim();
-                    url = `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=${cleanEmail}`;
+                    const clean = url.replace('mailto:', '').trim();
+                    url = `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=${clean}`;
                 }
             }
 
-            // Auto-corrección para otras URLs sin protocolo
             if (url !== '#' && !url.startsWith('http://') && !url.startsWith('https://')) {
                 url = `https://${url}`;
             }
@@ -189,7 +207,6 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }).join('');
 
-        // Actualizar botón flotante de whatsapp
         const floatWa = document.getElementById('floating-whatsapp-btn');
         if(floatWa) {
             const waUrl = links.whatsapp && links.whatsapp.trim() !== '' ? links.whatsapp : 'https://wa.me/+584242032510';
@@ -198,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 2. SLIDER INTERACTIVO INTELIGENTE
+    // 3. SLIDER INTERACTIVO INTELIGENTE
     // ==========================================
     let currentSlide = 0;
     let slideTimer = null;
@@ -253,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 3. AUTENTICACIÓN Y ROLES DE USUARIO
+    // 4. AUTENTICACIÓN Y EDITOR
     // ==========================================
     const loginModal = document.getElementById('login-modal');
     const editorPanel = document.getElementById('editor-panel');
@@ -300,9 +317,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ==========================================
-    // 4. LÓGICA DEL PANEL DE EDITOR
-    // ==========================================
     function openEditorDashboard(username) {
         document.getElementById('active-editor-name').innerText = username;
         fillEditorInputs();
@@ -328,7 +342,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('link-whatsapp').value = siteData.contactLinks.whatsapp || '';
     }
 
-    // Pestañas del Editor
     const tabBtns = document.querySelectorAll('.editor-tab-btn');
     const tabPanes = document.querySelectorAll('.tab-pane');
 
@@ -341,7 +354,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Guardar Todos los Cambios
     document.getElementById('btn-save-all').addEventListener('click', () => {
         siteData.tickerText = document.getElementById('edit-ticker-text').value;
         siteData.logoPath = document.getElementById('edit-logo-path').value;
@@ -359,21 +371,18 @@ document.addEventListener('DOMContentLoaded', () => {
         siteData.contactLinks.facebook = document.getElementById('link-facebook').value;
         siteData.contactLinks.telegram = document.getElementById('link-telegram').value;
         
-        // Formatear Gmail automáticamente
         let inputGmail = document.getElementById('link-gmail').value.trim();
         if(inputGmail && !inputGmail.startsWith('https://mail.google.com')) {
             const clean = inputGmail.replace('mailto:', '').trim();
             inputGmail = `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=${clean}`;
         }
         siteData.contactLinks.gmail = inputGmail;
-
         siteData.contactLinks.whatsapp = document.getElementById('link-whatsapp').value;
 
         saveSiteData();
-        alert('¡Todos los cambios han sido guardados y aplicados en vivo!');
+        alert('¡Todos los cambios han sido guardados!');
     });
 
-    // Agregar Nuevo Banner
     document.getElementById('btn-add-banner').addEventListener('click', () => {
         const tag = document.getElementById('new-banner-tag').value || 'Colección Especial';
         const title = document.getElementById('new-banner-title').value || 'Nuevo Banner';
@@ -382,10 +391,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         siteData.banners.push({ type: media.endsWith('.mp4') ? 'video' : 'image', media, tag, title, desc });
         saveSiteData();
-        alert('¡Nuevo banner agregado con éxito!');
+        alert('¡Nuevo banner agregado!');
     });
 
-    // Agregar Nuevo Producto
     document.getElementById('btn-add-product').addEventListener('click', () => {
         const brand = document.getElementById('new-prod-brand').value || 'Mitise';
         const name = document.getElementById('new-prod-name').value || 'Nuevo Perfume';
@@ -394,10 +402,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         siteData.products.push({ id: Date.now(), brand, name, price, image });
         saveSiteData();
-        alert('¡Producto añadido al catálogo con éxito!');
+        alert('¡Producto añadido!');
     });
 
-    // Cerrar sesión
     document.getElementById('btn-logout-editor').addEventListener('click', () => {
         sessionStorage.removeItem('mitise_active_editor');
         editorPanel.classList.remove('active');
@@ -438,11 +445,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if(closeStoryModal) closeStoryModal.onclick = closeAllModals;
     if(closeContactModal) closeContactModal.onclick = closeAllModals;
 
-    // Inicializar Contenido al cargar la página
     renderAllContent();
 });
 
-// Carrito de compras
 let itemCount = 0;
 let totalPrice = 0;
 
