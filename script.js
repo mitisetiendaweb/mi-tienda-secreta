@@ -1,32 +1,138 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 1. CARGA DINÁMICA DE PRODUCTOS DESDE CATALOG.JSON
-    const productsContainer = document.getElementById('products-container');
-
-    fetch('catalog.json')
-        .then(response => {
-            if (!response.ok) throw new Error("Error al cargar catalog.json");
-            return response.json();
-        })
-        .then(products => {
-            renderProducts(products);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            if(productsContainer) {
-                productsContainer.innerHTML = '<p style="text-align:center; color: var(--gold-light);">Cargando catálogo...</p>';
+    // ==========================================
+    // 0. ESTADO INICIAL Y ALMACENAMIENTO (localStorage)
+    // ==========================================
+    const DEFAULT_DATA = {
+        tickerText: "⚜️ LUXURY FRAGRANCE ⚜️,💎 PERFUMERÍA 100% ORIGINAL Y DE LUJO 💎,👑 LUXURY FRAGRANCE 👑",
+        logoPath: "IMG/LOGO FN.png",
+        banners: [
+            {
+                type: "video",
+                media: "VID/3BHARARA.mp4",
+                tag: "Colección Exclusiva 2026",
+                title: "Fragancias que Dejan Huella",
+                desc: "Descubre notas olfativas de oro, maderas nobles y esencias orientales diseñadas para destacar."
+            },
+            {
+                type: "image",
+                media: "IMG/OFERTON.png",
+                tag: "Edición Especial",
+                title: "Lujo & Distinción Olfativa",
+                desc: "Aprovecha precios exclusivos en líneas seleccionadas de la mejor perfumería."
             }
+        ],
+        subsections: ["Recomendados"],
+        products: [
+            { id: 1, brand: "Lattafa Exclusif", name: "Atheeri Gold Edition", price: 85.00, image: "IMG/LOGO_ENTERO.png", subsection: "Recomendados" },
+            { id: 2, brand: "Haute Parfumerie", name: "Élixir de Nuit", price: 120.00, image: "IMG/LOGO_ENTERO.png", subsection: "Recomendados" },
+            { id: 3, brand: "Royal Collection", name: "Velours Imperial", price: 95.00, image: "IMG/LOGO_ENTERO.png", subsection: "Recomendados" },
+            { id: 4, brand: "Oriental Oud", name: "Oud Royal Gold", price: 140.00, image: "IMG/LOGO_ENTERO.png", subsection: "Recomendados" }
+        ],
+        about: {
+            subtitle: "Pasión por el Aroma Real",
+            title: "La Selección Perfecta Detrás de Cada Gota",
+            desc: "Curamos y distribuimos las mejores inspiraciones olfativas del mundo, seleccionadas meticulosamente por su fidelidad y formuladas a base de aceites concentrados. Disfruta de una fijación extraordinaria y máxima duración en tu piel sin pagar sobreprecios.",
+            modalStory: `A mediados de 2011 en Puerto Rico, Mitise es bautizada bajo el concepto revelador de Mi Tienda Secreta. nació tras identificar una gran verdad del mercado: la mayoría de las personas paga sumas exorbitantes no por la esencia en sí, sino por la marca, el frasco de diseño y la publicidad, recibiendo a cambio fórmulas diluidas en alcohol que se evaporaban al cabo de unas horas.\n\nFrente a esta realidad, la propuesta no fue crear fragancias desde cero, sino democratizar el acceso al lujo mediante la curaduría y distribución de las mejores equivalencias olfativas. Mitise se enfocó en rastrear y seleccionar meticulosamente las mejores inspiraciones de los perfumes más codiciados del mundo, garantizando la más alta fidelidad y, sobre todo, una formulación superior a base de aceites.\n\nEl secreto del éxito radicó en la fijación. Al prescindir del alcohol y apostar por concentrados de óleo de alta pureza, las fragancias distribuidas por Mitise no se evaporan rápidamente; penetran en la piel e interactúan con el calor corporal para ofrecer una durabilidad extraordinaria durante todo el día. El cliente descubrió que podía llevar la misma presencia, elegancia y rastro distintivo de una marca de alta gama, pero a un precio justo y accesible.\n\nEse concepto de compra inteligente convirtió a la tienda en un secreto imposible de guardar. La marca dio el salto a Miami, posicionándose en el mercado estadounidense como la alternativa definitiva para quienes buscan la máxima calidad olfativa sin pagar sobreprecios innecesarios.\n\nHoy, esa misma filosofía cruza el Atlántico para desembarcar en el mercado español. Mitise se presenta en España como el puente directo hacia las mejores inspiraciones en aceite del mundo: un espacio donde la altísima fijación, el rendimiento real y la honestidad en el precio se unen para redefinir la forma en que las personas disfrutan de su perfume diario.`
+        },
+        contactLinks: {
+            instagram: "https://www.instagram.com/mitisefragrance/",
+            tiktok: "",
+            facebook: "",
+            telegram: "",
+            gmail: "",
+            whatsapp: "https://wa.me/1234567890"
+        }
+    };
+
+    let siteData = JSON.parse(localStorage.getItem('mitise_site_data')) || DEFAULT_DATA;
+
+    function saveSiteData() {
+        localStorage.setItem('mitise_site_data', JSON.stringify(siteData));
+        renderAllContent();
+    }
+
+    // ==========================================
+    // 1. RENDERIZADO DINÁMICO DE LA WEB
+    // ==========================================
+    function renderAllContent() {
+        // Ticker
+        const tickerContainer = document.getElementById('ticker-track-container');
+        if(tickerContainer) {
+            const items = siteData.tickerText.split(',').map(item => `<span class="ticker-item">${item.trim()}</span>`).join('');
+            tickerContainer.innerHTML = items + items; // Duplicado para efecto fluido
+        }
+
+        // Logo
+        const logoImg = document.getElementById('main-logo-img');
+        if(logoImg && siteData.logoPath) logoImg.src = siteData.logoPath;
+
+        // Banners Slider
+        renderBanners();
+
+        // Catálogo & Productos
+        renderCatalog();
+
+        // Sobre Nosotros
+        document.getElementById('about-subtitle-display').innerText = siteData.about.subtitle;
+        document.getElementById('about-title-display').innerText = siteData.about.title;
+        document.getElementById('about-desc-display').innerText = siteData.about.desc;
+        
+        const storyBody = document.getElementById('story-modal-body-display');
+        if(storyBody) {
+            storyBody.innerHTML = siteData.about.modalStory
+                .split('\n\n')
+                .map(para => `<p>${para.trim()}</p>`)
+                .join('');
+        }
+
+        // Enlaces de Contacto
+        renderContactGrid();
+    }
+
+    function renderBanners() {
+        const slidesWrapper = document.getElementById('slides-wrapper');
+        if(!slidesWrapper) return;
+        slidesWrapper.innerHTML = '';
+
+        siteData.banners.forEach((banner, index) => {
+            const slideDiv = document.createElement('div');
+            slideDiv.className = `slide slide-${index + 1} ${index === 0 ? 'active' : ''}`;
+            
+            let bgMedia = '';
+            if(banner.media.endsWith('.mp4')) {
+                bgMedia = `<video autoplay muted playsinline class="hero-bg-video"><source src="${banner.media}" type="video/mp4"></video>`;
+            } else {
+                bgMedia = `<img src="${banner.media}" alt="Banner ${index+1}" class="hero-bg-img">`;
+            }
+
+            slideDiv.innerHTML = `
+                ${bgMedia}
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <p class="slide-tag">${banner.tag}</p>
+                    <h1 class="slide-title">${banner.title}</h1>
+                    <p class="slide-desc">${banner.desc}</p>
+                    <a href="#catalogo" class="btn-gold">Explorar Catálogo</a>
+                </div>
+            `;
+            slidesWrapper.appendChild(slideDiv);
         });
 
-    function renderProducts(products) {
-        if(!productsContainer) return;
-        productsContainer.innerHTML = '';
-        products.forEach(product => {
+        initSliderLogic();
+    }
+
+    function renderCatalog() {
+        const container = document.getElementById('products-container');
+        if(!container) return;
+        container.innerHTML = '';
+
+        siteData.products.forEach(product => {
             const card = document.createElement('div');
             card.className = 'product-card';
             card.innerHTML = `
                 <div class="product-img-box">
-                    <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x300/1a1a1a/D4AF37?text=Perfume'">
+                    <img src="${product.image}" alt="${product.name}" onerror="this.src='IMG/LOGO_ENTERO.png'">
                 </div>
                 <div class="product-details">
                     <div>
@@ -34,71 +140,251 @@ document.addEventListener('DOMContentLoaded', () => {
                         <h3 class="product-name">${product.name}</h3>
                     </div>
                     <div>
-                        <p class="product-price">$${product.price.toFixed(2)} USD</p>
+                        <p class="product-price">$${Number(product.price).toFixed(2)} USD</p>
                         <button class="btn-add-cart" onclick="addToCart('${product.name}', ${product.price})">Añadir al Carrito</button>
                     </div>
                 </div>
             `;
-            productsContainer.appendChild(card);
+            container.appendChild(card);
         });
     }
 
-    // 2. LÓGICA DEL BANNER SLIDER INTELIGENTE
+    function renderContactGrid() {
+        const grid = document.getElementById('contact-links-grid');
+        if(!grid) return;
+
+        const links = siteData.contactLinks;
+        const config = [
+            { key: 'instagram', label: '@mitisefragrance', icon: 'IMG/INSTAGRAM.png', defaultUrl: 'https://www.instagram.com/mitisefragrance/' },
+            { key: 'tiktok', label: 'TikTok', icon: 'IMG/TIKTOK.png', defaultUrl: '#' },
+            { key: 'facebook', label: 'Facebook', icon: 'IMG/FACEBOOK.png', defaultUrl: '#' },
+            { key: 'telegram', label: 'Telegram', icon: 'IMG/TELEGREAM.png', defaultUrl: '#' },
+            { key: 'gmail', label: 'Gmail', icon: 'IMG/GMAIL.png', defaultUrl: '#' },
+            { key: 'whatsapp', label: 'WhatsApp', icon: 'IMG/WHATSAPP.png', defaultUrl: '#' }
+        ];
+
+        grid.innerHTML = config.map(item => {
+            const url = links[item.key] && links[item.key].trim() !== '' ? links[item.key] : item.defaultUrl;
+            const isTarget = url !== '#';
+            return `
+                <a href="${url}" ${isTarget ? 'target="_blank" rel="noopener noreferrer"' : 'onclick="event.preventDefault()"'} class="btn-social-gold">
+                    <img src="${item.icon}" alt="${item.label}" class="btn-social-icon" onerror="this.style.display='none'">
+                    <span>${item.label}</span>
+                </a>
+            `;
+        }).join('');
+
+        // Actualizar botón flotante de whatsapp si existe
+        const floatWa = document.getElementById('floating-whatsapp-btn');
+        if(floatWa && links.whatsapp) floatWa.href = links.whatsapp;
+    }
+
+    // ==========================================
+    // 2. SLIDER INTERACTIVO INTELIGENTE
+    // ==========================================
     let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
-    const prevBtn = document.getElementById('prevSlide');
-    const nextBtn = document.getElementById('nextSlide');
     let slideTimer = null;
 
-    function showSlide(index) {
-        if (slideTimer) clearTimeout(slideTimer);
+    function initSliderLogic() {
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevSlide');
+        const nextBtn = document.getElementById('nextSlide');
 
-        slides.forEach((slide, i) => {
-            slide.classList.remove('active');
-            const vid = slide.querySelector('video');
-            if (vid) vid.pause();
+        function showSlide(index) {
+            if (slideTimer) clearTimeout(slideTimer);
 
-            if (i === index) {
-                slide.classList.add('active');
-                
-                const currentVideo = slide.querySelector('video');
-                if (currentVideo) {
-                    currentVideo.currentTime = 0;
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                const vid = slide.querySelector('video');
+                if (vid) vid.pause();
+
+                if (i === index) {
+                    slide.classList.add('active');
                     
-                    const playPromise = currentVideo.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(err => {
-                            console.log("Autoplay omitido o restringido:", err);
-                            slideTimer = setTimeout(() => moveSlide(1), 8000);
-                        });
+                    const currentVideo = slide.querySelector('video');
+                    if (currentVideo) {
+                        currentVideo.currentTime = 0;
+                        const playPromise = currentVideo.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(() => {
+                                slideTimer = setTimeout(() => moveSlide(1), 8000);
+                            });
+                        }
+                        currentVideo.onended = () => moveSlide(1);
+                    } else {
+                        slideTimer = setTimeout(() => moveSlide(1), 6000);
                     }
-
-                    currentVideo.onended = () => {
-                        moveSlide(1);
-                    };
-                } else {
-                    slideTimer = setTimeout(() => moveSlide(1), 6000);
                 }
+            });
+        }
+
+        function moveSlide(direction) {
+            if (slides.length === 0) return;
+            currentSlide += direction;
+            if (currentSlide >= slides.length) currentSlide = 0;
+            if (currentSlide < 0) currentSlide = slides.length - 1;
+            showSlide(currentSlide);
+        }
+
+        if (prevBtn && nextBtn) {
+            prevBtn.onclick = () => moveSlide(-1);
+            nextBtn.onclick = () => moveSlide(1);
+        }
+
+        showSlide(currentSlide);
+    }
+
+    // ==========================================
+    // 3. AUTENTICACIÓN Y ROLES DE USUARIO
+    // ==========================================
+    const loginModal = document.getElementById('login-modal');
+    const editorPanel = document.getElementById('editor-panel');
+    const btnLoginTrigger = document.getElementById('btn-login-trigger');
+    const closeLoginModal = document.getElementById('close-login-modal');
+    const loginForm = document.getElementById('login-form');
+    const loginErrorMsg = document.getElementById('login-error-msg');
+
+    const USERS = {
+        "RUBEN": "RUBEN4321",
+        "LUIS": "LUIS4321"
+    };
+
+    if(btnLoginTrigger) {
+        btnLoginTrigger.addEventListener('click', () => {
+            const activeUser = sessionStorage.getItem('mitise_active_editor');
+            if(activeUser) {
+                openEditorDashboard(activeUser);
+            } else {
+                loginModal.classList.add('active');
             }
         });
     }
 
-    function moveSlide(direction) {
-        if (slides.length === 0) return;
-        currentSlide += direction;
-        if (currentSlide >= slides.length) currentSlide = 0;
-        if (currentSlide < 0) currentSlide = slides.length - 1;
-        showSlide(currentSlide);
+    if(closeLoginModal) {
+        closeLoginModal.addEventListener('click', () => loginModal.classList.remove('active'));
     }
 
-    if (prevBtn && nextBtn) {
-        prevBtn.addEventListener('click', () => moveSlide(-1));
-        nextBtn.addEventListener('click', () => moveSlide(1));
+    if(loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const user = document.getElementById('login-username').value.trim().toUpperCase();
+            const pass = document.getElementById('login-password').value.trim();
+
+            if(USERS[user] && USERS[user] === pass) {
+                loginErrorMsg.innerText = "";
+                sessionStorage.setItem('mitise_active_editor', user);
+                loginModal.classList.remove('active');
+                loginForm.reset();
+                openEditorDashboard(user);
+            } else {
+                loginErrorMsg.innerText = "Usuario o contraseña incorrectos.";
+            }
+        });
     }
 
-    showSlide(0);
+    // ==========================================
+    // 4. LÓGICA DEL PANEL DE EDITOR
+    // ==========================================
+    function openEditorDashboard(username) {
+        document.getElementById('active-editor-name').innerText = username;
+        fillEditorInputs();
+        editorPanel.classList.add('active');
+    }
 
-    // 3. LÓGICA DE APERTURA Y CIERRE DE MODALES (SOBRE NOSOTROS & CONTACTO)
+    function fillEditorInputs() {
+        document.getElementById('edit-ticker-text').value = siteData.tickerText;
+        document.getElementById('edit-logo-path').value = siteData.logoPath;
+        document.getElementById('edit-banner1-bg').value = siteData.banners[0] ? siteData.banners[0].media : '';
+        document.getElementById('edit-banner2-bg').value = siteData.banners[1] ? siteData.banners[1].media : '';
+        
+        document.getElementById('edit-about-subtitle').value = siteData.about.subtitle;
+        document.getElementById('edit-about-title').value = siteData.about.title;
+        document.getElementById('edit-about-desc').value = siteData.about.desc;
+        document.getElementById('edit-story-modal-text').value = siteData.about.modalStory;
+
+        document.getElementById('link-instagram').value = siteData.contactLinks.instagram || '';
+        document.getElementById('link-tiktok').value = siteData.contactLinks.tiktok || '';
+        document.getElementById('link-facebook').value = siteData.contactLinks.facebook || '';
+        document.getElementById('link-telegram').value = siteData.contactLinks.telegram || '';
+        document.getElementById('link-gmail').value = siteData.contactLinks.gmail || '';
+        document.getElementById('link-whatsapp').value = siteData.contactLinks.whatsapp || '';
+    }
+
+    // Pestañas del Editor
+    const tabBtns = document.querySelectorAll('.editor-tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabPanes.forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(btn.dataset.tab).classList.add('active');
+        });
+    });
+
+    // Guardar Todos los Cambios
+    document.getElementById('btn-save-all').addEventListener('click', () => {
+        siteData.tickerText = document.getElementById('edit-ticker-text').value;
+        siteData.logoPath = document.getElementById('edit-logo-path').value;
+        
+        if(siteData.banners[0]) siteData.banners[0].media = document.getElementById('edit-banner1-bg').value;
+        if(siteData.banners[1]) siteData.banners[1].media = document.getElementById('edit-banner2-bg').value;
+
+        siteData.about.subtitle = document.getElementById('edit-about-subtitle').value;
+        siteData.about.title = document.getElementById('edit-about-title').value;
+        siteData.about.desc = document.getElementById('edit-about-desc').value;
+        siteData.about.modalStory = document.getElementById('edit-story-modal-text').value;
+
+        siteData.contactLinks.instagram = document.getElementById('link-instagram').value;
+        siteData.contactLinks.tiktok = document.getElementById('link-tiktok').value;
+        siteData.contactLinks.facebook = document.getElementById('link-facebook').value;
+        siteData.contactLinks.telegram = document.getElementById('link-telegram').value;
+        siteData.contactLinks.gmail = document.getElementById('link-gmail').value;
+        siteData.contactLinks.whatsapp = document.getElementById('link-whatsapp').value;
+
+        saveSiteData();
+        alert('¡Todos los cambios han sido guardados y aplicados en vivo!');
+    });
+
+    // Agregar Nuevo Banner
+    document.getElementById('btn-add-banner').addEventListener('click', () => {
+        const tag = document.getElementById('new-banner-tag').value || 'Colección Especial';
+        const title = document.getElementById('new-banner-title').value || 'Nuevo Banner';
+        const desc = document.getElementById('new-banner-desc').value || 'Descripción del nuevo banner';
+        const media = document.getElementById('new-banner-media').value || 'IMG/OFERTON.png';
+
+        siteData.banners.push({ type: media.endsWith('.mp4') ? 'video' : 'image', media, tag, title, desc });
+        saveSiteData();
+        alert('¡Nuevo banner agregado con éxito!');
+    });
+
+    // Agregar Nuevo Producto
+    document.getElementById('btn-add-product').addEventListener('click', () => {
+        const brand = document.getElementById('new-prod-brand').value || 'Mitise';
+        const name = document.getElementById('new-prod-name').value || 'Nuevo Perfume';
+        const price = parseFloat(document.getElementById('new-prod-price').value) || 90;
+        const image = document.getElementById('new-prod-img').value || 'IMG/LOGO_ENTERO.png';
+
+        siteData.products.push({ id: Date.now(), brand, name, price, image });
+        saveSiteData();
+        alert('¡Producto añadido al catálogo con éxito!');
+    });
+
+    // Cerrar sesión y cerrar editor
+    document.getElementById('btn-logout-editor').addEventListener('click', () => {
+        sessionStorage.removeItem('mitise_active_editor');
+        editorPanel.classList.remove('active');
+        alert('Sesión de editor cerrada.');
+    });
+
+    document.getElementById('close-editor-panel').addEventListener('click', () => {
+        editorPanel.classList.remove('active');
+    });
+
+    // ==========================================
+    // 5. MODALES INTERACTIVOS (NOSOTROS & CONTACTO)
+    // ==========================================
     const storyModal = document.getElementById('story-modal');
     const contactModal = document.getElementById('contact-modal');
     
@@ -108,8 +394,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const closeStoryModal = document.getElementById('close-story-modal');
     const closeContactModal = document.getElementById('close-contact-modal');
-    
-    const allNavLinks = document.querySelectorAll('.nav-link');
 
     function openModal(modal) {
         closeAllModals();
@@ -121,52 +405,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if(contactModal) contactModal.classList.remove('active');
     }
 
-    // Eventos para abrir el modal de Sobre Nosotros
-    if(navAbout) {
-        navAbout.addEventListener('click', (e) => {
-            e.preventDefault();
-            openModal(storyModal);
-        });
-    }
+    if(navAbout) navAbout.onclick = (e) => { e.preventDefault(); openModal(storyModal); };
+    if(btnReadStory) btnReadStory.onclick = () => openModal(storyModal);
+    if(navContact) navContact.onclick = (e) => { e.preventDefault(); openModal(contactModal); };
 
-    if(btnReadStory) {
-        btnReadStory.addEventListener('click', () => openModal(storyModal));
-    }
+    if(closeStoryModal) closeStoryModal.onclick = closeAllModals;
+    if(closeContactModal) closeContactModal.onclick = closeAllModals;
 
-    // Eventos para abrir el modal de Contacto
-    if(navContact) {
-        navContact.addEventListener('click', (e) => {
-            e.preventDefault();
-            openModal(contactModal);
-        });
-    }
-
-    // Eventos de Cierre
-    if(closeStoryModal) closeStoryModal.addEventListener('click', closeAllModals);
-    if(closeContactModal) closeContactModal.addEventListener('click', closeAllModals);
-
-    // Cerrar al hacer clic fuera del cuadro
-    window.addEventListener('click', (e) => {
-        if(e.target === storyModal || e.target === contactModal) {
-            closeAllModals();
-        }
-    });
-
-    // Cerrar al presionar la tecla ESC
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeAllModals();
-    });
-
-    // Cerrar modales si hace clic en CUALQUIER otro enlace del menú (ej. Perfumería)
-    allNavLinks.forEach(link => {
-        if(link !== navAbout && link !== navContact) {
-            link.addEventListener('click', closeAllModals);
-        }
-    });
-
+    // Inicializar Contenido al cargar la página
+    renderAllContent();
 });
 
-// 4. LÓGICA DEL CARRITO DE COMPRAS
+// Carrito de compras
 let itemCount = 0;
 let totalPrice = 0;
 
@@ -176,6 +426,4 @@ function addToCart(name, price) {
     
     document.getElementById('cart-count').innerText = itemCount;
     document.getElementById('cart-price').innerText = `$${totalPrice.toFixed(2)}`;
-    
-    console.log(`Producto añadido: ${name} ($${price})`);
 }
