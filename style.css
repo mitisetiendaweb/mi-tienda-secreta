@@ -71,7 +71,7 @@ a {
 }
 
 /* ==========================================
-   2. HEADER PRINCIPAL Y MENÚ
+   2. HEADER PRINCIPAL Y ESTRUCTURA AGRUPADA
    ========================================== */
 #main-header {
     position: sticky;
@@ -91,12 +91,13 @@ a {
     padding: 10px 20px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; /* Distribuye Logo a la izq y Acciones a la derecha */
 }
 
 .logo-area {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .logo-img {
@@ -107,6 +108,7 @@ a {
     transition: var(--transition);
 }
 
+/* Menú Escritorio */
 .nav-menu {
     display: flex;
     list-style: none;
@@ -126,20 +128,12 @@ a {
     color: var(--gold-primary);
 }
 
-.mobile-menu-btn {
-    display: none;
-    background: transparent;
-    border: none;
-    color: var(--gold-primary);
-    font-size: 1.8rem;
-    cursor: pointer;
-    line-height: 1;
-}
-
-.header-icons {
+/* GRUPO DE ACCIONES DERECHA (MÓVIL Y ESCRITORIO) */
+.header-right-actions {
     display: flex;
     align-items: center;
     gap: 15px;
+    flex-shrink: 0;
 }
 
 .icon-btn {
@@ -150,6 +144,7 @@ a {
     cursor: pointer;
     transition: var(--transition);
     position: relative;
+    padding: 2px;
 }
 
 .cart-badge {
@@ -168,6 +163,18 @@ a {
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--gold-light);
+}
+
+/* Botón Menú Hamburguesa */
+.mobile-menu-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--gold-primary);
+    font-size: 1.8rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 4px;
 }
 
 /* ==========================================
@@ -571,7 +578,7 @@ a {
     width: auto;
 }
 
-/* Login y Editor Dashboard */
+/* Editor & Login */
 .login-card {
     background: #141414;
     border: 1px solid var(--gold-primary);
@@ -723,11 +730,10 @@ footer p {
     font-size: 0.8rem;
 }
 
-/* Botón Mi Cuenta Discreto en Gris Oscuro (Pasa Desapercibido) */
 .footer-admin-btn {
     background: transparent;
     border: none;
-    color: #383838; /* Gris oscuro sutil que se mimetiza con el fondo */
+    color: #383838;
     font-size: 0.72rem;
     cursor: pointer;
     transition: var(--transition);
@@ -756,7 +762,7 @@ footer p {
     }
 
     .mobile-menu-btn {
-        display: block;
+        display: block; /* Muestra el botón de hamburguesa */
     }
 
     .nav-menu {
@@ -810,39 +816,60 @@ footer p {
     }
 }
 
+/* --- REGLAS MÓVILES (< 768px) --- */
 @media (max-width: 768px) {
+    .header-container {
+        padding: 8px 12px;
+    }
+
+    .logo-img {
+        max-height: 42px; /* Logo ajustado */
+    }
+
+    .header-right-actions {
+        gap: 10px; /* Separación limpia entre iconos */
+    }
+
+    .icon-btn {
+        font-size: 1.1rem;
+    }
+
+    .hide-mobile {
+        display: none !important; /* Oculta $0.00 y corazón para despejar espacio */
+    }
+
     .section-container {
-        padding: 30px 8px;
+        padding: 30px 6px;
     }
 
     .products-grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 Productos por fila en móviles */
-        gap: 6px;
+        grid-template-columns: repeat(3, 1fr); /* 3 Productos por fila */
+        gap: 5px;
     }
 
     .product-img-box {
-        height: 110px;
+        height: 105px;
     }
 
     .product-details {
-        padding: 6px 3px;
+        padding: 5px 2px;
     }
 
     .product-brand {
-        font-size: 0.52rem;
+        font-size: 0.5rem;
     }
 
     .product-name {
-        font-size: 0.72rem;
+        font-size: 0.7rem;
     }
 
     .product-price {
-        font-size: 0.75rem;
+        font-size: 0.72rem;
     }
 
     .btn-add-cart {
-        padding: 5px 2px;
-        font-size: 0.58rem;
+        padding: 4px 2px;
+        font-size: 0.55rem;
     }
 
     .footer-container {
@@ -852,7 +879,7 @@ footer p {
     }
 }
 
-/* Botón WhatsApp Flotante */
+/* Botón WhatsApp */
 .whatsapp-btn {
     position: fixed;
     bottom: 20px;
