@@ -1,0 +1,288 @@
+/* ==========================================================================
+   COMPONENTES REUTILIZABLES & BOTONES DE LUJO
+   ========================================================================== */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-padding {
+    padding: 100px 0 60px 0;
+}
+
+.bg-dark-soft {
+    background-color: var(--bg-black-soft);
+}
+
+/* Títulos Globales */
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title {
+    font-family: var(--font-title);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    color: var(--text-light);
+    font-weight: 400;
+    letter-spacing: 1.5px;
+}
+
+.section-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-top: 10px;
+    letter-spacing: 0.5px;
+}
+
+.gold-divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+    margin: 20px auto 0 auto;
+}
+
+/* Botón Dorado Sólido */
+.btn-gold-solid {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
+    color: var(--bg-black);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+}
+
+.btn-gold-solid:hover {
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 100%);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Botón Dorado Outline (Borde) */
+.btn-gold-outline {
+    display: inline-block;
+    background: transparent;
+    color: var(--gold-primary);
+    border: 1px solid var(--gold-primary);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 13px 26px;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+
+.btn-gold-outline:hover {
+    background-color: var(--gold-primary);
+    color: var(--bg-black);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   1. HEADER & NAVEGACIÓN
+   ========================================================================== */
+#main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: rgba(13, 13, 13, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    transition: var(--transition-smooth);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Logo */
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.logo-wrapper img {
+    max-height: 45px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Links de Navegación */
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 400;
+    position: relative;
+    padding-bottom: 5px;
+    transition: var(--transition-smooth);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background-color: var(--gold-primary);
+    transition: var(--transition-smooth);
+    transform: translateX(-50%);
+}
+
+.nav-links a:hover {
+    color: var(--gold-primary);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Acciones del Navbar (Carrito) */
+.cart-btn {
+    background: transparent;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: var(--gold-primary);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.cart-btn:hover {
+    background-color: var(--gold-primary);
+    color: var(--bg-black);
+    border-color: var(--gold-primary);
+}
+
+/* ==========================================================================
+   2. HERO SECTION
+   ========================================================================== */
+#hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 80px; /* Offset para el header */
+    overflow: hidden;
+}
+
+/* Contenedor del video o multimedia de fondo */
+.hero-bg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.hero-bg-container video, 
+.hero-bg-container iframe, 
+.hero-bg-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Capa de degradado oscuro para que el texto sea perfectamente legible */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background: radial-gradient(circle, rgba(13,13,13,0.4) 0%, rgba(13,13,13,0.85) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-content {
+    text-align: center;
+    max-width: 800px;
+    padding: 0 20px;
+    z-index: 3;
+    animation: fadeIn 1.2s ease-out;
+}
+
+.hero-title {
+    font-family: var(--font-title);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    color: var(--text-light);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--text-muted);
+    font-weight: 300;
+    margin-bottom: 35px;
+    letter-spacing: 1px;
+}
+
+/* Animación de entrada para la bienvenida */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVO / MOBILE-FIRST (FASE 2)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* Se activará mediante JS o menú hamburguesa en etapas avanzadas */
+    }
+
+    .hero-title {
+        margin-bottom: 15px;
+    }
+
+    .hero-subtitle {
+        margin-bottom: 25px;
+    }
+}
