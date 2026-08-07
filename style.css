@@ -4,6 +4,7 @@
 :root {
     --bg-black: #0B0B0B;
     --bg-dark-card: #141414;
+    --bg-dark-soft: #111111;
     --gold-primary: #D4AF37;
     --gold-light: #F3E5AB;
     --gold-dark: #A88311;
@@ -18,6 +19,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -84,7 +89,6 @@ a {
     justify-content: space-between;
 }
 
-/* Ajustes Específicos para la Imagen del Logo */
 .logo-area {
     display: flex;
     align-items: center;
@@ -102,7 +106,6 @@ a {
     transform: scale(1.02);
 }
 
-/* Enlaces del Menú */
 .nav-menu {
     display: flex;
     list-style: none;
@@ -122,7 +125,6 @@ a {
     color: var(--gold-primary);
 }
 
-/* Iconos Derecha (Búsqueda, Usuario, Favoritos, Carrito) */
 .header-icons {
     display: flex;
     align-items: center;
@@ -406,7 +408,63 @@ a {
 }
 
 /* ==========================================
-   5. BOTÓN WHATSAPP & FOOTER
+   5. SECCIÓN SOBRE NOSOTROS
+   ========================================== */
+.bg-dark-soft {
+    background-color: var(--bg-dark-soft);
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.split-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.gold-subtitle {
+    color: var(--gold-primary);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.section-title-left {
+    font-family: var(--font-title);
+    font-size: 2.2rem;
+    color: var(--text-light);
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.split-text p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+.about-img-frame {
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    padding: 15px;
+    border-radius: 8px;
+    background-color: var(--bg-black);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-img {
+    max-width: 100%;
+    max-height: 250px;
+    object-fit: contain;
+}
+
+/* ==========================================
+   6. BOTÓN WHATSAPP & FOOTER
    ========================================== */
 .whatsapp-btn {
     position: fixed;
@@ -444,4 +502,5 @@ footer {
     .nav-menu { display: none; }
     .slide-title { font-size: 2.5rem; }
     .logo-img { max-height: 42px; }
+    .split-layout { grid-template-columns: 1fr; gap: 30px; }
 }
