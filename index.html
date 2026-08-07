@@ -18,12 +18,12 @@
     <!-- 1. BARRA SUPERIOR DE ANUNCIOS -->
     <div class="top-announcement-bar">
         <div class="ticker-track">
-            <span class="ticker-item">⚜️ LUXURY FRAGRANCE ⚜️</span>
+            <span class="ticker-item">👑 LUXURY FRAGRANCE 👑</span>
             <span class="ticker-item">💎 PERFUMERÍA 100% ORIGINAL Y DE LUJO 💎</span>
             <span class="ticker-item">👑 LUXURY FRAGRANCE 👑</span>
-            <span class="ticker-item">⚜️ LUXURY FRAGRANCE ⚜️</span>
             <span class="ticker-item">💎 PERFUMERÍA 100% ORIGINAL Y DE LUJO 💎</span>
             <span class="ticker-item">👑 LUXURY FRAGRANCE 👑</span>
+            <span class="ticker-item">💎 PERFUMERÍA 100% ORIGINAL Y DE LUJO 💎</span>
         </div>
     </div>
 
@@ -37,10 +37,10 @@
 
             <!-- Menú Central -->
             <ul class="nav-menu">
-                <li><a href="#catalogo">Perfumería</a></li>
-                <li><a href="#sobre-nosotros">Sobre Nosotros</a></li>
-                <li><a href="#catalogo">Ofertas</a></li>
-                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#catalogo" class="nav-link">Perfumería</a></li>
+                <li><a href="#sobre-nosotros" class="nav-link" id="nav-about">Sobre Nosotros</a></li>
+                <li><a href="#catalogo" class="nav-link">Ofertas</a></li>
+                <li><a href="#contacto" class="nav-link">Contacto</a></li>
             </ul>
 
             <!-- Iconos de Acción -->
@@ -91,92 +91,53 @@
         <div class="products-grid" id="products-container"></div>
     </section>
 
-    <!-- 5. SECCIÓN SOBRE NOSOTROS (HISTORIA & NARRATIVA) -->
+    <!-- 5. SECCIÓN SOBRE NOSOTROS -->
     <section id="sobre-nosotros" class="bg-dark-soft">
-        <div class="section-container">
-            
-            <div class="section-header">
-                <span class="gold-subtitle">Nuestra Esencia & Legado</span>
-                <h2 class="section-title">El Secreto Detrás de Mitise</h2>
-                <div class="gold-divider"></div>
+        <div class="section-container split-layout">
+            <div class="split-text">
+                <span class="gold-subtitle">Legado y Pasión</span>
+                <h2 class="section-title-left">La Maestría Detrás de Cada Gota</h2>
+                <p>Nuestra casa de perfumería combina ingredientes raros de origen ético con la artesanía tradicional. Descubre el origen de nuestra firma olfativa única.</p>
+                <br>
+                <button class="btn-gold" id="btn-read-story">Descubrir Nuestra Historia</button>
             </div>
-
-            <!-- Cita Principal de Impacto -->
-            <div class="story-quote-box">
-                <blockquote class="story-quote">
-                    "El verdadero misterio del perfume no reside en el marketing ni en el embalaje, sino en la memoria emocional que deja sobre la piel."
-                </blockquote>
-            </div>
-
-            <!-- Línea del Tiempo Narrativa / Capítulos -->
-            <div class="story-timeline">
-                
-                <!-- Capítulo 1 -->
-                <div class="timeline-card">
-                    <span class="timeline-badge">2011 • Puerto Rico 🌴</span>
-                    <h3 class="timeline-title">El Nacer de una Firma Secreta</h3>
-                    <p>
-                        Bajo el sol cálido de Puerto Rico, a mediados de 2011, nació una obsesión transformadora: la búsqueda de un aroma que no fuera un lujo inalcanzable, sino una firma personal accesible para todos.
-                    </p>
-                    <p>
-                        Entre las brisas del Caribe se gestó <strong>Mitise</strong>, bautizado como la abreviación natural de <em>Mi Tienda Secreta</em>. Desafiando las reglas convencionales, apostamos por una alquimia pura: <strong>fragancias a base de aceites de la más alta pureza</strong>. Al eliminar el alcohol, descubrimos la clave de una fijación extraordinaria que interactúa con el calor del cuerpo para crear un aura íntima y duradera a un precio justo.
-                    </p>
-                </div>
-
-                <!-- Capítulo 2 -->
-                <div class="timeline-card">
-                    <span class="timeline-badge">Miami • USA 🏙️</span>
-                    <h3 class="timeline-title">El Lujo Inteligente</h3>
-                    <p>
-                        Esa llama de autenticidad cruzó el mar Caribe hacia el escenario vibrante y cosmopolita de Miami. En el corazón de Florida, la propuesta caló hondo entre una comunidad que busca distinción sin pagar sobreprecios.
-                    </p>
-                    <p>
-                        Mitise se consolidó en Estados Unidos como el aliado diario de quienes entienden que el verdadero <strong>lujo inteligente</strong> combina alta calidad, elegancia y rendimiento duradero.
-                    </p>
-                </div>
-
-                <!-- Capítulo 3 -->
-                <div class="timeline-card">
-                    <span class="timeline-badge">España • Europa 🇪🇸</span>
-                    <h3 class="timeline-title">Cruzando el Atlántico</h3>
-                    <p>
-                        Hoy, la historia se renueva al desembarcar en el mercado español para ofrecer una alternativa fresca, cautivadora y accesible.
-                    </p>
-                    <p>
-                        Mitise llega a España invitando a una nueva audiencia a descubrir su propia esencia secreta: el placer de vestir aromas intensos, ricos y memorables que celebran la belleza de lo auténtico.
-                    </p>
-                </div>
-
-            </div>
-
-            <!-- Pilares de Valor (Badges) -->
-            <div class="story-pillars">
-                <div class="pillar-box">
-                    <span class="pillar-icon">💧</span>
-                    <h4>100% Aceites Puros</h4>
-                    <p>Sin alcoholes ni fórmulas diluidas.</p>
-                </div>
-                <div class="pillar-box">
-                    <span class="pillar-icon">⏳</span>
-                    <h4>Fijación Prolongada</h4>
-                    <p>Aromas intensos que evolucionan todo el día.</p>
-                </div>
-                <div class="pillar-box">
-                    <span class="pillar-icon">👑</span>
-                    <h4>Lujo Inteligente</h4>
-                    <p>Máxima calidad a un precio justo y honesto.</p>
+            <div class="split-image">
+                <div class="about-img-frame">
+                    <img src="IMG/LOGO%20FN.png" alt="Sobre La Casa del Perfume" class="about-img">
                 </div>
             </div>
-
         </div>
     </section>
 
-    <!-- 6. BOTÓN FLOTANTE DE WHATSAPP -->
+    <!-- 6. MODAL INTERACTIVO DE HISTORIA MITISE -->
+    <div id="story-modal" class="story-modal-backdrop">
+        <div class="story-modal-card">
+            <button class="story-modal-close" id="close-story-modal" aria-label="Cerrar">&times;</button>
+            
+            <div class="story-header">
+                <span class="gold-subtitle">Nuestra Esencia Secreta</span>
+                <h2 class="story-title">La Historia de Mitise</h2>
+                <div class="gold-divider"></div>
+            </div>
+
+            <div class="story-body">
+                <p>Bajo el sol cálido de Puerto Rico, a mediados de 2011, nació una obsesión transformadora: la búsqueda de un aroma que no fuera un lujo inalcanzable, sino una firma personal accesible para todos. Entre las brisas del Caribe se gestó Mitise, un nombre bautizado desde la intimidad y la complicidad, como la abreviación natural de Mi Tienda Secreta. La premisa fundacional era simple pero revolucionaria: desafiar las reglas de la perfumería convencional, donde las grandes marcas vendían frascos costosos con fórmulas diluidas en alcohol que se evaporaban al cabo de pocas horas.</p>
+
+                <p>El verdadero misterio del perfume no reside en el marketing ni en el embalaje, sino en la memoria emocional que deja sobre la piel. Con esta convicción, Mitise apostó desde sus primeros días por una alquimia pura: fragancias concebidas a base de aceites. Al eliminar el alcohol y concentrar óleos aromáticos de la más alta pureza, se descubrió la clave de una fijación extraordinaria. Una gota de aceite perfumado no compite con el ambiente; interactúa con el calor natural del cuerpo para crear un aura íntima, duradera y profundamente seductora, capaz de acompañar a la persona durante todo el día a un precio justo y honesto. Lo que comenzó como un tesoro escondido entre apasionados del buen olor en la isla, rápidamente se convirtió en un secreto imposible de guardar.</p>
+
+                <p>Esa llama de autenticidad no tardó en cruzar el mar Caribe. El escenario vibrante y cosmopolita de Miami fue el siguiente gran capítulo. En el corazón de Florida, la propuesta caló hondo entre una comunidad que busca distinción sin pagar sobreprecios. Mitise se consolidó en Estados Unidos como el aliado diario de quienes entienden que el verdadero lujo inteligente combina alta calidad, elegancia y rendimiento sin comprometer el bolsillo.</p>
+
+                <p>Hoy, la historia se renueva al cruzar el Atlántico para desembarcar en el mercado español. Mitise llega a España para ofrecer una alternativa fresca y cautivadora, invitando a una nueva audiencia a descubrir su propia esencia secreta: el placer de vestir aromas intensos, ricos y memorables que perduran en el tiempo y celebran la belleza de lo auténtico.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. BOTÓN FLOTANTE DE WHATSAPP -->
     <a href="https://wa.me/1234567890?text=Hola,%20quisiera%20informaci%C3%B3n%20sobre%20sus%20perfumes" target="_blank" class="whatsapp-btn">
         <span>💬</span> ¡Hola!
     </a>
 
-    <!-- 7. FOOTER -->
+    <!-- 8. FOOTER -->
     <footer id="contacto">
         <p>&copy; 2026 Haute Parfumerie - La Casa del Perfume. Todos los derechos reservados.</p>
     </footer>
