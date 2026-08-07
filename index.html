@@ -7,7 +7,7 @@
     <!-- Título Oficial de la Pestaña -->
     <title>Mitise | LUXURY FRAGRANCE</title>
     
-    <!-- Favicon (Ícono oficial de la pestaña del navegador) -->
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="IMG/LOGO_ENTERO.png">
     <link rel="shortcut icon" type="image/png" href="IMG/LOGO_ENTERO.png">
     <link rel="apple-touch-icon" href="IMG/LOGO_ENTERO.png">
@@ -24,13 +24,8 @@
 
     <!-- 1. BARRA SUPERIOR DE ANUNCIOS -->
     <div class="top-announcement-bar">
-        <div class="ticker-track">
-            <span class="ticker-item">⚜️ LUXURY FRAGRANCE ⚜️</span>
-            <span class="ticker-item">💎 PERFUMERÍA 100% ORIGINAL Y DE LUJO 💎</span>
-            <span class="ticker-item">👑 LUXURY FRAGRANCE 👑</span>
-            <span class="ticker-item">⚜️ LUXURY FRAGRANCE ⚜️</span>
-            <span class="ticker-item">💎 PERFUMERÍA 100% ORIGINAL Y DE LUJO 💎</span>
-            <span class="ticker-item">👑 LUXURY FRAGRANCE 👑</span>
+        <div class="ticker-track" id="ticker-track-container">
+            <!-- Cargado Dinámicamente -->
         </div>
     </div>
 
@@ -39,7 +34,7 @@
         <div class="header-container">
             <!-- Logo Oficial -->
             <a href="#" class="logo-area">
-                <img src="IMG/LOGO%20FN.png" alt="Logo Mitise" class="logo-img">
+                <img src="IMG/LOGO%20FN.png" alt="Logo Mitise" class="logo-img" id="main-logo-img">
             </a>
 
             <!-- Menú Central -->
@@ -52,7 +47,7 @@
             <!-- Iconos de Acción -->
             <div class="header-icons">
                 <button class="icon-btn" title="Buscar">🔍</button>
-                <button class="icon-btn" title="Mi Cuenta">👤</button>
+                <button class="icon-btn" id="btn-login-trigger" title="Mi Cuenta">👤</button>
                 <button class="icon-btn" title="Favoritos">🖤</button>
                 <button class="icon-btn" title="Carrito">
                     🛒
@@ -63,41 +58,13 @@
         </div>
     </header>
 
-    <!-- 3. BANNER SLIDER PRINCIPAL -->
-    <section class="hero-slider">
+    <!-- 3. BANNER SLIDER PRINCIPAL DINÁMICO -->
+    <section class="hero-slider" id="hero-slider-container">
         <button class="slider-arrow arrow-left" id="prevSlide">&#10094;</button>
         <button class="slider-arrow arrow-right" id="nextSlide">&#10095;</button>
 
-        <!-- Slide 1: VIDEO BHARARA DE FONDO -->
-        <div class="slide slide-1 active">
-            <video autoplay muted playsinline class="hero-bg-video">
-                <source src="VID/3BHARARA.mp4" type="video/mp4">
-                <source src="VID/3bharara.mp4" type="video/mp4">
-            </video>
-
-            <div class="slide-overlay"></div>
-
-            <div class="slide-content">
-                <p class="slide-tag">Colección Exclusiva 2026</p>
-                <h1 class="slide-title">Fragancias que Dejan Huella</h1>
-                <p class="slide-desc">Descubre notas olfativas de oro, maderas nobles y esencias orientales diseñadas para destacar.</p>
-                <a href="#catalogo" class="btn-gold">Explorar Catálogo</a>
-            </div>
-        </div>
-
-        <!-- Slide 2: IMAGEN OFERTON.PNG DE FONDO -->
-        <div class="slide slide-2">
-            <img src="IMG/OFERTON.png" alt="Oferta Especial Perfumería" class="hero-bg-img">
-            
-            <div class="slide-overlay"></div>
-
-            <div class="slide-content">
-                <p class="slide-tag">Edición Especial</p>
-                <h1 class="slide-title">Lujo & Distinción Olfativa</h1>
-                <p class="slide-desc">Aprovecha precios exclusivos en líneas seleccionadas de la mejor perfumería.</p>
-                <a href="#catalogo" class="btn-gold">Ver Ofertas</a>
-            </div>
-        </div>
+        <!-- Slides generados dinámicamente -->
+        <div id="slides-wrapper" style="width: 100%; height: 100%; position: relative;"></div>
     </section>
 
     <!-- 4. CATÁLOGO DE PRODUCTOS -->
@@ -107,6 +74,8 @@
             <div class="gold-divider"></div>
         </div>
 
+        <!-- Contenedor para Subsecciones y Productos -->
+        <div id="catalog-subsections-container"></div>
         <div class="products-grid" id="products-container"></div>
     </section>
 
@@ -114,15 +83,15 @@
     <section id="sobre-nosotros" class="bg-dark-soft">
         <div class="section-container split-layout">
             <div class="split-text">
-                <span class="gold-subtitle">Pasión por el Aroma Real</span>
-                <h2 class="section-title-left">La Selección Perfecta Detrás de Cada Gota</h2>
-                <p>Curamos y distribuimos las mejores inspiraciones olfativas del mundo, seleccionadas meticulosamente por su fidelidad y formuladas a base de aceites concentrados. Disfruta de una fijación extraordinaria y máxima duración en tu piel sin pagar sobreprecios.</p>
+                <span class="gold-subtitle" id="about-subtitle-display">Pasión por el Aroma Real</span>
+                <h2 class="section-title-left" id="about-title-display">La Selección Perfecta Detrás de Cada Gota</h2>
+                <p id="about-desc-display">Curamos y distribuimos las mejores inspiraciones olfativas del mundo, seleccionadas meticulosamente por su fidelidad y formuladas a base de aceites concentrados. Disfruta de una fijación extraordinaria y máxima duración en tu piel sin pagar sobreprecios.</p>
                 <br>
                 <button class="btn-gold" id="btn-read-story">Descubrir Nuestra Historia</button>
             </div>
             <div class="split-image">
                 <div class="about-img-frame">
-                    <img src="IMG/LOGO%20FN.png" alt="Sobre Mitise" class="about-img">
+                    <img src="IMG/LOGO%20FN.png" alt="Sobre Mitise" class="about-img" id="about-img-display">
                 </div>
             </div>
         </div>
@@ -139,21 +108,13 @@
                 <div class="gold-divider"></div>
             </div>
 
-            <div class="story-body">
-                <p>A mediados de 2011 en Puerto Rico, Mitise es bautizada bajo el concepto revelador de Mi Tienda Secreta. nació tras identificar una gran verdad del mercado: la mayoría de las personas paga sumas exorbitantes no por la esencia en sí, sino por la marca, el frasco de diseño y la publicidad, recibiendo a cambio fórmulas diluidas en alcohol que se evaporaban al cabo de unas horas.</p>
-
-                <p>Frente a esta realidad, la propuesta no fue crear fragancias desde cero, sino democratizar el acceso al lujo mediante la curaduría y distribución de las mejores equivalencias olfativas. Mitise se enfocó en rastrear y seleccionar meticulosamente las mejores inspiraciones de los perfumes más codiciados del mundo, garantizando la más alta fidelidad y, sobre todo, una formulación superior a base de aceites.</p>
-
-                <p>El secreto del éxito radicó en la fijación. Al prescindir del alcohol y apostar por concentrados de óleo de alta pureza, las fragancias distribuidas por Mitise no se evaporan rápidamente; penetran en la piel e interactúan con el calor corporal para ofrecer una durabilidad extraordinaria durante todo el día. El cliente descubrió que podía llevar la misma presencia, elegancia y rastro distintivo de una marca de alta gama, pero a un precio justo y accesible.</p>
-
-                <p>Ese concepto de compra inteligente convirtió a la tienda en un secreto imposible de guardar. La marca dio el salto a Miami, posicionándose en el mercado estadounidense como la alternativa definitiva para quienes buscan la máxima calidad olfativa sin pagar sobreprecios innecesarios.</p>
-
-                <p>Hoy, esa misma filosofía cruza el Atlántico para desembarcar en el mercado español. Mitise se presenta en España como el puente directo hacia las mejores inspiraciones en aceite del mundo: un espacio donde la altísima fijación, el rendimiento real y la honestidad en el precio se unen para redefinir la forma en que las personas disfrutan de su perfume diario.</p>
+            <div class="story-body" id="story-modal-body-display">
+                <!-- Se carga dinámicamente -->
             </div>
         </div>
     </div>
 
-    <!-- 7. MODAL INTERACTIVO DE CONTACTO CON MULTI-CANAL DE REDES -->
+    <!-- 7. MODAL INTERACTIVO DE CONTACTO -->
     <div id="contact-modal" class="story-modal-backdrop">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-contact-modal" aria-label="Cerrar">&times;</button>
@@ -174,54 +135,217 @@
                     <p class="executive-quote">“Tu esencia. Tu poder. Tu firma.”</p>
                 </div>
 
-                <!-- Grilla de Botones de Redes Sociales / Contacto -->
-                <div class="contact-buttons-grid">
-                    <!-- Instagram (Activo) -->
-                    <a href="https://www.instagram.com/mitisefragrance/" target="_blank" rel="noopener noreferrer" class="btn-social-gold">
-                        <img src="IMG/INSTAGRAM.png" alt="Instagram Logo" class="btn-social-icon" onerror="this.style.display='none'">
-                        <span>@mitisefragrance</span>
-                    </a>
-
-                    <!-- TikTok (Inactivo por ahora) -->
-                    <a href="#" class="btn-social-gold" onclick="event.preventDefault()">
-                        <img src="IMG/TIKTOK.png" alt="TikTok Logo" class="btn-social-icon" onerror="this.style.display='none'">
-                        <span>TikTok</span>
-                    </a>
-
-                    <!-- Facebook (Inactivo por ahora) -->
-                    <a href="#" class="btn-social-gold" onclick="event.preventDefault()">
-                        <img src="IMG/FACEBOOK.png" alt="Facebook Logo" class="btn-social-icon" onerror="this.style.display='none'">
-                        <span>Facebook</span>
-                    </a>
-
-                    <!-- Telegram (Inactivo por ahora) -->
-                    <a href="#" class="btn-social-gold" onclick="event.preventDefault()">
-                        <img src="IMG/TELEGREAM.png" alt="Telegram Logo" class="btn-social-icon" onerror="this.style.display='none'">
-                        <span>Telegram</span>
-                    </a>
-
-                    <!-- Gmail (Inactivo por ahora) -->
-                    <a href="#" class="btn-social-gold" onclick="event.preventDefault()">
-                        <img src="IMG/GMAIL.png" alt="Gmail Logo" class="btn-social-icon" onerror="this.style.display='none'">
-                        <span>Gmail</span>
-                    </a>
-
-                    <!-- WhatsApp (Inactivo por ahora) -->
-                    <a href="#" class="btn-social-gold" onclick="event.preventDefault()">
-                        <img src="IMG/WHATSAPP.png" alt="WhatsApp Logo" class="btn-social-icon" onerror="this.style.display='none'">
-                        <span>WhatsApp</span>
-                    </a>
+                <!-- Grilla de Botones de Redes Sociales -->
+                <div class="contact-buttons-grid" id="contact-links-grid">
+                    <!-- Dinámico -->
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 8. BOTÓN FLOTANTE DE WHATSAPP -->
-    <a href="https://wa.me/1234567890?text=Hola,%20quisiera%20informaci%C3%B3n%20sobre%20sus%20perfumes" target="_blank" class="whatsapp-btn">
+    <!-- 8. VENTANA LOGIN FULLSCREEN (MI CUENTA / EDITOR) -->
+    <div id="login-modal" class="fullscreen-modal-backdrop">
+        <div class="login-card">
+            <button class="fullscreen-modal-close" id="close-login-modal">&times;</button>
+            <div class="story-header">
+                <span class="gold-subtitle">Acceso de Administración</span>
+                <h2 class="story-title">Mi Cuenta / Editor</h2>
+                <div class="gold-divider"></div>
+            </div>
+            
+            <form id="login-form">
+                <div class="form-group-gold">
+                    <label for="login-username">Usuario</label>
+                    <input type="text" id="login-username" placeholder="Ingresa tu usuario" required autocomplete="off">
+                </div>
+                <div class="form-group-gold">
+                    <label for="login-password">Contraseña</label>
+                    <input type="password" id="login-password" placeholder="Ingresa tu contraseña" required>
+                </div>
+                <p id="login-error-msg" class="error-text-gold"></p>
+                <button type="submit" class="btn-gold btn-full">Iniciar Sesión como Editor</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 9. PANEL DE EDITOR EN PANTALLA COMPLETA -->
+    <div id="editor-panel" class="fullscreen-modal-backdrop">
+        <div class="editor-dashboard-card">
+            <div class="editor-top-bar">
+                <div>
+                    <span class="gold-subtitle">SISTEMA CMS DE GESTIÓN</span>
+                    <h2 class="editor-title">Panel de Control Mitise (Rol: Editor - <span id="active-editor-name"></span>)</h2>
+                </div>
+                <div class="editor-top-actions">
+                    <button class="btn-gold-small" id="btn-save-all">💾 Guardar Todos los Cambios</button>
+                    <button class="btn-outline-gold-small" id="btn-logout-editor">Cerrar Sesión</button>
+                    <button class="story-modal-close-static" id="close-editor-panel">&times;</button>
+                </div>
+            </div>
+
+            <div class="editor-body-layout">
+                <!-- Pestañas del Editor -->
+                <div class="editor-tabs">
+                    <button class="editor-tab-btn active" data-tab="tab-ticker">📢 Anuncios (Ticker)</button>
+                    <button class="editor-tab-btn" data-tab="tab-logo">👑 Logo Oficial</button>
+                    <button class="editor-tab-btn" data-tab="tab-banners">🎬 Banners & Video</button>
+                    <button class="editor-tab-btn" data-tab="tab-catalog">🛍️ Catálogo & Productos</button>
+                    <button class="editor-tab-btn" data-tab="tab-nosotros">📖 Sobre Nosotros</button>
+                    <button class="editor-tab-btn" data-tab="tab-contact">📱 Redes & Contacto</button>
+                </div>
+
+                <!-- Contenido de las Pestañas -->
+                <div class="editor-content-area">
+                    
+                    <!-- TAB 1: TICKER -->
+                    <div id="tab-ticker" class="tab-pane active">
+                        <h3>Gestión del Ticker de Anuncios</h3>
+                        <p class="editor-hint">Separa cada mensaje promocional con una coma (,).</p>
+
+                        <div class="form-group-gold">
+                            <label>Mensajes Promocionales (Separados por coma):</label>
+                            <textarea id="edit-ticker-text" rows="4"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: LOGO -->
+                    <div id="tab-logo" class="tab-pane">
+                        <h3>Gestión del Logo Principal</h3>
+                        <div class="form-group-gold">
+                            <label>Ruta o URL de la Imagen del Logo (Ej: IMG/LOGO FN.png):</label>
+                            <input type="text" id="edit-logo-path">
+                        </div>
+                    </div>
+
+                    <!-- TAB 3: BANNERS -->
+                    <div id="tab-banners" class="tab-pane">
+                        <h3>Banners Interactivos del Slider</h3>
+
+                        <div class="form-group-gold">
+                            <label>Banner 1 - Ruta del Video/Fondo (Ej: VID/3BHARARA.mp4):</label>
+                            <input type="text" id="edit-banner1-bg">
+                        </div>
+
+                        <div class="form-group-gold">
+                            <label>Banner 2 - Ruta de la Imagen de Fondo (Ej: IMG/OFERTON.png):</label>
+                            <input type="text" id="edit-banner2-bg">
+                        </div>
+
+                        <hr class="editor-divider">
+                        <h4>Añadir un Nuevo Banner al Slider</h4>
+                        <div class="form-group-gold">
+                            <label>Etiqueta / Tag (Ej: Colección Especial):</label>
+                            <input type="text" id="new-banner-tag" placeholder="Ej: Nueva Colección">
+                        </div>
+                        <div class="form-group-gold">
+                            <label>Título del Banner:</label>
+                            <input type="text" id="new-banner-title" placeholder="Ej: Esencias de Noche">
+                        </div>
+                        <div class="form-group-gold">
+                            <label>Descripción:</label>
+                            <input type="text" id="new-banner-desc" placeholder="Ej: Fragancias intensas e inolvidables">
+                        </div>
+                        <div class="form-group-gold">
+                            <label>Ruta de Imagen o Video de Fondo (Ej: IMG/OFERTON.png o VID/3BHARARA.mp4):</label>
+                            <input type="text" id="new-banner-media" placeholder="Ej: IMG/banner3.jpg">
+                        </div>
+                        <button class="btn-gold" id="btn-add-banner">+ Agregar Nuevo Banner</button>
+                    </div>
+
+                    <!-- TAB 4: CATÁLOGO Y PRODUCTOS -->
+                    <div id="tab-catalog" class="tab-pane">
+                        <h3>Añadir Subsección al Catálogo</h3>
+                        <div class="form-group-gold inline-form">
+                            <input type="text" id="new-subsection-name" placeholder="Ej: Perfumes Árabes / Aceites Concentrados">
+                            <button class="btn-gold" id="btn-add-subsection">+ Crear Subsección</button>
+                        </div>
+
+                        <hr class="editor-divider">
+                        <h3>Añadir Nuevo Producto</h3>
+                        <div class="form-group-gold">
+                            <label>Marca / Subtítulo:</label>
+                            <input type="text" id="new-prod-brand" placeholder="Ej: Lattafa / Mitise">
+                        </div>
+                        <div class="form-group-gold">
+                            <label>Nombre del Producto:</label>
+                            <input type="text" id="new-prod-name" placeholder="Ej: Bharara King Oil">
+                        </div>
+                        <div class="form-group-gold">
+                            <label>Precio ($ USD):</label>
+                            <input type="number" id="new-prod-price" placeholder="Ej: 95">
+                        </div>
+                        <div class="form-group-gold">
+                            <label>Ruta de la Foto (Ej: IMG/producto1.jpg):</label>
+                            <input type="text" id="new-prod-img" placeholder="Ej: IMG/LOGO_ENTERO.png">
+                        </div>
+                        <button class="btn-gold" id="btn-add-product">+ Añadir Producto al Catálogo</button>
+                    </div>
+
+                    <!-- TAB 5: SOBRE NOSOTROS -->
+                    <div id="tab-nosotros" class="tab-pane">
+                        <h3>Editar Sección Sobre Nosotros</h3>
+                        <div class="form-group-gold">
+                            <label>Subtítulo:</label>
+                            <input type="text" id="edit-about-subtitle">
+                        </div>
+                        <div class="form-group-gold">
+                            <label>Título Principal:</label>
+                            <input type="text" id="edit-about-title">
+                        </div>
+                        <div class="form-group-gold">
+                            <label>Descripción Corta:</label>
+                            <textarea id="edit-about-desc" rows="3"></textarea>
+                        </div>
+                        
+                        <h4>Texto Completo del Modal (Historia de Mitise)</h4>
+                        <div class="form-group-gold">
+                            <label>Párrafos (separa cada párrafo presionando Enter dos veces):</label>
+                            <textarea id="edit-story-modal-text" rows="8"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- TAB 6: CONTACTO & REDES -->
+                    <div id="tab-contact" class="tab-pane">
+                        <h3>Editar Enlaces y Direcciones de Contacto</h3>
+                        <p class="editor-hint">Ingresa las URL o enlaces completos para cada aplicación.</p>
+
+                        <div class="form-group-gold">
+                            <label>Instagram URL:</label>
+                            <input type="text" id="link-instagram" placeholder="https://www.instagram.com/mitisefragrance/">
+                        </div>
+                        <div class="form-group-gold">
+                            <label>TikTok URL:</label>
+                            <input type="text" id="link-tiktok" placeholder="https://www.tiktok.com/@mitise">
+                        </div>
+                        <div class="form-group-gold">
+                            <label>Facebook URL:</label>
+                            <input type="text" id="link-facebook" placeholder="https://facebook.com/mitise">
+                        </div>
+                        <div class="form-group-gold">
+                            <label>Telegram URL:</label>
+                            <input type="text" id="link-telegram" placeholder="https://t.me/mitise">
+                        </div>
+                        <div class="form-group-gold">
+                            <label>Gmail / Correo (Ej: mailto:contacto@mitise.com):</label>
+                            <input type="text" id="link-gmail" placeholder="mailto:info@mitise.com">
+                        </div>
+                        <div class="form-group-gold">
+                            <label>WhatsApp URL (Ej: https://wa.me/1234567890):</label>
+                            <input type="text" id="link-whatsapp" placeholder="https://wa.me/1234567890">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 10. BOTÓN FLOTANTE DE WHATSAPP -->
+    <a href="https://wa.me/1234567890?text=Hola,%20quisiera%20informaci%C3%B3n%20sobre%20sus%20perfumes" target="_blank" class="whatsapp-btn" id="floating-whatsapp-btn">
         <span>💬</span> ¡Hola!
     </a>
 
-    <!-- 9. FOOTER -->
+    <!-- 11. FOOTER -->
     <footer id="contacto">
         <p>&copy; 2026 Mitise - Luxury Fragrance. Todos los derechos reservados.</p>
     </footer>
