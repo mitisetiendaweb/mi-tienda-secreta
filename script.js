@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tiktok: "",
             facebook: "",
             telegram: "https://t.me/+584242032510",
-            gmail: "https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=mitisefragance@gmail.com",
+            gmail: "mitisefragance@gmail.com",
             whatsapp: "https://wa.me/+584242032510"
         }
     };
@@ -173,34 +173,47 @@ document.addEventListener('DOMContentLoaded', () => {
         const grid = document.getElementById('contact-links-grid');
         if(!grid) return;
 
+        // Detector Inteligente de Teléfono Móvil
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
         const links = siteData.contactLinks;
         const config = [
             { key: 'instagram', label: '@mitisefragrance', icon: 'IMG/INSTAGRAM.png', defaultUrl: 'https://www.instagram.com/mitisefragrance/' },
             { key: 'tiktok', label: 'TikTok', icon: 'IMG/TIKTOK.png', defaultUrl: '#' },
             { key: 'facebook', label: 'Facebook', icon: 'IMG/FACEBOOK.png', defaultUrl: '#' },
             { key: 'telegram', label: 'Telegram', icon: 'IMG/TELEGREAM.png', defaultUrl: 'https://t.me/+584242032510' },
-            { key: 'gmail', label: 'Gmail', icon: 'IMG/GMAIL.png', defaultUrl: 'https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=mitisefragance@gmail.com' },
+            { key: 'gmail', label: 'Gmail', icon: 'IMG/GMAIL.png', defaultUrl: 'mitisefragance@gmail.com' },
             { key: 'whatsapp', label: 'WhatsApp', icon: 'IMG/WHATSAPP.png', defaultUrl: 'https://wa.me/+584242032510' }
         ];
 
         grid.innerHTML = config.map(item => {
             let url = links[item.key] && links[item.key].trim() !== '' ? links[item.key].trim() : item.defaultUrl;
 
+            // LÓGICA DUAL INTELIGENTE PARA GMAIL
             if (item.key === 'gmail') {
-                if (!url.startsWith('https://mail.google.com')) {
-                    const clean = url.replace('mailto:', '').trim();
-                    url = `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=${clean}`;
+                const cleanEmail = url.replace('mailto:', '')
+                                      .replace('https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=', '')
+                                      .trim();
+
+                if (isMobile) {
+                    // En Teléfonos Móviles: Abre la App nativa de Gmail / Correo
+                    url = `mailto:${cleanEmail}`;
+                } else {
+                    // En Computadoras: Abre Gmail Web en una nueva pestaña
+                    url = `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=${cleanEmail}`;
                 }
             }
 
-            if (url !== '#' && !url.startsWith('http://') && !url.startsWith('https://')) {
+            // Auto-corrección de protocolo para otras URLs
+            if (url !== '#' && !url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('mailto:')) {
                 url = `https://${url}`;
             }
 
-            const isTarget = url !== '#';
+            // Abrir en nueva pestaña si no es mailto: ni #
+            const isTarget = url !== '#' && !url.startsWith('mailto:');
             
             return `
-                <a href="${url}" ${isTarget ? 'target="_blank" rel="noopener noreferrer"' : 'onclick="event.preventDefault()"'} class="btn-social-gold">
+                <a href="${url}" ${isTarget ? 'target="_blank" rel="noopener noreferrer"' : ''} class="btn-social-gold">
                     <img src="${item.icon}" alt="${item.label}" class="btn-social-icon" onerror="this.style.display='none'">
                     <span>${item.label}</span>
                 </a>
@@ -370,13 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
         siteData.contactLinks.tiktok = document.getElementById('link-tiktok').value;
         siteData.contactLinks.facebook = document.getElementById('link-facebook').value;
         siteData.contactLinks.telegram = document.getElementById('link-telegram').value;
-        
-        let inputGmail = document.getElementById('link-gmail').value.trim();
-        if(inputGmail && !inputGmail.startsWith('https://mail.google.com')) {
-            const clean = inputGmail.replace('mailto:', '').trim();
-            inputGmail = `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=${clean}`;
-        }
-        siteData.contactLinks.gmail = inputGmail;
+        siteData.contactLinks.gmail = document.getElementById('link-gmail').value;
         siteData.contactLinks.whatsapp = document.getElementById('link-whatsapp').value;
 
         saveSiteData();
