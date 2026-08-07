@@ -1,5 +1,5 @@
 /* ==========================================
-   VARIABLES GLOBALES Y RESET 100% MOBILE FIRST
+   VARIABLES GLOBALES Y RESET
    ========================================== */
 :root {
     --bg-black: #0B0B0B;
@@ -24,7 +24,7 @@
 html, body {
     width: 100%;
     max-width: 100vw;
-    overflow-x: hidden; /* Elimina cualquier desborde horizontal */
+    overflow-x: hidden;
 }
 
 body {
@@ -71,7 +71,7 @@ a {
 }
 
 /* ==========================================
-   2. HEADER RESPONSIVO Y MENU HAMBURGUESA
+   2. HEADER PRINCIPAL Y MENÚ
    ========================================== */
 #main-header {
     position: sticky;
@@ -86,7 +86,7 @@ a {
 
 .header-container {
     width: 100%;
-    max-width: 1400px;
+    max-width: 1500px;
     margin: 0 auto;
     padding: 10px 20px;
     display: flex;
@@ -107,7 +107,6 @@ a {
     transition: var(--transition);
 }
 
-/* Menú Navegación Escritorio */
 .nav-menu {
     display: flex;
     list-style: none;
@@ -127,7 +126,6 @@ a {
     color: var(--gold-primary);
 }
 
-/* Botón Menú Hamburguesa Móvil */
 .mobile-menu-btn {
     display: none;
     background: transparent;
@@ -173,7 +171,7 @@ a {
 }
 
 /* ==========================================
-   3. HERO SLIDER RESPONSIVO
+   3. HERO SLIDER
    ========================================== */
 .hero-slider {
     position: relative;
@@ -295,18 +293,18 @@ a {
 }
 
 /* ==========================================
-   4. CATÁLOGO DE PRODUCTOS RESPONSIVO
+   4. CATÁLOGO DE PRODUCTOS (8 POR FILA EN ESCRITORIO / 3 EN MÓVIL)
    ========================================== */
 .section-container {
     width: 100%;
-    max-width: 1300px;
+    max-width: 1600px; /* Ampliado para dar cabida a los 8 productos */
     margin: 0 auto;
-    padding: 60px 20px;
+    padding: 50px 15px;
 }
 
 .section-header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 35px;
 }
 
 .section-title {
@@ -323,17 +321,18 @@ a {
     margin: 0 auto;
 }
 
+/* --- GRILLA PRINCIPAL: 8 COLUMNAS EN ESCRITORIO --- */
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(8, 1fr); /* 8 Productos por fila */
+    gap: 12px;
     width: 100%;
 }
 
 .product-card {
     background-color: var(--bg-dark-card);
     border: 1px solid rgba(212, 175, 55, 0.2);
-    border-radius: 8px;
+    border-radius: 6px;
     overflow: hidden;
     transition: var(--transition);
     display: flex;
@@ -344,11 +343,13 @@ a {
 
 .product-card:hover {
     border-color: var(--gold-primary);
-    transform: translateY(-5px);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
 }
 
+/* Imagen del Producto para Ajuste de 8 Columnas */
 .product-img-box {
-    height: 260px;
+    height: 140px;
     width: 100%;
     background-color: #1a1a1a;
     display: flex;
@@ -365,7 +366,7 @@ a {
 }
 
 .product-details {
-    padding: 18px;
+    padding: 10px 6px;
     text-align: center;
     flex-grow: 1;
     display: flex;
@@ -374,37 +375,38 @@ a {
 }
 
 .product-brand {
-    font-size: 0.72rem;
+    font-size: 0.6rem;
     color: var(--gold-primary);
     text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 4px;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
 }
 
 .product-name {
     font-family: var(--font-title);
-    font-size: 1.15rem;
-    margin-bottom: 8px;
+    font-size: 0.82rem;
+    margin-bottom: 4px;
     color: var(--text-light);
+    line-height: 1.15;
 }
 
 .product-price {
-    font-size: 1.05rem;
+    font-size: 0.85rem;
     font-weight: 700;
     color: var(--gold-light);
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
 .btn-add-cart {
     width: 100%;
-    padding: 10px;
+    padding: 6px 4px;
     background: transparent;
     border: 1px solid var(--gold-primary);
     color: var(--gold-primary);
-    font-size: 0.78rem;
+    font-size: 0.65rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     border-radius: 4px;
     cursor: pointer;
     transition: var(--transition);
@@ -572,7 +574,7 @@ a {
     width: auto;
 }
 
-/* Login y Editor Dashboard */
+/* Editor & Login */
 .login-card {
     background: #141414;
     border: 1px solid var(--gold-primary);
@@ -699,18 +701,25 @@ a {
     margin-left: 8px;
 }
 
-.error-text-gold {
-    color: #ff5555;
-    font-size: 0.82rem;
-    margin-bottom: 12px;
+/* ==========================================
+   7. REGLAS RESPONSIVAS (TABLETS & MÓVILES)
+   ========================================== */
+
+/* Tablets / Pantallas Medianas (5 por fila) */
+@media (max-width: 1200px) {
+    .products-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+    }
 }
 
-/* ==========================================
-   7. REGLAS ESPECÍFICAS PARA MÓVILES (< 900px)
-   ========================================== */
 @media (max-width: 900px) {
+    .products-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
     .mobile-menu-btn {
-        display: block; /* Muestra el icono de Hamburguesa */
+        display: block;
     }
 
     .nav-menu {
@@ -730,7 +739,7 @@ a {
     }
 
     .nav-menu.active {
-        left: 0; /* Despliega el menú móvil */
+        left: 0;
     }
 
     .nav-menu a {
@@ -754,15 +763,6 @@ a {
         font-size: 0.88rem;
     }
 
-    .slider-arrow {
-        width: 36px;
-        height: 36px;
-        font-size: 0.9rem;
-    }
-
-    .arrow-left { left: 8px; }
-    .arrow-right { right: 8px; }
-
     .split-layout {
         grid-template-columns: 1fr;
         gap: 25px;
@@ -770,7 +770,7 @@ a {
     }
 
     .contact-buttons-grid {
-        grid-template-columns: 1fr; /* 1 sola columna en botones de contacto */
+        grid-template-columns: 1fr;
     }
 
     .editor-body-layout {
@@ -785,26 +785,54 @@ a {
     }
 }
 
-@media (max-width: 600px) {
-    .header-container {
-        padding: 8px 12px;
-    }
-
-    .logo-img {
-        max-height: 48px;
+/* --- MÓVILES / SMARTPHONES: 3 PRODUCTOS POR FILA --- */
+@media (max-width: 768px) {
+    .section-container {
+        padding: 30px 8px; /* Aprovechamiento máximo del ancho del móvil */
     }
 
     .products-grid {
-        grid-template-columns: 1fr; /* Una sola tarjeta por fila en móviles */
+        grid-template-columns: repeat(3, 1fr); /* 3 Productos por fila en teléfonos */
+        gap: 6px;
     }
 
-    .product-card {
-        max-width: 340px;
-        margin: 0 auto;
+    .product-img-box {
+        height: 110px; /* Imagen compacta proporcional */
     }
 
-    .section-container {
-        padding: 40px 15px;
+    .product-details {
+        padding: 6px 3px;
+    }
+
+    .product-brand {
+        font-size: 0.52rem;
+        letter-spacing: 0.5px;
+        margin-bottom: 2px;
+    }
+
+    .product-name {
+        font-size: 0.72rem;
+        margin-bottom: 3px;
+        line-height: 1.1;
+    }
+
+    .product-price {
+        font-size: 0.75rem;
+        margin-bottom: 5px;
+    }
+
+    .btn-add-cart {
+        padding: 5px 2px;
+        font-size: 0.58rem;
+        letter-spacing: 0;
+    }
+
+    .header-container {
+        padding: 8px 10px;
+    }
+
+    .logo-img {
+        max-height: 45px;
     }
 }
 
