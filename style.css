@@ -1,21 +1,295 @@
-/* ==========================================================================
-   COMPONENTES REUTILIZABLES & BOTONES DE LUJO
-   ========================================================================== */
-.container {
-    width: 90%;
-    max-width: 1200px;
+/* ==========================================
+   VARIABLES GLOBALES Y RESET
+   ========================================== */
+:root {
+    --bg-black: #0B0B0B;
+    --bg-dark-card: #141414;
+    --gold-primary: #D4AF37;
+    --gold-light: #F3E5AB;
+    --gold-dark: #A88311;
+    --text-light: #FFFFFF;
+    --text-muted: #B3B3B3;
+    --font-title: 'Playfair Display', serif;
+    --font-body: 'Montserrat', sans-serif;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-black);
+    color: var(--text-light);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ==========================================
+   1. BARRA SUPERIOR DE ANUNCIOS (TICKER)
+   ========================================== */
+.top-announcement-bar {
+    background: linear-gradient(90deg, #111, #222, #111);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    color: var(--gold-light);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 8px 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.ticker-track {
+    display: inline-block;
+    animation: ticker 25s linear infinite;
+}
+
+.ticker-item {
+    display: inline-block;
+    margin-right: 40px;
+}
+
+@keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* ==========================================
+   2. HEADER PRINCIPAL Y LOGO
+   ========================================== */
+#main-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: rgba(11, 11, 11, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.header-container {
+    max-width: 1400px;
     margin: 0 auto;
+    padding: 12px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.section-padding {
-    padding: 100px 0 60px 0;
+/* Ajustes Específicos para la Imagen del Logo */
+.logo-area {
+    display: flex;
+    align-items: center;
 }
 
-.bg-dark-soft {
-    background-color: var(--bg-black-soft);
+.logo-img {
+    max-height: 52px;
+    width: auto;
+    object-fit: contain;
+    transition: var(--transition);
 }
 
-/* Títulos Globales */
+.logo-img:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+/* Enlaces del Menú */
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+.nav-menu a {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-light);
+    transition: var(--transition);
+}
+
+.nav-menu a:hover {
+    color: var(--gold-primary);
+}
+
+/* Iconos Derecha (Búsqueda, Usuario, Favoritos, Carrito) */
+.header-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-light);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+}
+
+.icon-btn:hover {
+    color: var(--gold-primary);
+}
+
+.cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background-color: var(--gold-primary);
+    color: #000;
+    font-size: 0.65rem;
+    font-weight: 700;
+    border-radius: 50%;
+    padding: 2px 6px;
+}
+
+.cart-total-price {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    margin-left: 5px;
+}
+
+/* ==========================================
+   3. HERO SLIDER
+   ========================================== */
+.hero-slider {
+    position: relative;
+    width: 100%;
+    height: 75vh;
+    min-height: 500px;
+    background-color: #000;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.slide-1 {
+    background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.3)), 
+                radial-gradient(circle, rgba(212,175,55,0.3) 0%, rgba(0,0,0,0.9) 100%);
+}
+
+.slide-2 {
+    background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.3)), 
+                radial-gradient(circle, rgba(168,131,17,0.4) 0%, rgba(11,11,11,0.95) 100%);
+}
+
+.slide-content {
+    max-width: 800px;
+    padding: 0 40px;
+    text-align: left;
+    z-index: 2;
+}
+
+.slide-tag {
+    color: var(--gold-primary);
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.slide-title {
+    font-family: var(--font-title);
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    color: var(--text-light);
+}
+
+.slide-desc {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+    max-width: 550px;
+}
+
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--gold-primary);
+    color: var(--gold-primary);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: var(--transition);
+}
+
+.slider-arrow:hover {
+    background: var(--gold-primary);
+    color: #000;
+}
+
+.arrow-left { left: 20px; }
+.arrow-right { right: 20px; }
+
+.btn-gold {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+    color: #000;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 14px 32px;
+    border-radius: 30px;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+.btn-gold:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+    background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
+}
+
+/* ==========================================
+   4. CATÁLOGO DE PRODUCTOS
+   ========================================== */
+.section-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 80px 20px;
+}
+
 .section-header {
     text-align: center;
     margin-bottom: 50px;
@@ -23,584 +297,151 @@
 
 .section-title {
     font-family: var(--font-title);
-    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-size: 2.4rem;
     color: var(--text-light);
-    font-weight: 400;
-    letter-spacing: 1.5px;
-}
-
-.section-subtitle {
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    margin-top: 10px;
-    letter-spacing: 0.5px;
+    margin-bottom: 10px;
 }
 
 .gold-divider {
-    width: 60px;
+    width: 80px;
     height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
-    margin: 20px auto 0 auto;
-}
-
-/* Botón Dorado Sólido */
-.btn-gold-solid {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
-    color: var(--bg-black);
-    font-family: var(--font-body);
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    padding: 14px 28px;
-    border: none;
-    border-radius: 2px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: var(--transition-smooth);
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
-}
-
-.btn-gold-solid:hover {
-    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 100%);
-    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
-    transform: translateY(-2px);
-}
-
-/* Botón Dorado Outline (Borde) */
-.btn-gold-outline {
-    display: inline-block;
-    background: transparent;
-    color: var(--gold-primary);
-    border: 1px solid var(--gold-primary);
-    font-family: var(--font-body);
-    font-size: 0.85rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    padding: 13px 26px;
-    border-radius: 2px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: var(--transition-smooth);
-}
-
-.btn-gold-outline:hover {
-    background-color: var(--gold-primary);
-    color: var(--bg-black);
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-    transform: translateY(-2px);
-}
-
-/* ==========================================================================
-   1. HEADER & NAVEGACIÓN
-   ========================================================================== */
-#main-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    background-color: rgba(13, 13, 13, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-    transition: var(--transition-smooth);
-}
-
-.nav-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 5%;
-    max-width: 1400px;
+    background: var(--gold-primary);
     margin: 0 auto;
 }
 
-/* Logo */
-.logo-wrapper {
-    display: flex;
-    align-items: center;
-}
-
-.logo-wrapper img {
-    max-height: 45px;
-    width: auto;
-    object-fit: contain;
-}
-
-/* Links de Navegación */
-.nav-links {
-    display: flex;
-    list-style: none;
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 30px;
 }
 
-.nav-links a {
-    color: var(--text-light);
-    text-decoration: none;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-weight: 400;
-    position: relative;
-    padding-bottom: 5px;
-    transition: var(--transition-smooth);
-}
-
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 1px;
-    background-color: var(--gold-primary);
-    transition: var(--transition-smooth);
-    transform: translateX(-50%);
-}
-
-.nav-links a:hover {
-    color: var(--gold-primary);
-}
-
-.nav-links a:hover::after {
-    width: 100%;
-}
-
-/* Acciones del Navbar (Carrito) */
-.cart-btn {
-    background: transparent;
-    border: 1px solid rgba(212, 175, 55, 0.4);
-    color: var(--gold-primary);
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: var(--transition-smooth);
-}
-
-.cart-btn:hover {
-    background-color: var(--gold-primary);
-    color: var(--bg-black);
-    border-color: var(--gold-primary);
-}
-
-/* ==========================================================================
-   2. HERO SECTION
-   ========================================================================== */
-#hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 80px; /* Offset para el header */
-    overflow: hidden;
-}
-
-/* Contenedor del video o multimedia de fondo */
-.hero-bg-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.hero-bg-container video, 
-.hero-bg-container iframe, 
-.hero-bg-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Capa de degradado oscuro para que el texto sea perfectamente legible */
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-    background: radial-gradient(circle, rgba(13,13,13,0.4) 0%, rgba(13,13,13,0.85) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.hero-content {
-    text-align: center;
-    max-width: 800px;
-    padding: 0 20px;
-    z-index: 3;
-    animation: fadeIn 1.2s ease-out;
-}
-
-.hero-title {
-    font-family: var(--font-title);
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    color: var(--text-light);
-    font-weight: 400;
-    line-height: 1.15;
-    margin-bottom: 20px;
-    letter-spacing: 1px;
-}
-
-.hero-subtitle {
-    font-size: clamp(1rem, 2vw, 1.25rem);
-    color: var(--text-muted);
-    font-weight: 300;
-    margin-bottom: 35px;
-    letter-spacing: 1px;
-}
-
-/* Animación de entrada para la bienvenida */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ==========================================================================
-   RESPONSIVO / MOBILE-FIRST (FASE 2)
-   ========================================================================== */
-@media (max-width: 768px) {
-    .nav-links {
-        display: none; /* Se activará mediante JS o menú hamburguesa en etapas avanzadas */
-    }
-
-    .hero-title {
-        margin-bottom: 15px;
-    }
-
-    .hero-subtitle {
-        margin-bottom: 25px;
-    }
-}
-
-/* ==========================================================================
-   3. SECCIÓN CATÁLOGO DE PRODUCTOS (GRILLA & TARJETAS LUJO)
-   ========================================================================== */
-
-/* Grilla Responsiva para Productos */
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 35px;
-    margin-top: 40px;
-}
-
-/* Tarjeta de Producto (Contenedor Marfil) */
 .product-card {
-    background-color: var(--bg-ivory);
-    border-radius: 6px;
-    overflow: hidden;
-    position: relative;
+    background-color: var(--bg-dark-card);
     border: 1px solid rgba(212, 175, 55, 0.2);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: var(--transition);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: var(--transition-smooth);
 }
 
-/* Efecto de elevación y brillo dorado al pasar el cursor sobre la tarjeta */
 .product-card:hover {
-    transform: translateY(-8px);
     border-color: var(--gold-primary);
-    box-shadow: 0 18px 35px rgba(212, 175, 55, 0.25);
+    transform: translateY(-7px);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
 }
 
-/* Contenedor de la Imagen del Producto */
-.product-card .placeholder-product-img,
-.product-card-img-wrapper {
-    position: relative;
+.product-img-box {
+    height: 280px;
     width: 100%;
-    height: 320px;
-    background-color: #f0eee9; /* Tono beige suave mientras carga */
+    background-color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
 }
 
-.product-card img {
+.product-img-box img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
-    transition: transform 0.6s ease;
+    transition: transform 0.5s ease;
 }
 
-/* Zoom suave en la imagen del producto al hacer hover */
-.product-card:hover img {
+.product-card:hover .product-img-box img {
     transform: scale(1.06);
 }
 
-/* Información del Producto dentro de la Tarjeta */
-.product-info {
-    padding: 25px 20px;
+.product-details {
+    padding: 20px;
     text-align: center;
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
     justify-content: space-between;
+}
+
+.product-brand {
+    font-size: 0.75rem;
+    color: var(--gold-primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
 }
 
 .product-name {
     font-family: var(--font-title);
-    font-size: 1.35rem;
-    color: var(--text-dark); /* Texto oscuro para legibilidad impecable */
-    font-weight: 600;
-    margin-bottom: 6px;
-    letter-spacing: 0.5px;
-}
-
-.product-category {
-    font-size: 0.78rem;
-    color: #777777;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 12px;
-    font-weight: 500;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: var(--text-light);
 }
 
 .product-price {
-    font-family: var(--font-body);
-    font-size: 1.25rem;
-    color: var(--gold-dark); /* Tono dorado oscuro para mayor contraste */
-    font-weight: 600;
-    margin-bottom: 20px;
-}
-
-/* Botones dentro de la Tarjeta de Producto */
-.product-actions {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-}
-
-.product-actions .btn-gold-outline {
-    padding: 10px 14px;
-    font-size: 0.75rem;
-    border-color: var(--gold-dark);
-    color: var(--text-dark);
-}
-
-.product-actions .btn-gold-outline:hover {
-    background-color: var(--text-dark);
-    color: var(--bg-ivory);
-    border-color: var(--text-dark);
-}
-
-.product-actions .btn-gold-solid {
-    padding: 10px 14px;
-    font-size: 0.75rem;
-}
-
-/* ==========================================================================
-   RESPONSIVO PARA CATÁLOGO
-   ========================================================================== */
-@media (max-width: 480px) {
-    .product-grid {
-        grid-template-columns: 1fr; /* Una sola columna en dispositivos muy pequeños */
-        gap: 25px;
-    }
-
-    .product-actions {
-        flex-direction: column; /* Botones apilados verticalmente en móviles */
-    }
-}
-
-/* ==========================================================================
-   4. SECCIÓN SOBRE NOSOTROS (SPLIT LAYOUT)
-   ========================================================================== */
-.split-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-}
-
-.split-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.gold-subtitle {
-    color: var(--gold-primary);
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 2.5px;
-    margin-bottom: 12px;
-    font-weight: 600;
-}
-
-.split-text h2 {
-    font-family: var(--font-title);
-    font-size: clamp(2rem, 3.5vw, 2.8rem);
-    color: var(--text-light);
-    line-height: 1.25;
-    margin-bottom: 25px;
-    font-weight: 400;
-}
-
-.split-text p {
-    color: var(--text-muted);
-    font-size: 1rem;
-    line-height: 1.8;
-    margin-bottom: 20px;
-}
-
-/* ==========================================================================
-   5. SECCIÓN REDES SOCIALES (SOCIAL FEED GRID)
-   ========================================================================== */
-.social-feed-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 25px;
-    margin-bottom: 40px;
-}
-
-.social-card {
-    border-radius: 4px;
-    overflow: hidden;
-    position: relative;
-    border: 1px solid rgba(212, 175, 55, 0.15);
-    transition: var(--transition-smooth);
-}
-
-.social-card:hover {
-    border-color: var(--gold-primary);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.15);
-}
-
-.social-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-top: 20px;
-}
-
-/* ==========================================================================
-   6. SECCIÓN CONTACTO (FORMULARIO MINIMALISTA)
-   ========================================================================== */
-.small-container {
-    max-width: 650px;
-    margin: 0 auto;
-}
-
-.contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    background-color: var(--bg-black);
-    padding: 40px;
-    border-radius: 6px;
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    text-align: left;
-}
-
-.form-group label {
-    font-size: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: 700;
     color: var(--gold-light);
+    margin-bottom: 15px;
+}
+
+.btn-add-cart {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid var(--gold-primary);
+    color: var(--gold-primary);
+    font-size: 0.8rem;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-weight: 500;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition);
 }
 
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(212, 175, 55, 0.25);
-    border-radius: 3px;
-    padding: 14px 18px;
-    color: var(--text-light);
-    font-family: var(--font-body);
-    font-size: 0.95rem;
-    transition: var(--transition-smooth);
+.btn-add-cart:hover {
+    background: var(--gold-primary);
+    color: #000;
 }
 
-/* Efecto Dorado al Enfocar los Campos de Texto */
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--gold-primary);
-    background-color: rgba(212, 175, 55, 0.03);
-    box-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
+/* ==========================================
+   5. BOTÓN WHATSAPP & FOOTER
+   ========================================== */
+.whatsapp-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background-color: #25D366;
+    color: #FFF;
+    padding: 12px 20px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    transition: var(--transition);
 }
 
-.btn-full {
-    width: 100%;
-    margin-top: 10px;
+.whatsapp-btn:hover {
+    transform: scale(1.05);
+    background-color: #20ba5a;
 }
 
-/* ==========================================================================
-   7. FOOTER (PIE DE PÁGINA)
-   ========================================================================== */
-#main-footer {
-    background-color: #080808;
-    border-top: 1px solid rgba(212, 175, 55, 0.15);
-    padding: 40px 0;
+footer {
+    background-color: #050505;
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+    padding: 40px 20px;
+    text-align: center;
     font-size: 0.85rem;
     color: var(--text-muted);
 }
 
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.legal-links {
-    display: flex;
-    gap: 20px;
-}
-
-.legal-links a {
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: var(--transition-smooth);
-}
-
-.legal-links a:hover {
-    color: var(--gold-primary);
-}
-
-/* ==========================================================================
-   RESPONSIVO PARA FASE 4
-   ========================================================================== */
-@media (max-width: 850px) {
-    .split-layout {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-
-    .contact-form {
-        padding: 25px 20px;
-    }
-
-    .footer-content {
-        flex-direction: column;
-        text-align: center;
-    }
+@media (max-width: 900px) {
+    .nav-menu { display: none; }
+    .slide-title { font-size: 2.5rem; }
+    .logo-img { max-height: 42px; }
 }
