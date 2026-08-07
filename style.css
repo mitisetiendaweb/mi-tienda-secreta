@@ -69,7 +69,7 @@ a {
 }
 
 /* ==========================================
-   2. HEADER PRINCIPAL Y LOGO
+   2. HEADER PRINCIPAL Y LOGO DESTACADO
    ========================================== */
 #main-header {
     position: sticky;
@@ -188,7 +188,7 @@ a {
 }
 
 /* ==========================================
-   3. HERO SLIDER
+   3. HERO SLIDER CON VIDEO INTEGRADOF
    ========================================== */
 .hero-slider {
     position: relative;
@@ -218,21 +218,39 @@ a {
     opacity: 1;
 }
 
-.slide-1 {
-    background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.3)), 
-                radial-gradient(circle, rgba(212,175,55,0.3) 0%, rgba(0,0,0,0.9) 100%);
+/* Video de fondo para Slide 1 */
+.hero-bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+/* Capa oscura para contrastar el texto */
+.slide-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.45) 100%);
+    z-index: 2;
 }
 
 .slide-2 {
-    background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.3)), 
+    background: linear-gradient(to right, rgba(0,0,0,0.85), rgba(0,0,0,0.4)), 
                 radial-gradient(circle, rgba(168,131,17,0.4) 0%, rgba(11,11,11,0.95) 100%);
 }
 
 .slide-content {
+    position: relative;
     max-width: 800px;
     padding: 0 40px;
     text-align: left;
-    z-index: 2;
+    z-index: 3;
 }
 
 .slide-tag {
@@ -433,33 +451,7 @@ a {
 }
 
 /* ==========================================
-   5. SECCIÓN DE VIDEO EXPERIENCIA OLFATIVA
-   ========================================== */
-.video-section {
-    padding-top: 40px;
-    padding-bottom: 80px;
-}
-
-.video-frame {
-    max-width: 950px;
-    margin: 0 auto;
-    border: 1px solid var(--gold-primary);
-    border-radius: 12px;
-    overflow: hidden;
-    background-color: #000;
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.25);
-}
-
-.showcase-video {
-    width: 100%;
-    height: auto;
-    max-height: 550px;
-    display: block;
-    object-fit: cover;
-}
-
-/* ==========================================
-   6. SECCIÓN SOBRE NOSOTROS
+   5. SECCIÓN SOBRE NOSOTROS
    ========================================== */
 .bg-dark-soft {
     background-color: var(--bg-dark-soft);
@@ -515,7 +507,7 @@ a {
 }
 
 /* ==========================================
-   7. MODAL DE HISTORIA
+   6. MODAL DE HISTORIA
    ========================================== */
 .story-modal-backdrop {
     position: fixed;
@@ -623,7 +615,7 @@ a {
 }
 
 /* ==========================================
-   8. BOTÓN WHATSAPP & FOOTER
+   7. BOTÓN WHATSAPP & FOOTER
    ========================================== */
 .whatsapp-btn {
     position: fixed;
