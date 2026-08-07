@@ -43,21 +43,53 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. LÓGICA DEL BANNER SLIDER
+    // 2. LÓGICA DEL BANNER SLIDER INTELIGENTE (RESPETA LA DURACIÓN COMPLETA DEL VIDEO)
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
     const prevBtn = document.getElementById('prevSlide');
     const nextBtn = document.getElementById('nextSlide');
+    let slideTimer = null;
 
     function showSlide(index) {
+        // Cancelar temporizadores previos
+        if (slideTimer) clearTimeout(slideTimer);
+
         slides.forEach((slide, i) => {
             slide.classList.remove('active');
-            if (i === index) slide.classList.add('active');
+            const vid = slide.querySelector('video');
+            if (vid) vid.pause(); // Pausar videos de slides inactivas
+
+            if (i === index) {
+                slide.classList.add('active');
+                
+                const currentVideo = slide.querySelector('video');
+                if (currentVideo) {
+                    // Reiniciar y reproducir el video desde el segundo 0
+                    currentVideo.currentTime = 0;
+                    
+                    const playPromise = currentVideo.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(err => {
+                            console.log("Autoplay omitido o restringido por navegador:", err);
+                            // Fallback en caso de bloqueo: cambiar a los 8 segundos
+                            slideTimer = setTimeout(() => moveSlide(1), 8000);
+                        });
+                    }
+
+                    // Evento clave: Esperar a que el video TERMINE para pasar al siguiente slide
+                    currentVideo.onended = () => {
+                        moveSlide(1);
+                    };
+                } else {
+                    // Para banners sin video (imágenes fijas), esperar 6 segundos
+                    slideTimer = setTimeout(() => moveSlide(1), 6000);
+                }
+            }
         });
     }
 
     function moveSlide(direction) {
-        if(slides.length === 0) return;
+        if (slides.length === 0) return;
         currentSlide += direction;
         if (currentSlide >= slides.length) currentSlide = 0;
         if (currentSlide < 0) currentSlide = slides.length - 1;
@@ -69,9 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
         nextBtn.addEventListener('click', () => moveSlide(1));
     }
 
-    setInterval(() => {
-        moveSlide(1);
-    }, 5000);
+    // Iniciar el slider en el slide 0
+    showSlide(0);
 
     // 3. LÓGICA DE APERTURA/CIERRE DEL MODAL DE HISTORIA
     const storyModal = document.getElementById('story-modal');
@@ -88,7 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if(storyModal) storyModal.classList.remove('active');
     }
 
-    // Eventos para abrir el modal
     if(navAbout) {
         navAbout.addEventListener('click', (e) => {
             e.preventDefault();
@@ -100,24 +130,20 @@ document.addEventListener('DOMContentLoaded', () => {
         btnReadStory.addEventListener('click', openModal);
     }
 
-    // Evento para cerrar al hacer clic en la "X"
     if(closeStoryModal) {
         closeStoryModal.addEventListener('click', closeModal);
     }
 
-    // Evento para cerrar si hace clic fuera del contenido del modal
     if(storyModal) {
         storyModal.addEventListener('click', (e) => {
             if(e.target === storyModal) closeModal();
         });
     }
 
-    // Cerrar si presiona la tecla Escape (ESC)
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeModal();
     });
 
-    // Cerrar si hace clic en CUALQUIER otra sección / enlace del menú
     allNavLinks.forEach(link => {
         if(link !== navAbout) {
             link.addEventListener('click', closeModal);
@@ -126,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// 4. LÓGICA DEL CARRITO DE COMPRAS (Global)
+// 4. LÓGICA DEL CARRITO DE COMPRAS
 let itemCount = 0;
 let totalPrice = 0;
 
