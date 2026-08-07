@@ -69,7 +69,7 @@ a {
 }
 
 /* ==========================================
-   2. HEADER PRINCIPAL Y LOGO DESTACADO
+   2. HEADER PRINCIPAL Y LOGO
    ========================================== */
 #main-header {
     position: sticky;
@@ -433,7 +433,33 @@ a {
 }
 
 /* ==========================================
-   5. SECCIÓN SOBRE NOSOTROS
+   5. SECCIÓN DE VIDEO EXPERIENCIA OLFATIVA
+   ========================================== */
+.video-section {
+    padding-top: 40px;
+    padding-bottom: 80px;
+}
+
+.video-frame {
+    max-width: 950px;
+    margin: 0 auto;
+    border: 1px solid var(--gold-primary);
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #000;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.25);
+}
+
+.showcase-video {
+    width: 100%;
+    height: auto;
+    max-height: 550px;
+    display: block;
+    object-fit: cover;
+}
+
+/* ==========================================
+   6. SECCIÓN SOBRE NOSOTROS
    ========================================== */
 .bg-dark-soft {
     background-color: var(--bg-dark-soft);
@@ -489,7 +515,7 @@ a {
 }
 
 /* ==========================================
-   6. MODAL LLAMATIVO DE LA HISTORIA MITISE
+   7. MODAL DE HISTORIA
    ========================================== */
 .story-modal-backdrop {
     position: fixed;
@@ -583,7 +609,6 @@ a {
     font-weight: 700;
 }
 
-/* Personalización de la barra de desplazamiento del Modal */
 .story-modal-card::-webkit-scrollbar {
     width: 6px;
 }
@@ -598,7 +623,7 @@ a {
 }
 
 /* ==========================================
-   7. BOTÓN WHATSAPP & FOOTER
+   8. BOTÓN WHATSAPP & FOOTER
    ========================================== */
 .whatsapp-btn {
     position: fixed;
