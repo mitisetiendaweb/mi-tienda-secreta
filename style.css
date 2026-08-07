@@ -188,7 +188,7 @@ a {
 }
 
 /* ==========================================
-   3. HERO SLIDER CON MULTIMEDIA (VIDEO & IMAGEN)
+   3. HERO SLIDER
    ========================================== */
 .hero-slider {
     position: relative;
@@ -218,7 +218,6 @@ a {
     opacity: 1;
 }
 
-/* Video de fondo para Slide 1 */
 .hero-bg-video {
     position: absolute;
     top: 0;
@@ -229,7 +228,6 @@ a {
     z-index: 1;
 }
 
-/* Imagen de fondo para Slide 2 */
 .hero-bg-img {
     position: absolute;
     top: 0;
@@ -241,7 +239,6 @@ a {
     z-index: 1;
 }
 
-/* Capa oscura para contrastar el texto */
 .slide-overlay {
     position: absolute;
     top: 0;
@@ -514,7 +511,7 @@ a {
 }
 
 /* ==========================================
-   6. MODAL DE HISTORIA
+   6. MODALES (SOBRE NOSOTROS & CONTACTO)
    ========================================== */
 .story-modal-backdrop {
     position: fixed;
@@ -606,6 +603,59 @@ a {
     font-size: 1.5rem;
     color: var(--gold-primary);
     font-weight: 700;
+}
+
+/* Modal de Contacto Específico */
+.contact-modal-card {
+    max-width: 550px;
+    text-align: center;
+}
+
+.contact-modal-desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.contact-buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Botón Dorado Oficial de Instagram */
+.btn-instagram-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+    color: #000;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
+    padding: 14px 28px;
+    border-radius: 30px;
+    transition: var(--transition);
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.35);
+    text-decoration: none;
+    width: 100%;
+    max-width: 320px;
+}
+
+.btn-instagram-gold:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
+    background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
+}
+
+.btn-instagram-icon {
+    height: 24px;
+    width: auto;
+    object-fit: contain;
 }
 
 .story-modal-card::-webkit-scrollbar {
