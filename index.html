@@ -312,6 +312,64 @@
             </div>
         </div>
     </footer>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        // 1. Efecto de cambio en el Header al hacer Scroll
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.style.backgroundColor = 'rgba(10, 10, 10, 0.95)';
+                header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.8)';
+            } else {
+                header.style.backgroundColor = 'rgba(13, 13, 13, 0.85)';
+                header.style.boxShadow = 'none';
+            }
+        });
 
+        // 2. Control de envío del formulario de contacto
+        const contactForm = document.querySelector('.contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Animación o mensaje de confirmación
+                const btn = contactForm.querySelector('button[type="submit"]');
+                const originalText = btn.innerText;
+                
+                btn.innerText = 'ENVIANDO...';
+                btn.style.opacity = '0.8';
+                
+                setTimeout(() => {
+                    alert('Gracias por su mensaje. Un asesor olfativo se pondrá en contacto a la brevedad.');
+                    contactForm.reset();
+                    btn.innerText = originalText;
+                    btn.style.opacity = '1';
+                }, 1200);
+            });
+        }
+
+        // 3. Simulación básica para botón del Carrito de Compras
+        const cartBtn = document.querySelector('.cart-btn');
+        const addToCartBtns = document.querySelectorAll('.product-card .btn-gold-solid');
+        let cartCount = 0;
+
+        addToCartBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                cartCount++;
+                cartBtn.innerHTML = `<span>🛒</span> (${cartCount})`;
+                
+                // Feedback visual rápido
+                btn.innerText = '¡AÑADIDO!';
+                btn.style.backgroundColor = 'var(--gold-light)';
+                
+                setTimeout(() => {
+                    btn.innerText = 'Añadir al Carrito';
+                    btn.style.backgroundColor = '';
+                }, 1000);
+            });
+        });
+    });
+</script>
 </body>
 </html>
