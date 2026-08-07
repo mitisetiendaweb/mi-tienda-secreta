@@ -39,7 +39,7 @@
             <ul class="nav-menu">
                 <li><a href="#catalogo" class="nav-link">Perfumería</a></li>
                 <li><a href="#sobre-nosotros" class="nav-link" id="nav-about">Sobre Nosotros</a></li>
-                <li><a href="#contacto" class="nav-link">Contacto</a></li>
+                <li><a href="#contacto" class="nav-link" id="nav-contact">Contacto</a></li>
             </ul>
 
             <!-- Iconos de Acción -->
@@ -144,12 +144,37 @@
         </div>
     </div>
 
-    <!-- 7. BOTÓN FLOTANTE DE WHATSAPP -->
+    <!-- 7. MODAL INTERACTIVO DE CONTACTO -->
+    <div id="contact-modal" class="story-modal-backdrop">
+        <div class="story-modal-card contact-modal-card">
+            <button class="story-modal-close" id="close-contact-modal" aria-label="Cerrar">&times;</button>
+
+            <div class="story-header">
+                <span class="gold-subtitle">Atención Personalizada</span>
+                <h2 class="story-title">Contacto Exclusivo</h2>
+                <div class="gold-divider"></div>
+            </div>
+
+            <div class="contact-modal-body">
+                <p class="contact-modal-desc">Conéctate con nuestro universo oficial para realizar pedidos personalizados, asesoría olfativa y consultas generales.</p>
+
+                <div class="contact-buttons-container">
+                    <!-- Botón de Instagram Oficial -->
+                    <a href="https://www.instagram.com/mitisefragrance/" target="_blank" rel="noopener noreferrer" class="btn-instagram-gold">
+                        <img src="IMG/INSTAGRAM.png" alt="Instagram Logo" class="btn-instagram-icon" onerror="this.style.display='none'">
+                        <span>@mitisefragrance</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. BOTÓN FLOTANTE DE WHATSAPP -->
     <a href="https://wa.me/1234567890?text=Hola,%20quisiera%20informaci%C3%B3n%20sobre%20sus%20perfumes" target="_blank" class="whatsapp-btn">
         <span>💬</span> ¡Hola!
     </a>
 
-    <!-- 8. FOOTER -->
+    <!-- 9. FOOTER -->
     <footer id="contacto">
         <p>&copy; 2026 Haute Parfumerie - La Casa del Perfume. Todos los derechos reservados.</p>
     </footer>
