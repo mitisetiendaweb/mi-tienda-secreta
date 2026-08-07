@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             subtitle: "Pasión por el Aroma Real",
             title: "La Selección Perfecta Detrás de Cada Gota",
             desc: "Curamos y distribuimos las mejores inspiraciones olfativas del mundo, seleccionadas meticulosamente por su fidelidad y formuladas a base de aceites concentrados. Disfruta de una fijación extraordinaria y máxima duración en tu piel sin pagar sobreprecios.",
-            modalStory: `A mediados de 2011 en Puerto Rico, Mitise es bautizada bajo el concepto revelador de Mi Tienda Secreta. nació tras identificar una gran verdad del mercado: la mayoría de las personas paga sumas exorbitantes no por la esencia en sí, sino por la marca, el frasco de diseño y la publicidad, recibiendo a cambio fórmulas diluidas en alcohol que se evaporaban al cabo de unas horas.\n\nFrente a esta realidad, la propuesta no fue crear fragancias desde cero, sino democratizar el acceso al lujo mediante la curaduría y distribución de las mejores equivalencias olfativas. Mitise se enfocó en rastrear y seleccionar meticulosamente las mejores inspiraciones de los perfumes más codiciados del mundo, garantizando la más alta fidelidad y, sobre todo, una formulación superior a base de aceites.\n\nEl secreto del éxito radicó en la fijación. Al prescindir del alcohol y apostar por concentrados de óleo de alta pureza, las fragancias distribuidas por Mitise no se evaporan rápidamente; penetran en la piel e interactúan con el calor corporal para ofrecer una durabilidad extraordinaria durante todo el día. El cliente descubrió que podía llevar la misma presencia, elegancia y rastro distintivo de una marca de alta gama, pero a un precio justo y accesible.\n\nHoy, esa misma filosofía cruza el Atlántico para desembarcar en el mercado español. Mitise se presenta en España como el puente directo hacia las mejores inspiraciones en aceite del mundo: un espacio donde la altísima fijación, el rendimiento real y la honestidad en el precio se unen para redefinir la forma en que las personas disfrutan de su perfume diario.`
+            modalStory: `<p>A mediados de 2011 en Puerto Rico, Mitise es bautizada bajo el concepto revelador de <strong>Mi Tienda Secreta</strong>. nació tras identificar una gran verdad del mercado: la mayoría de las personas paga sumas exorbitantes no por la esencia en sí, sino por la marca, el frasco de diseño y la publicidad, recibiendo a cambio fórmulas diluidas en alcohol que se evaporaban al cabo de unas horas.</p>\n\n<p>Frente a esta realidad, la propuesta no fue crear fragancias desde cero, sino democratizar el acceso al lujo mediante la curaduría y distribución de las mejores equivalencias olfativas. Mitise se enfocó en rastrear y seleccionar meticulosamente las mejores inspiraciones de los perfumes más codiciados del mundo, garantizando la más alta fidelidad y, sobre todo, una formulación superior a base de aceites.</p>\n\n<p>El secreto del éxito radicó en la fijación. Al prescindir del alcohol y apostar por concentrados de óleo de alta pureza, las fragancias distribuidas por Mitise no se evaporan rápidamente; penetran en la piel e interactúan con el calor corporal para ofrecer una durabilidad extraordinaria durante todo el día. El cliente descubrió que podía llevar la misma presencia, elegancia y rastro distintivo de una marca de alta gama, pero a un precio justo y accesible.</p>\n\n<p>Ese concepto de compra inteligente convirtió a la tienda en un secreto imposible de guardar. La marca dio el salto a Miami, posicionándose en el mercado estadounidense como la alternativa definitiva para quienes buscan la máxima calidad olfativa sin pagar sobreprecios innecesarios.</p>\n\n<p>Hoy, esa misma filosofía cruza el Atlántico para desembarcar en el mercado español. Mitise se presenta en España como el puente directo hacia las mejores inspiraciones en aceite del mundo: un espacio donde la altísima fijación, el rendimiento real y la honestidad en el precio se unen para redefinir la forma en que las personas disfrutan de su perfume diario.</p>`
         },
         contactLinks: {
             instagram: "https://www.instagram.com/mitisefragrance/",
@@ -100,10 +100,14 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const storyBody = document.getElementById('story-modal-body-display');
         if(storyBody) {
-            storyBody.innerHTML = siteData.about.modalStory
-                .split('\n\n')
-                .map(para => `<p>${para.trim()}</p>`)
-                .join('');
+            let storyHtml = siteData.about.modalStory;
+            if(!storyHtml.includes('<p>')) {
+                storyHtml = storyHtml
+                    .split(/\n\s*\n/)
+                    .map(para => `<p>${para.trim()}</p>`)
+                    .join('');
+            }
+            storyBody.innerHTML = storyHtml;
         }
 
         // Redes
@@ -188,27 +192,16 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.innerHTML = config.map(item => {
             let url = links[item.key] && links[item.key].trim() !== '' ? links[item.key].trim() : item.defaultUrl;
 
-            // --- AUTO-CORRECCIÓN INTELIGENTE DE ENLACES ---
-
-            // 1. TikTok
             if (item.key === 'tiktok' && url !== '#') {
-                if (url.startsWith('@')) {
-                    url = `https://www.tiktok.com/${url}`;
-                } else if (!url.startsWith('http')) {
-                    url = `https://www.tiktok.com/@${url}`;
-                }
+                if (url.startsWith('@')) url = `https://www.tiktok.com/${url}`;
+                else if (!url.startsWith('http')) url = `https://www.tiktok.com/@${url}`;
             }
 
-            // 2. Instagram
             if (item.key === 'instagram' && url !== '#') {
-                if (url.startsWith('@')) {
-                    url = `https://www.instagram.com/${url.replace('@', '')}/`;
-                } else if (!url.startsWith('http')) {
-                    url = `https://www.instagram.com/${url}/`;
-                }
+                if (url.startsWith('@')) url = `https://www.instagram.com/${url.replace('@', '')}/`;
+                else if (!url.startsWith('http')) url = `https://www.instagram.com/${url}/`;
             }
 
-            // 3. Gmail
             if (item.key === 'gmail') {
                 const cleanEmail = url.replace('mailto:', '').replace('https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=', '').trim();
                 if (isMobile) {
@@ -218,14 +211,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // 4. WhatsApp / Telegram
-            if ((item.key === 'whatsapp' || item.key === 'telegram') && url !== '#') {
-                if (!url.startsWith('http')) {
-                    url = `https://${url}`;
-                }
-            }
-
-            // Corrección general si falta https://
             if (url !== '#' && !url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('mailto:')) {
                 url = `https://${url}`;
             }
@@ -443,7 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
-    // 5. MODALES INTERACTIVOS (NOSOTROS & CONTACTO)
+    // 5. MODALES INTERACTIVOS
     // ==========================================
     const storyModal = document.getElementById('story-modal');
     const contactModal = document.getElementById('contact-modal');
