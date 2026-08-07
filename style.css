@@ -69,7 +69,7 @@ a {
 }
 
 /* ==========================================
-   2. HEADER PRINCIPAL Y LOGO DESTACADO
+   2. HEADER PRINCIPAL Y LOGO
    ========================================== */
 #main-header {
     position: sticky;
@@ -91,7 +91,6 @@ a {
     justify-content: space-between;
 }
 
-/* --- ESTILOS MEJORADOS DEL LOGO --- */
 .logo-area {
     display: flex;
     align-items: center;
@@ -99,21 +98,18 @@ a {
 }
 
 .logo-img {
-    max-height: 72px; /* Mayor tamaño para impacto visual */
+    max-height: 72px;
     width: auto;
     object-fit: contain;
-    /* Halo dorado elegante detrás del logo */
     filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4));
     transition: var(--transition);
 }
 
 .logo-img:hover {
-    /* Intensifica el halo y da un toque brillante al pasar el cursor */
     filter: drop-shadow(0 0 18px rgba(212, 175, 55, 0.75)) brightness(1.1);
     transform: scale(1.05);
 }
 
-/* Enlaces del Menú */
 .nav-menu {
     display: flex;
     list-style: none;
@@ -151,7 +147,6 @@ a {
     width: 100%;
 }
 
-/* Iconos Derecha */
 .header-icons {
     display: flex;
     align-items: center;
@@ -436,19 +431,12 @@ a {
 }
 
 /* ==========================================
-   5. SECCIÓN SOBRE NOSOTROS
+   5. SECCIÓN SOBRE NOSOTROS (NARRATIVA Y STORYTELLING)
    ========================================== */
 .bg-dark-soft {
     background-color: var(--bg-dark-soft);
-    border-top: 1px solid rgba(212, 175, 55, 0.1);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-}
-
-.split-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
-    align-items: center;
+    border-top: 1px solid rgba(212, 175, 55, 0.15);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
 }
 
 .gold-subtitle {
@@ -457,38 +445,125 @@ a {
     text-transform: uppercase;
     letter-spacing: 2.5px;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     display: block;
 }
 
-.section-title-left {
+/* Cita Destacada */
+.story-quote-box {
+    max-width: 900px;
+    margin: 0 auto 50px auto;
+    padding: 30px 40px;
+    background: linear-gradient(135deg, rgba(20,20,20,0.8), rgba(11,11,11,0.95));
+    border-left: 3px solid var(--gold-primary);
+    border-right: 3px solid var(--gold-primary);
+    border-radius: 6px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    text-align: center;
+}
+
+.story-quote {
     font-family: var(--font-title);
-    font-size: 2.2rem;
-    color: var(--text-light);
-    margin-bottom: 20px;
-    line-height: 1.2;
+    font-size: 1.35rem;
+    font-style: italic;
+    color: var(--gold-light);
+    line-height: 1.6;
 }
 
-.split-text p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    line-height: 1.8;
+/* Tarjetas de Capítulos */
+.story-timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
 }
 
-.about-img-frame {
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    padding: 15px;
+.timeline-card {
+    background-color: var(--bg-dark-card);
+    border: 1px solid rgba(212, 175, 55, 0.2);
     border-radius: 8px;
-    background-color: var(--bg-black);
+    padding: 30px 25px;
+    transition: var(--transition);
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
 }
 
-.about-img {
-    max-width: 100%;
-    max-height: 250px;
-    object-fit: contain;
+.timeline-card:hover {
+    border-color: var(--gold-primary);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.15);
+}
+
+.timeline-badge {
+    align-self: flex-start;
+    background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+    color: #000;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.timeline-title {
+    font-family: var(--font-title);
+    font-size: 1.4rem;
+    color: var(--text-light);
+    margin-bottom: 15px;
+}
+
+.timeline-card p {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.75;
+    margin-bottom: 12px;
+}
+
+.timeline-card p strong {
+    color: var(--gold-light);
+}
+
+/* Pilares de Marca */
+.story-pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    text-align: center;
+    border-top: 1px dashed rgba(212, 175, 55, 0.25);
+    padding-top: 50px;
+}
+
+.pillar-box {
+    background-color: rgba(20, 20, 20, 0.6);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    padding: 25px 20px;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.pillar-box:hover {
+    border-color: var(--gold-primary);
+    background-color: var(--bg-dark-card);
+}
+
+.pillar-icon {
+    font-size: 2.2rem;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.pillar-box h4 {
+    font-family: var(--font-title);
+    font-size: 1.1rem;
+    color: var(--gold-light);
+    margin-bottom: 8px;
+}
+
+.pillar-box p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
 }
 
 /* ==========================================
@@ -529,6 +604,7 @@ footer {
 @media (max-width: 900px) {
     .nav-menu { display: none; }
     .slide-title { font-size: 2.5rem; }
-    .logo-img { max-height: 52px; } /* Tamaño adaptado para móviles */
-    .split-layout { grid-template-columns: 1fr; gap: 30px; }
+    .logo-img { max-height: 52px; }
+    .story-quote-box { padding: 20px; }
+    .story-quote { font-size: 1.15rem; }
 }
