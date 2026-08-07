@@ -13,10 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => {
             console.error('Error:', error);
-            productsContainer.innerHTML = '<p style="text-align:center; color: var(--gold-light);">Cargando catálogo...</p>';
+            if(productsContainer) {
+                productsContainer.innerHTML = '<p style="text-align:center; color: var(--gold-light);">Cargando catálogo...</p>';
+            }
         });
 
     function renderProducts(products) {
+        if(!productsContainer) return;
         productsContainer.innerHTML = '';
         products.forEach(product => {
             const card = document.createElement('div');
@@ -54,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function moveSlide(direction) {
+        if(slides.length === 0) return;
         currentSlide += direction;
         if (currentSlide >= slides.length) currentSlide = 0;
         if (currentSlide < 0) currentSlide = slides.length - 1;
@@ -65,14 +69,64 @@ document.addEventListener('DOMContentLoaded', () => {
         nextBtn.addEventListener('click', () => moveSlide(1));
     }
 
-    // Auto-play del slider cada 5 segundos
     setInterval(() => {
         moveSlide(1);
     }, 5000);
 
+    // 3. LÓGICA DE APERTURA/CIERRE DEL MODAL DE HISTORIA
+    const storyModal = document.getElementById('story-modal');
+    const navAbout = document.getElementById('nav-about');
+    const btnReadStory = document.getElementById('btn-read-story');
+    const closeStoryModal = document.getElementById('close-story-modal');
+    const allNavLinks = document.querySelectorAll('.nav-link');
+
+    function openModal() {
+        if(storyModal) storyModal.classList.add('active');
+    }
+
+    function closeModal() {
+        if(storyModal) storyModal.classList.remove('active');
+    }
+
+    // Eventos para abrir el modal
+    if(navAbout) {
+        navAbout.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal();
+        });
+    }
+
+    if(btnReadStory) {
+        btnReadStory.addEventListener('click', openModal);
+    }
+
+    // Evento para cerrar al hacer clic en la "X"
+    if(closeStoryModal) {
+        closeStoryModal.addEventListener('click', closeModal);
+    }
+
+    // Evento para cerrar si hace clic fuera del contenido del modal
+    if(storyModal) {
+        storyModal.addEventListener('click', (e) => {
+            if(e.target === storyModal) closeModal();
+        });
+    }
+
+    // Cerrar si presiona la tecla Escape (ESC)
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+    });
+
+    // Cerrar si hace clic en CUALQUIER otra sección / enlace del menú
+    allNavLinks.forEach(link => {
+        if(link !== navAbout) {
+            link.addEventListener('click', closeModal);
+        }
+    });
+
 });
 
-// 3. LÓGICA DEL CARRITO DE COMPRAS (Global)
+// 4. LÓGICA DEL CARRITO DE COMPRAS (Global)
 let itemCount = 0;
 let totalPrice = 0;
 
@@ -83,6 +137,5 @@ function addToCart(name, price) {
     document.getElementById('cart-count').innerText = itemCount;
     document.getElementById('cart-price').innerText = `$${totalPrice.toFixed(2)}`;
     
-    // Alerta estilizada
     console.log(`Producto añadido: ${name} ($${price})`);
 }
