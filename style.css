@@ -417,3 +417,190 @@
         flex-direction: column; /* Botones apilados verticalmente en móviles */
     }
 }
+
+/* ==========================================================================
+   4. SECCIÓN SOBRE NOSOTROS (SPLIT LAYOUT)
+   ========================================================================== */
+.split-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.split-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.gold-subtitle {
+    color: var(--gold-primary);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.split-text h2 {
+    font-family: var(--font-title);
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    color: var(--text-light);
+    line-height: 1.25;
+    margin-bottom: 25px;
+    font-weight: 400;
+}
+
+.split-text p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+/* ==========================================================================
+   5. SECCIÓN REDES SOCIALES (SOCIAL FEED GRID)
+   ========================================================================== */
+.social-feed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.social-card {
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    transition: var(--transition-smooth);
+}
+
+.social-card:hover {
+    border-color: var(--gold-primary);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.15);
+}
+
+.social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+/* ==========================================================================
+   6. SECCIÓN CONTACTO (FORMULARIO MINIMALISTA)
+   ========================================================================== */
+.small-container {
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    background-color: var(--bg-black);
+    padding: 40px;
+    border-radius: 6px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+}
+
+.form-group label {
+    font-size: 0.8rem;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 3px;
+    padding: 14px 18px;
+    color: var(--text-light);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    transition: var(--transition-smooth);
+}
+
+/* Efecto Dorado al Enfocar los Campos de Texto */
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--gold-primary);
+    background-color: rgba(212, 175, 55, 0.03);
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
+}
+
+.btn-full {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* ==========================================================================
+   7. FOOTER (PIE DE PÁGINA)
+   ========================================================================== */
+#main-footer {
+    background-color: #080808;
+    border-top: 1px solid rgba(212, 175, 55, 0.15);
+    padding: 40px 0;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.legal-links {
+    display: flex;
+    gap: 20px;
+}
+
+.legal-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+
+.legal-links a:hover {
+    color: var(--gold-primary);
+}
+
+/* ==========================================================================
+   RESPONSIVO PARA FASE 4
+   ========================================================================== */
+@media (max-width: 850px) {
+    .split-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .contact-form {
+        padding: 25px 20px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}
