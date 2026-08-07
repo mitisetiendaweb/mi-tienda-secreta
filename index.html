@@ -29,38 +29,38 @@
         </div>
     </div>
 
-    <!-- 2. HEADER PRINCIPAL -->
+    <!-- 2. HEADER PRINCIPAL ORDENADO -->
     <header id="main-header">
         <div class="header-container">
-            <!-- Logo Oficial -->
+            <!-- Logo Oficial (Extremo Izquierdo) -->
             <a href="#" class="logo-area">
                 <img src="IMG/LOGO%20FN.png" alt="Logo Mitise" class="logo-img" id="main-logo-img">
             </a>
 
-            <!-- Botón Menú Hamburguesa Móvil -->
-            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menú">☰</button>
-
-            <!-- Menú Central -->
+            <!-- Menú Central (Escritorio + Drawer Móvil) -->
             <ul class="nav-menu" id="nav-menu">
                 <li><a href="#catalogo" class="nav-link">Perfumería</a></li>
                 <li><a href="#sobre-nosotros" class="nav-link" id="nav-about">Sobre Nosotros</a></li>
                 <li><a href="#contacto" class="nav-link" id="nav-contact">Contacto</a></li>
             </ul>
 
-            <!-- Iconos de Acción para Clientes -->
-            <div class="header-icons">
+            <!-- Acciones y Menú Agrupados (Extremo Derecho) -->
+            <div class="header-right-actions">
                 <button class="icon-btn" title="Buscar">🔍</button>
-                <button class="icon-btn" title="Favoritos">🖤</button>
+                <button class="icon-btn hide-mobile" title="Favoritos">🖤</button>
                 <button class="icon-btn" title="Carrito">
                     🛒
                     <span class="cart-badge" id="cart-count">0</span>
                 </button>
-                <span class="cart-total-price" id="cart-price">$0.00</span>
+                <span class="cart-total-price hide-mobile" id="cart-price">$0.00</span>
+                
+                <!-- Botón Hamburguesa al final -->
+                <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menú">☰</button>
             </div>
         </div>
     </header>
 
-    <!-- 3. BANNER SLIDER PRINCIPAL DINÁMICO -->
+    <!-- 3. BANNER SLIDER PRINCIPAL -->
     <section class="hero-slider" id="hero-slider-container">
         <button class="slider-arrow arrow-left" id="prevSlide">&#10094;</button>
         <button class="slider-arrow arrow-right" id="nextSlide">&#10095;</button>
@@ -315,11 +315,10 @@
         <span>💬</span> ¡Hola!
     </a>
 
-    <!-- 11. FOOTER CON BOTÓN DE MI CUENTA DISCRETO -->
+    <!-- 11. FOOTER CON BOTÓN DISCRETO MI CUENTA -->
     <footer id="contacto">
         <div class="footer-container">
             <p>&copy; 2026 Mitise - Luxury Fragrance. Todos los derechos reservados.</p>
-            <!-- Botón discreto en gris oscuro en la parte inferior derecha -->
             <button class="footer-admin-btn" id="btn-login-trigger" title="Acceso Administrativo">Mi Cuenta</button>
         </div>
     </footer>
