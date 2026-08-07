@@ -293,11 +293,11 @@ a {
 }
 
 /* ==========================================
-   4. CATÁLOGO DE PRODUCTOS (8 POR FILA EN ESCRITORIO / 3 EN MÓVIL)
+   4. CATÁLOGO DE PRODUCTOS (8 ESCRITORIO / 3 MÓVIL)
    ========================================== */
 .section-container {
     width: 100%;
-    max-width: 1600px; /* Ampliado para dar cabida a los 8 productos */
+    max-width: 1600px;
     margin: 0 auto;
     padding: 50px 15px;
 }
@@ -321,10 +321,9 @@ a {
     margin: 0 auto;
 }
 
-/* --- GRILLA PRINCIPAL: 8 COLUMNAS EN ESCRITORIO --- */
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(8, 1fr); /* 8 Productos por fila */
+    grid-template-columns: repeat(8, 1fr);
     gap: 12px;
     width: 100%;
 }
@@ -344,10 +343,8 @@ a {
 .product-card:hover {
     border-color: var(--gold-primary);
     transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
 }
 
-/* Imagen del Producto para Ajuste de 8 Columnas */
 .product-img-box {
     height: 140px;
     width: 100%;
@@ -475,7 +472,7 @@ a {
 }
 
 /* ==========================================
-   6. MODALES Y CONTACTO
+   6. MODALES
    ========================================== */
 .story-modal-backdrop,
 .fullscreen-modal-backdrop {
@@ -574,7 +571,7 @@ a {
     width: auto;
 }
 
-/* Editor & Login */
+/* Login y Editor Dashboard */
 .login-card {
     background: #141414;
     border: 1px solid var(--gold-primary);
@@ -702,10 +699,50 @@ a {
 }
 
 /* ==========================================
-   7. REGLAS RESPONSIVAS (TABLETS & MÓVILES)
+   7. FOOTER CON BOTÓN DISCRETO "MI CUENTA"
    ========================================== */
+footer {
+    background-color: #050505;
+    border-top: 1px solid rgba(212, 175, 55, 0.15);
+    padding: 25px 20px;
+    color: var(--text-muted);
+}
 
-/* Tablets / Pantallas Medianas (5 por fila) */
+.footer-container {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+footer p {
+    font-size: 0.8rem;
+}
+
+/* Botón Mi Cuenta Discreto en Gris Oscuro (Pasa Desapercibido) */
+.footer-admin-btn {
+    background: transparent;
+    border: none;
+    color: #383838; /* Gris oscuro sutil que se mimetiza con el fondo */
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: var(--font-body);
+    padding: 2px 6px;
+    letter-spacing: 0.5px;
+}
+
+.footer-admin-btn:hover {
+    color: #555555;
+}
+
+/* ==========================================
+   8. MEDIA QUERIES RESPONSIVAS
+   ========================================== */
 @media (max-width: 1200px) {
     .products-grid {
         grid-template-columns: repeat(5, 1fr);
@@ -751,18 +788,6 @@ a {
         min-height: 400px;
     }
 
-    .slide-content {
-        padding: 0 15px;
-    }
-
-    .slide-title {
-        font-size: 1.9rem;
-    }
-
-    .slide-desc {
-        font-size: 0.88rem;
-    }
-
     .split-layout {
         grid-template-columns: 1fr;
         gap: 25px;
@@ -785,19 +810,18 @@ a {
     }
 }
 
-/* --- MÓVILES / SMARTPHONES: 3 PRODUCTOS POR FILA --- */
 @media (max-width: 768px) {
     .section-container {
-        padding: 30px 8px; /* Aprovechamiento máximo del ancho del móvil */
+        padding: 30px 8px;
     }
 
     .products-grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 Productos por fila en teléfonos */
+        grid-template-columns: repeat(3, 1fr); /* 3 Productos por fila en móviles */
         gap: 6px;
     }
 
     .product-img-box {
-        height: 110px; /* Imagen compacta proporcional */
+        height: 110px;
     }
 
     .product-details {
@@ -806,37 +830,29 @@ a {
 
     .product-brand {
         font-size: 0.52rem;
-        letter-spacing: 0.5px;
-        margin-bottom: 2px;
     }
 
     .product-name {
         font-size: 0.72rem;
-        margin-bottom: 3px;
-        line-height: 1.1;
     }
 
     .product-price {
         font-size: 0.75rem;
-        margin-bottom: 5px;
     }
 
     .btn-add-cart {
         padding: 5px 2px;
         font-size: 0.58rem;
-        letter-spacing: 0;
     }
 
-    .header-container {
-        padding: 8px 10px;
-    }
-
-    .logo-img {
-        max-height: 45px;
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
     }
 }
 
-/* Botón WhatsApp */
+/* Botón WhatsApp Flotante */
 .whatsapp-btn {
     position: fixed;
     bottom: 20px;
@@ -849,13 +865,4 @@ a {
     font-size: 0.85rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     z-index: 999;
-}
-
-footer {
-    background-color: #050505;
-    border-top: 1px solid rgba(212, 175, 55, 0.2);
-    padding: 30px 15px;
-    text-align: center;
-    font-size: 0.8rem;
-    color: var(--text-muted);
 }
