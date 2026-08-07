@@ -18,12 +18,12 @@
     <!-- 1. BARRA SUPERIOR DE ANUNCIOS -->
     <div class="top-announcement-bar">
         <div class="ticker-track">
-            <span class="ticker-item">👑 LUXURY FRAGRANCE 👑</span>
+            <span class="ticker-item">⚜️ LUXURY FRAGRANCE ⚜️</span>
             <span class="ticker-item">💎 PERFUMERÍA 100% ORIGINAL Y DE LUJO 💎</span>
             <span class="ticker-item">👑 LUXURY FRAGRANCE 👑</span>
+            <span class="ticker-item">⚜️ LUXURY FRAGRANCE ⚜️</span>
             <span class="ticker-item">💎 PERFUMERÍA 100% ORIGINAL Y DE LUJO 💎</span>
             <span class="ticker-item">👑 LUXURY FRAGRANCE 👑</span>
-            <span class="ticker-item">💎 PERFUMERÍA 100% ORIGINAL Y DE LUJO 💎</span>
         </div>
     </div>
 
@@ -38,7 +38,6 @@
             <!-- Menú Central -->
             <ul class="nav-menu">
                 <li><a href="#catalogo" class="nav-link">Perfumería</a></li>
-                <li><a href="#experiencia" class="nav-link">Experiencia</a></li>
                 <li><a href="#sobre-nosotros" class="nav-link" id="nav-about">Sobre Nosotros</a></li>
                 <li><a href="#contacto" class="nav-link">Contacto</a></li>
             </ul>
@@ -57,12 +56,21 @@
         </div>
     </header>
 
-    <!-- 3. BANNER SLIDER PRINCIPAL -->
+    <!-- 3. BANNER SLIDER PRINCIPAL CON VIDEO DE FONDO -->
     <section class="hero-slider">
         <button class="slider-arrow arrow-left" id="prevSlide">&#10094;</button>
         <button class="slider-arrow arrow-right" id="nextSlide">&#10095;</button>
 
+        <!-- Slide 1: VIDEO BHARARA DE FONDO -->
         <div class="slide slide-1 active">
+            <video autoplay muted loop playsinline class="hero-bg-video">
+                <source src="VID/3BHARARA.mp4" type="video/mp4">
+                <source src="VID/3bharara.mp4" type="video/mp4">
+            </video>
+
+            <!-- Capa Oscura Traslúcida para legibilidad -->
+            <div class="slide-overlay"></div>
+
             <div class="slide-content">
                 <p class="slide-tag">Colección Exclusiva 2026</p>
                 <h1 class="slide-title">Fragancias que Dejan Huella</h1>
@@ -71,6 +79,7 @@
             </div>
         </div>
 
+        <!-- Slide 2 -->
         <div class="slide slide-2">
             <div class="slide-content">
                 <p class="slide-tag">Edición Especial</p>
@@ -91,24 +100,7 @@
         <div class="products-grid" id="products-container"></div>
     </section>
 
-    <!-- 5. SECCIÓN DE VIDEO CON RUTA CORREGIDA -->
-    <section id="experiencia" class="section-container video-section">
-        <div class="section-header">
-            <span class="gold-subtitle">Spot Exclusivo</span>
-            <h2 class="section-title">Experiencia Bharara</h2>
-            <div class="gold-divider"></div>
-        </div>
-
-        <div class="video-frame">
-            <video autoplay muted loop playsinline controls class="showcase-video">
-                <source src="VID/3BHARARA.mp4" type="video/mp4">
-                <source src="VID/3bharara.mp4" type="video/mp4">
-                Tu navegador no soporta la reproducción de video HTML5.
-            </video>
-        </div>
-    </section>
-
-    <!-- 6. SECCIÓN SOBRE NOSOTROS -->
+    <!-- 5. SECCIÓN SOBRE NOSOTROS -->
     <section id="sobre-nosotros" class="bg-dark-soft">
         <div class="section-container split-layout">
             <div class="split-text">
@@ -126,7 +118,7 @@
         </div>
     </section>
 
-    <!-- 7. MODAL INTERACTIVO DE HISTORIA MITISE -->
+    <!-- 6. MODAL INTERACTIVO DE HISTORIA MITISE -->
     <div id="story-modal" class="story-modal-backdrop">
         <div class="story-modal-card">
             <button class="story-modal-close" id="close-story-modal" aria-label="Cerrar">&times;</button>
@@ -149,12 +141,12 @@
         </div>
     </div>
 
-    <!-- 8. BOTÓN FLOTANTE DE WHATSAPP -->
+    <!-- 7. BOTÓN FLOTANTE DE WHATSAPP -->
     <a href="https://wa.me/1234567890?text=Hola,%20quisiera%20informaci%C3%B3n%20sobre%20sus%20perfumes" target="_blank" class="whatsapp-btn">
         <span>💬</span> ¡Hola!
     </a>
 
-    <!-- 9. FOOTER -->
+    <!-- 8. FOOTER -->
     <footer id="contacto">
         <p>&copy; 2026 Haute Parfumerie - La Casa del Perfume. Todos los derechos reservados.</p>
     </footer>
