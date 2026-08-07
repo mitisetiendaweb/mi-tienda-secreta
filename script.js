@@ -192,16 +192,19 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.innerHTML = config.map(item => {
             let url = links[item.key] && links[item.key].trim() !== '' ? links[item.key].trim() : item.defaultUrl;
 
+            // Auto-corrección para TikTok
             if (item.key === 'tiktok' && url !== '#') {
                 if (url.startsWith('@')) url = `https://www.tiktok.com/${url}`;
                 else if (!url.startsWith('http')) url = `https://www.tiktok.com/@${url}`;
             }
 
+            // Auto-corrección para Instagram
             if (item.key === 'instagram' && url !== '#') {
                 if (url.startsWith('@')) url = `https://www.instagram.com/${url.replace('@', '')}/`;
                 else if (!url.startsWith('http')) url = `https://www.instagram.com/${url}/`;
             }
 
+            // Auto-corrección para Gmail
             if (item.key === 'gmail') {
                 const cleanEmail = url.replace('mailto:', '').replace('https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=', '').trim();
                 if (isMobile) {
@@ -211,14 +214,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
+            // Auto-corrección para otras URLs
             if (url !== '#' && !url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('mailto:')) {
                 url = `https://${url}`;
             }
 
-            const isTarget = url !== '#' && !url.startsWith('mailto:');
-            
+            // En móviles, NO usamos target="_blank" para apps nativas (TikTok, Instagram, Telegram, WhatsApp)
+            // de modo que el sistema operativo (Android/iOS) abra la Aplicación Nativa instalada directamente.
+            const isApp = ['tiktok', 'instagram', 'telegram', 'whatsapp'].includes(item.key);
+            const useTargetBlank = url !== '#' && !url.startsWith('mailto:') && (!isMobile || !isApp);
+
             return `
-                <a href="${url}" ${isTarget ? 'target="_blank" rel="noopener noreferrer"' : 'onclick="event.preventDefault()"'} class="btn-social-gold">
+                <a href="${url}" ${useTargetBlank ? 'target="_blank" rel="noopener noreferrer"' : ''} class="btn-social-gold">
                     <img src="${item.icon}" alt="${item.label}" class="btn-social-icon" onerror="this.style.display='none'">
                     <span>${item.label}</span>
                 </a>
@@ -446,7 +453,6 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
 
-            // Registra un estado en el historial para capturar el botón "ATRÁS" del teléfono
             if (!modalPushedState) {
                 history.pushState({ modalActive: true }, '');
                 modalPushedState = true;
@@ -472,11 +478,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Captura el botón físico/gesto "ATRÁS" del teléfono celular
+    // Captura el botón físico o gesto "ATRÁS" del teléfono
     window.addEventListener('popstate', (e) => {
         if (modalPushedState) {
             modalPushedState = false;
-            closeAllModals(false); // Cierra la ventana emergente y mantiene al usuario en la página
+            closeAllModals(false);
         }
     });
 
@@ -487,7 +493,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if(closeStoryModal) closeStoryModal.onclick = () => closeAllModals(true);
     if(closeContactModal) closeContactModal.onclick = () => closeAllModals(true);
 
-    // Cerrar al hacer clic fuera del recuadro
     window.onclick = (e) => {
         if(e.target === storyModal || e.target === contactModal || e.target === loginModal) {
             closeAllModals(true);
