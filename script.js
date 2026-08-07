@@ -33,15 +33,15 @@ document.addEventListener('DOMContentLoaded', () => {
             subtitle: "Pasión por el Aroma Real",
             title: "La Selección Perfecta Detrás de Cada Gota",
             desc: "Curamos y distribuimos las mejores inspiraciones olfativas del mundo, seleccionadas meticulosamente por su fidelidad y formuladas a base de aceites concentrados. Disfruta de una fijación extraordinaria y máxima duración en tu piel sin pagar sobreprecios.",
-            modalStory: `A mediados de 2011 en Puerto Rico, Mitise es bautizada bajo el concepto revelador de Mi Tienda Secreta. nació tras identificar una gran verdad del mercado: la mayoría de las personas paga sumas exorbitantes no por la esencia en sí, sino por la marca, el frasco de diseño y la publicidad, recibiendo a cambio fórmulas diluidas en alcohol que se evaporaban al cabo de unas horas.\n\nFrente a esta realidad, la propuesta no fue crear fragancias desde cero, sino democratizar el acceso al lujo mediante la curaduría y distribución de las mejores equivalencias olfativas. Mitise se enfocó en rastrear y seleccionar meticulosamente las mejores inspiraciones de los perfumes más codiciados del mundo, garantizando la más alta fidelidad y, sobre todo, una formulación superior a base de aceites.\n\nEl secreto del éxito radicó en la fijación. Al prescindir del alcohol y apostar por concentrados de óleo de alta pureza, las fragancias distribuidas por Mitise no se evaporan rápidamente; penetran en la piel e interactúan con el calor corporal para ofrecer una durabilidad extraordinaria durante todo el día. El cliente descubrió que podía llevar la misma presencia, elegancia y rastro distintivo de una marca de alta gama, pero a un precio justo y accesible.\n\nEse concepto de compra inteligente convirtió a la tienda en un secreto imposible de guardar. La marca dio el salto a Miami, posicionándose en el mercado estadounidense como la alternativa definitiva para quienes buscan la máxima calidad olfativa sin pagar sobreprecios innecesarios.\n\nHoy, esa misma filosofía cruza el Atlántico para desembarcar en el mercado español. Mitise se presenta en España como el puente directo hacia las mejores inspiraciones en aceite del mundo: un espacio donde la altísima fijación, el rendimiento real y la honestidad en el precio se unen para redefinir la forma en que las personas disfrutan de su perfume diario.`
+            modalStory: `A mediados de 2011 en Puerto Rico, Mitise es bautizada bajo el concepto revelador de Mi Tienda Secreta. nació tras identificar una gran verdad del mercado: la mayoría de las personas paga sumas exorbitantes no por la esencia en sí, sino por la marca, el frasco de diseño y la publicidad, recibiendo a cambio fórmulas diluidas en alcohol que se evaporaban al cabo de unas horas.\n\nFrente a esta realidad, la propuesta no fue crear fragancias desde cero, sino democratizar el acceso al lujo mediante la curaduría y distribución de las mejores equivalencias olfativas. Mitise se enfocó en rastrear y seleccionar meticulosamente las mejores inspiraciones de los perfumes más codiciados del mundo, garantizando la más alta fidelidad y, sobre todo, una formulación superior a base de aceites.\n\nEl secreto del éxito radicó en la fijación. Al prescindir del alcohol y apostar por concentrados de óleo de alta pureza, las fragancias distribuidas por Mitise no se evaporan rápidamente; penetran en la piel e interactúan con el calor corporal para ofrecer una durabilidad extraordinaria durante todo el día. El cliente descubrió que podía llevar la misma presencia, elegancia y rastro distintivo de una marca de alta gama, pero a un precio justo y accesible.\n\nHoy, esa misma filosofía cruza el Atlántico para desembarcar en el mercado español. Mitise se presenta en España como el puente directo hacia las mejores inspiraciones en aceite del mundo: un espacio donde la altísima fijación, el rendimiento real y la honestidad en el precio se unen para redefinir la forma en que las personas disfrutan de su perfume diario.`
         },
         contactLinks: {
             instagram: "https://www.instagram.com/mitisefragrance/",
             tiktok: "",
             facebook: "",
-            telegram: "",
-            gmail: "",
-            whatsapp: "https://wa.me/1234567890"
+            telegram: "https://t.me/+584242032510",
+            gmail: "mailto:mitisefragance@gmail.com",
+            whatsapp: "https://wa.me/+584242032510"
         }
     };
 
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tickerContainer = document.getElementById('ticker-track-container');
         if(tickerContainer) {
             const items = siteData.tickerText.split(',').map(item => `<span class="ticker-item">${item.trim()}</span>`).join('');
-            tickerContainer.innerHTML = items + items; // Duplicado para efecto fluido
+            tickerContainer.innerHTML = items + items;
         }
 
         // Logo
@@ -158,25 +158,42 @@ document.addEventListener('DOMContentLoaded', () => {
             { key: 'instagram', label: '@mitisefragrance', icon: 'IMG/INSTAGRAM.png', defaultUrl: 'https://www.instagram.com/mitisefragrance/' },
             { key: 'tiktok', label: 'TikTok', icon: 'IMG/TIKTOK.png', defaultUrl: '#' },
             { key: 'facebook', label: 'Facebook', icon: 'IMG/FACEBOOK.png', defaultUrl: '#' },
-            { key: 'telegram', label: 'Telegram', icon: 'IMG/TELEGREAM.png', defaultUrl: '#' },
-            { key: 'gmail', label: 'Gmail', icon: 'IMG/GMAIL.png', defaultUrl: '#' },
-            { key: 'whatsapp', label: 'WhatsApp', icon: 'IMG/WHATSAPP.png', defaultUrl: '#' }
+            { key: 'telegram', label: 'Telegram', icon: 'IMG/TELEGREAM.png', defaultUrl: 'https://t.me/+584242032510' },
+            { key: 'gmail', label: 'Gmail', icon: 'IMG/GMAIL.png', defaultUrl: 'mailto:mitisefragance@gmail.com' },
+            { key: 'whatsapp', label: 'WhatsApp', icon: 'IMG/WHATSAPP.png', defaultUrl: 'https://wa.me/+584242032510' }
         ];
 
         grid.innerHTML = config.map(item => {
-            const url = links[item.key] && links[item.key].trim() !== '' ? links[item.key] : item.defaultUrl;
-            const isTarget = url !== '#';
+            let url = links[item.key] && links[item.key].trim() !== '' ? links[item.key].trim() : item.defaultUrl;
+
+            // Auto-corrección inteligente para Gmail / Correo
+            if (item.key === 'gmail') {
+                if (url.includes('@') && !url.startsWith('http') && !url.startsWith('mailto:')) {
+                    url = `mailto:${url}`;
+                }
+            }
+
+            // Auto-corrección para URLs sin protocolo
+            if (url !== '#' && !url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('mailto:')) {
+                url = `https://${url}`;
+            }
+
+            const isTarget = url !== '#' && !url.startsWith('mailto:');
+            
             return `
-                <a href="${url}" ${isTarget ? 'target="_blank" rel="noopener noreferrer"' : 'onclick="event.preventDefault()"'} class="btn-social-gold">
+                <a href="${url}" ${isTarget ? 'target="_blank" rel="noopener noreferrer"' : ''} class="btn-social-gold">
                     <img src="${item.icon}" alt="${item.label}" class="btn-social-icon" onerror="this.style.display='none'">
                     <span>${item.label}</span>
                 </a>
             `;
         }).join('');
 
-        // Actualizar botón flotante de whatsapp si existe
+        // Actualizar botón flotante de whatsapp
         const floatWa = document.getElementById('floating-whatsapp-btn');
-        if(floatWa && links.whatsapp) floatWa.href = links.whatsapp;
+        if(floatWa) {
+            const waUrl = links.whatsapp && links.whatsapp.trim() !== '' ? links.whatsapp : 'https://wa.me/+584242032510';
+            floatWa.href = waUrl.startsWith('http') ? waUrl : `https://${waUrl}`;
+        }
     }
 
     // ==========================================
@@ -340,7 +357,14 @@ document.addEventListener('DOMContentLoaded', () => {
         siteData.contactLinks.tiktok = document.getElementById('link-tiktok').value;
         siteData.contactLinks.facebook = document.getElementById('link-facebook').value;
         siteData.contactLinks.telegram = document.getElementById('link-telegram').value;
-        siteData.contactLinks.gmail = document.getElementById('link-gmail').value;
+        
+        // Auto-formatear Gmail si se guarda solo la dirección
+        let inputGmail = document.getElementById('link-gmail').value.trim();
+        if(inputGmail.includes('@') && !inputGmail.startsWith('http') && !inputGmail.startsWith('mailto:')) {
+            inputGmail = 'mailto:' + inputGmail;
+        }
+        siteData.contactLinks.gmail = inputGmail;
+
         siteData.contactLinks.whatsapp = document.getElementById('link-whatsapp').value;
 
         saveSiteData();
@@ -371,7 +395,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('¡Producto añadido al catálogo con éxito!');
     });
 
-    // Cerrar sesión y cerrar editor
+    // Cerrar sesión
     document.getElementById('btn-logout-editor').addEventListener('click', () => {
         sessionStorage.removeItem('mitise_active_editor');
         editorPanel.classList.remove('active');
