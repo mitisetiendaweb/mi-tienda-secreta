@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <!-- Título Oficial de la Pestaña -->
     <title>Mitise | LUXURY FRAGRANCE</title>
@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <!-- 2. HEADER PRINCIPAL -->
+    <!-- 2. HEADER PRINCIPAL RESPONSIVO -->
     <header id="main-header">
         <div class="header-container">
             <!-- Logo Oficial -->
@@ -37,8 +37,11 @@
                 <img src="IMG/LOGO%20FN.png" alt="Logo Mitise" class="logo-img" id="main-logo-img">
             </a>
 
-            <!-- Menú Central -->
-            <ul class="nav-menu">
+            <!-- Botón Menú Hamburguesa para Móviles -->
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menú">☰</button>
+
+            <!-- Menú Central (Escritorio + Drawer Móvil) -->
+            <ul class="nav-menu" id="nav-menu">
                 <li><a href="#catalogo" class="nav-link">Perfumería</a></li>
                 <li><a href="#sobre-nosotros" class="nav-link" id="nav-about">Sobre Nosotros</a></li>
                 <li><a href="#contacto" class="nav-link" id="nav-contact">Contacto</a></li>
@@ -46,9 +49,7 @@
 
             <!-- Iconos de Acción -->
             <div class="header-icons">
-                <button class="icon-btn" title="Buscar">🔍</button>
                 <button class="icon-btn" id="btn-login-trigger" title="Mi Cuenta">👤</button>
-                <button class="icon-btn" title="Favoritos">🖤</button>
                 <button class="icon-btn" title="Carrito">
                     🛒
                     <span class="cart-badge" id="cart-count">0</span>
@@ -63,7 +64,6 @@
         <button class="slider-arrow arrow-left" id="prevSlide">&#10094;</button>
         <button class="slider-arrow arrow-right" id="nextSlide">&#10095;</button>
 
-        <!-- Slides generados dinámicamente -->
         <div id="slides-wrapper" style="width: 100%; height: 100%; position: relative;"></div>
     </section>
 
@@ -74,7 +74,6 @@
             <div class="gold-divider"></div>
         </div>
 
-        <!-- Contenedor para Subsecciones y Productos -->
         <div id="catalog-subsections-container"></div>
         <div class="products-grid" id="products-container"></div>
     </section>
@@ -108,9 +107,7 @@
                 <div class="gold-divider"></div>
             </div>
 
-            <div class="story-body" id="story-modal-body-display">
-                <!-- Se carga dinámicamente -->
-            </div>
+            <div class="story-body" id="story-modal-body-display"></div>
         </div>
     </div>
 
@@ -135,10 +132,7 @@
                     <p class="executive-quote">“Tu esencia. Tu poder. Tu firma.”</p>
                 </div>
 
-                <!-- Grilla de Botones de Redes Sociales -->
-                <div class="contact-buttons-grid" id="contact-links-grid">
-                    <!-- Dinámico -->
-                </div>
+                <div class="contact-buttons-grid" id="contact-links-grid"></div>
             </div>
         </div>
     </div>
@@ -174,114 +168,95 @@
             <div class="editor-top-bar">
                 <div>
                     <span class="gold-subtitle">SISTEMA CMS DE GESTIÓN</span>
-                    <h2 class="editor-title">Panel de Control Mitise (Rol: Editor - <span id="active-editor-name"></span>)</h2>
+                    <h2 class="editor-title">Panel de Control Mitise (<span id="active-editor-name"></span>)</h2>
                 </div>
                 <div class="editor-top-actions">
-                    <button class="btn-gold-small" id="btn-save-all">💾 Guardar Todos los Cambios</button>
+                    <button class="btn-gold-small" id="btn-save-all">💾 Guardar Cambios</button>
                     <button class="btn-outline-gold-small" id="btn-logout-editor">Cerrar Sesión</button>
                     <button class="story-modal-close-static" id="close-editor-panel">&times;</button>
                 </div>
             </div>
 
             <div class="editor-body-layout">
-                <!-- Pestañas del Editor -->
                 <div class="editor-tabs">
-                    <button class="editor-tab-btn active" data-tab="tab-ticker">📢 Anuncios (Ticker)</button>
-                    <button class="editor-tab-btn" data-tab="tab-logo">👑 Logo Oficial</button>
-                    <button class="editor-tab-btn" data-tab="tab-banners">🎬 Banners & Video</button>
-                    <button class="editor-tab-btn" data-tab="tab-catalog">🛍️ Catálogo & Productos</button>
-                    <button class="editor-tab-btn" data-tab="tab-nosotros">📖 Sobre Nosotros</button>
-                    <button class="editor-tab-btn" data-tab="tab-contact">📱 Redes & Contacto</button>
+                    <button class="editor-tab-btn active" data-tab="tab-ticker">📢 Anuncios</button>
+                    <button class="editor-tab-btn" data-tab="tab-logo">👑 Logo</button>
+                    <button class="editor-tab-btn" data-tab="tab-banners">🎬 Banners</button>
+                    <button class="editor-tab-btn" data-tab="tab-catalog">🛍️ Productos</button>
+                    <button class="editor-tab-btn" data-tab="tab-nosotros">📖 Nosotros</button>
+                    <button class="editor-tab-btn" data-tab="tab-contact">📱 Redes</button>
                 </div>
 
-                <!-- Contenido de las Pestañas -->
                 <div class="editor-content-area">
-                    
-                    <!-- TAB 1: TICKER -->
                     <div id="tab-ticker" class="tab-pane active">
                         <h3>Gestión del Ticker de Anuncios</h3>
                         <p class="editor-hint">Separa cada mensaje promocional con una coma (,).</p>
-
                         <div class="form-group-gold">
-                            <label>Mensajes Promocionales (Separados por coma):</label>
+                            <label>Mensajes Promocionales:</label>
                             <textarea id="edit-ticker-text" rows="4"></textarea>
                         </div>
                     </div>
 
-                    <!-- TAB 2: LOGO -->
                     <div id="tab-logo" class="tab-pane">
                         <h3>Gestión del Logo Principal</h3>
                         <div class="form-group-gold">
-                            <label>Ruta o URL de la Imagen del Logo (Ej: IMG/LOGO FN.png):</label>
+                            <label>Ruta de la Imagen del Logo:</label>
                             <input type="text" id="edit-logo-path">
                         </div>
                     </div>
 
-                    <!-- TAB 3: BANNERS -->
                     <div id="tab-banners" class="tab-pane">
-                        <h3>Banners Interactivos del Slider</h3>
-
+                        <h3>Banners del Slider</h3>
                         <div class="form-group-gold">
-                            <label>Banner 1 - Ruta del Video/Fondo (Ej: VID/3BHARARA.mp4):</label>
+                            <label>Banner 1 - Fondo:</label>
                             <input type="text" id="edit-banner1-bg">
                         </div>
-
                         <div class="form-group-gold">
-                            <label>Banner 2 - Ruta de la Imagen de Fondo (Ej: IMG/OFERTON.png):</label>
+                            <label>Banner 2 - Fondo:</label>
                             <input type="text" id="edit-banner2-bg">
                         </div>
-
                         <hr class="editor-divider">
-                        <h4>Añadir un Nuevo Banner al Slider</h4>
+                        <h4>Añadir Nuevo Banner</h4>
                         <div class="form-group-gold">
-                            <label>Etiqueta / Tag (Ej: Colección Especial):</label>
-                            <input type="text" id="new-banner-tag" placeholder="Ej: Nueva Colección">
+                            <label>Etiqueta / Tag:</label>
+                            <input type="text" id="new-banner-tag">
                         </div>
                         <div class="form-group-gold">
-                            <label>Título del Banner:</label>
-                            <input type="text" id="new-banner-title" placeholder="Ej: Esencias de Noche">
+                            <label>Título:</label>
+                            <input type="text" id="new-banner-title">
                         </div>
                         <div class="form-group-gold">
                             <label>Descripción:</label>
-                            <input type="text" id="new-banner-desc" placeholder="Ej: Fragancias intensas e inolvidables">
+                            <input type="text" id="new-banner-desc">
                         </div>
                         <div class="form-group-gold">
-                            <label>Ruta de Imagen o Video de Fondo (Ej: IMG/OFERTON.png o VID/3BHARARA.mp4):</label>
-                            <input type="text" id="new-banner-media" placeholder="Ej: IMG/banner3.jpg">
+                            <label>Fondo (Imagen/Video):</label>
+                            <input type="text" id="new-banner-media">
                         </div>
-                        <button class="btn-gold" id="btn-add-banner">+ Agregar Nuevo Banner</button>
+                        <button class="btn-gold" id="btn-add-banner">+ Agregar Banner</button>
                     </div>
 
-                    <!-- TAB 4: CATÁLOGO Y PRODUCTOS -->
                     <div id="tab-catalog" class="tab-pane">
-                        <h3>Añadir Subsección al Catálogo</h3>
-                        <div class="form-group-gold inline-form">
-                            <input type="text" id="new-subsection-name" placeholder="Ej: Perfumes Árabes / Aceites Concentrados">
-                            <button class="btn-gold" id="btn-add-subsection">+ Crear Subsección</button>
-                        </div>
-
-                        <hr class="editor-divider">
                         <h3>Añadir Nuevo Producto</h3>
                         <div class="form-group-gold">
-                            <label>Marca / Subtítulo:</label>
-                            <input type="text" id="new-prod-brand" placeholder="Ej: Lattafa / Mitise">
+                            <label>Marca:</label>
+                            <input type="text" id="new-prod-brand">
                         </div>
                         <div class="form-group-gold">
-                            <label>Nombre del Producto:</label>
-                            <input type="text" id="new-prod-name" placeholder="Ej: Bharara King Oil">
+                            <label>Nombre del Perfume:</label>
+                            <input type="text" id="new-prod-name">
                         </div>
                         <div class="form-group-gold">
                             <label>Precio ($ USD):</label>
-                            <input type="number" id="new-prod-price" placeholder="Ej: 95">
+                            <input type="number" id="new-prod-price">
                         </div>
                         <div class="form-group-gold">
-                            <label>Ruta de la Foto (Ej: IMG/producto1.jpg):</label>
-                            <input type="text" id="new-prod-img" placeholder="Ej: IMG/LOGO_ENTERO.png">
+                            <label>Ruta de la Foto:</label>
+                            <input type="text" id="new-prod-img">
                         </div>
-                        <button class="btn-gold" id="btn-add-product">+ Añadir Producto al Catálogo</button>
+                        <button class="btn-gold" id="btn-add-product">+ Añadir Producto</button>
                     </div>
 
-                    <!-- TAB 5: SOBRE NOSOTROS -->
                     <div id="tab-nosotros" class="tab-pane">
                         <h3>Editar Sección Sobre Nosotros</h3>
                         <div class="form-group-gold">
@@ -296,45 +271,39 @@
                             <label>Descripción Corta:</label>
                             <textarea id="edit-about-desc" rows="3"></textarea>
                         </div>
-                        
-                        <h4>Texto Completo del Modal (Historia de Mitise)</h4>
                         <div class="form-group-gold">
-                            <label>Párrafos (separa cada párrafo presionando Enter dos veces):</label>
+                            <label>Historia Completa (Modal):</label>
                             <textarea id="edit-story-modal-text" rows="8"></textarea>
                         </div>
                     </div>
 
-                    <!-- TAB 6: CONTACTO & REDES -->
                     <div id="tab-contact" class="tab-pane">
-                        <h3>Editar Enlaces y Direcciones de Contacto</h3>
-                        <p class="editor-hint">Ingresa las URL o enlaces completos para cada aplicación.</p>
-
+                        <h3>Enlaces de Contacto</h3>
                         <div class="form-group-gold">
                             <label>Instagram URL:</label>
-                            <input type="text" id="link-instagram" placeholder="https://www.instagram.com/mitisefragrance/">
+                            <input type="text" id="link-instagram">
                         </div>
                         <div class="form-group-gold">
                             <label>TikTok URL:</label>
-                            <input type="text" id="link-tiktok" placeholder="https://www.tiktok.com/@mitise">
+                            <input type="text" id="link-tiktok">
                         </div>
                         <div class="form-group-gold">
                             <label>Facebook URL:</label>
-                            <input type="text" id="link-facebook" placeholder="https://facebook.com/mitise">
+                            <input type="text" id="link-facebook">
                         </div>
                         <div class="form-group-gold">
                             <label>Telegram URL:</label>
-                            <input type="text" id="link-telegram" placeholder="https://t.me/mitise">
+                            <input type="text" id="link-telegram">
                         </div>
                         <div class="form-group-gold">
-                            <label>Gmail / Correo (Ej: mailto:contacto@mitise.com):</label>
-                            <input type="text" id="link-gmail" placeholder="mailto:info@mitise.com">
+                            <label>Gmail / Correo:</label>
+                            <input type="text" id="link-gmail">
                         </div>
                         <div class="form-group-gold">
-                            <label>WhatsApp URL (Ej: https://wa.me/1234567890):</label>
-                            <input type="text" id="link-whatsapp" placeholder="https://wa.me/1234567890">
+                            <label>WhatsApp URL:</label>
+                            <input type="text" id="link-whatsapp">
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
