@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         contactLinks: {
             instagram: "https://www.instagram.com/mitisefragrance/",
-            tiktok: "",
+            tiktok: "https://www.tiktok.com/@mitisefragance",
             facebook: "",
             telegram: "https://t.me/+584242032510",
             gmail: "mitisefragance@gmail.com",
@@ -173,13 +173,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const grid = document.getElementById('contact-links-grid');
         if(!grid) return;
 
-        // Detector Inteligente de Teléfono Móvil
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
         const links = siteData.contactLinks;
         const config = [
             { key: 'instagram', label: '@mitisefragrance', icon: 'IMG/INSTAGRAM.png', defaultUrl: 'https://www.instagram.com/mitisefragrance/' },
-            { key: 'tiktok', label: 'TikTok', icon: 'IMG/TIKTOK.png', defaultUrl: '#' },
+            { key: 'tiktok', label: 'TikTok', icon: 'IMG/TIKTOK.png', defaultUrl: 'https://www.tiktok.com/@mitisefragance' },
             { key: 'facebook', label: 'Facebook', icon: 'IMG/FACEBOOK.png', defaultUrl: '#' },
             { key: 'telegram', label: 'Telegram', icon: 'IMG/TELEGREAM.png', defaultUrl: 'https://t.me/+584242032510' },
             { key: 'gmail', label: 'Gmail', icon: 'IMG/GMAIL.png', defaultUrl: 'mitisefragance@gmail.com' },
@@ -189,31 +188,52 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.innerHTML = config.map(item => {
             let url = links[item.key] && links[item.key].trim() !== '' ? links[item.key].trim() : item.defaultUrl;
 
-            // LÓGICA DUAL INTELIGENTE PARA GMAIL
-            if (item.key === 'gmail') {
-                const cleanEmail = url.replace('mailto:', '')
-                                      .replace('https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=', '')
-                                      .trim();
+            // --- AUTO-CORRECCIÓN INTELIGENTE DE ENLACES ---
 
+            // 1. TikTok
+            if (item.key === 'tiktok' && url !== '#') {
+                if (url.startsWith('@')) {
+                    url = `https://www.tiktok.com/${url}`;
+                } else if (!url.startsWith('http')) {
+                    url = `https://www.tiktok.com/@${url}`;
+                }
+            }
+
+            // 2. Instagram
+            if (item.key === 'instagram' && url !== '#') {
+                if (url.startsWith('@')) {
+                    url = `https://www.instagram.com/${url.replace('@', '')}/`;
+                } else if (!url.startsWith('http')) {
+                    url = `https://www.instagram.com/${url}/`;
+                }
+            }
+
+            // 3. Gmail
+            if (item.key === 'gmail') {
+                const cleanEmail = url.replace('mailto:', '').replace('https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=', '').trim();
                 if (isMobile) {
-                    // En Teléfonos Móviles: Abre la App nativa de Gmail / Correo
                     url = `mailto:${cleanEmail}`;
                 } else {
-                    // En Computadoras: Abre Gmail Web en una nueva pestaña
                     url = `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=${cleanEmail}`;
                 }
             }
 
-            // Auto-corrección de protocolo para otras URLs
+            // 4. WhatsApp / Telegram
+            if ((item.key === 'whatsapp' || item.key === 'telegram') && url !== '#') {
+                if (!url.startsWith('http')) {
+                    url = `https://${url}`;
+                }
+            }
+
+            // Corrección general si falta https://
             if (url !== '#' && !url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('mailto:')) {
                 url = `https://${url}`;
             }
 
-            // Abrir en nueva pestaña si no es mailto: ni #
             const isTarget = url !== '#' && !url.startsWith('mailto:');
             
             return `
-                <a href="${url}" ${isTarget ? 'target="_blank" rel="noopener noreferrer"' : ''} class="btn-social-gold">
+                <a href="${url}" ${isTarget ? 'target="_blank" rel="noopener noreferrer"' : 'onclick="event.preventDefault()"'} class="btn-social-gold">
                     <img src="${item.icon}" alt="${item.label}" class="btn-social-icon" onerror="this.style.display='none'">
                     <span>${item.label}</span>
                 </a>
