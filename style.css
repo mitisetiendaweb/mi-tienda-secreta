@@ -188,7 +188,7 @@ a {
 }
 
 /* ==========================================
-   3. HERO SLIDER
+   3. HERO SLIDER CON MULTIMEDIA
    ========================================== */
 .hero-slider {
     position: relative;
@@ -607,7 +607,7 @@ a {
 
 /* Modal de Contacto Específico */
 .contact-modal-card {
-    max-width: 550px;
+    max-width: 520px;
     text-align: center;
 }
 
@@ -615,47 +615,48 @@ a {
     color: var(--text-muted);
     font-size: 0.95rem;
     line-height: 1.6;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .contact-buttons-container {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: 15px;
     margin-top: 10px;
 }
 
-/* Botón Dorado Oficial de Instagram */
+/* Botón Dorado Oficial de Instagram (Ajustado y Compacto) */
 .btn-instagram-gold {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 14px;
     background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
     color: #000;
     font-weight: 700;
-    font-size: 0.9rem;
-    letter-spacing: 1.5px;
-    padding: 14px 28px;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    padding: 12px 26px;
     border-radius: 30px;
     transition: var(--transition);
     box-shadow: 0 4px 20px rgba(212, 175, 55, 0.35);
     text-decoration: none;
-    width: 100%;
-    max-width: 320px;
+    width: auto; /* Ancho ajustado al contenido */
+    max-width: max-content;
 }
 
 .btn-instagram-gold:hover {
-    transform: translateY(-3px) scale(1.02);
+    transform: translateY(-3px) scale(1.03);
     box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
     background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
 }
 
+/* Imagen de Instagram Agrandada */
 .btn-instagram-icon {
-    height: 24px;
+    height: 36px; /* Aumentada de 24px a 36px */
     width: auto;
     object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
 }
 
 .story-modal-card::-webkit-scrollbar {
