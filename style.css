@@ -218,16 +218,7 @@ a {
     opacity: 1;
 }
 
-.hero-bg-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 1;
-}
-
+.hero-bg-video,
 .hero-bg-img {
     position: absolute;
     top: 0;
@@ -356,6 +347,15 @@ a {
     height: 2px;
     background: var(--gold-primary);
     margin: 0 auto;
+}
+
+.subsection-title {
+    font-family: var(--font-title);
+    font-size: 1.6rem;
+    color: var(--gold-primary);
+    margin: 40px 0 20px 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    padding-bottom: 8px;
 }
 
 .products-grid {
@@ -605,7 +605,7 @@ a {
     font-weight: 700;
 }
 
-/* Modal de Contacto Específico */
+/* Modal de Contacto */
 .contact-modal-card {
     max-width: 620px;
     text-align: center;
@@ -653,7 +653,6 @@ a {
     letter-spacing: 1px;
 }
 
-/* Grilla de Canales de Contacto (2 Columnas) */
 .contact-buttons-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -693,22 +692,234 @@ a {
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
 }
 
-.story-modal-card::-webkit-scrollbar {
-    width: 6px;
-}
-
-.story-modal-card::-webkit-scrollbar-track {
-    background: #111;
-}
-
-.story-modal-card::-webkit-scrollbar-thumb {
-    background: var(--gold-primary);
-    border-radius: 10px;
-}
-
 /* ==========================================
-   7. BOTÓN WHATSAPP & FOOTER
+   7. SISTEMA CMS Y LOGIN EN PANTALLA COMPLETA
    ========================================== */
+.fullscreen-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(5, 5, 5, 0.95);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.fullscreen-modal-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Tarjeta de Login */
+.login-card {
+    background: linear-gradient(145deg, #141414, #080808);
+    border: 1px solid var(--gold-primary);
+    box-shadow: 0 0 40px rgba(212, 175, 55, 0.3);
+    padding: 40px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 420px;
+    position: relative;
+    text-align: center;
+}
+
+.fullscreen-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: var(--gold-primary);
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.form-group-gold {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.form-group-gold label {
+    font-size: 0.8rem;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.form-group-gold input,
+.form-group-gold textarea {
+    background: #111;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    color: #fff;
+    padding: 12px 15px;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.form-group-gold input:focus,
+.form-group-gold textarea:focus {
+    outline: none;
+    border-color: var(--gold-primary);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+.error-text-gold {
+    color: #ff5555;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+/* Dashboard del Editor */
+.editor-dashboard-card {
+    background: #0d0d0d;
+    border: 1px solid var(--gold-primary);
+    width: 95vw;
+    height: 92vh;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 0 50px rgba(0,0,0,0.9);
+}
+
+.editor-top-bar {
+    background: #141414;
+    padding: 15px 25px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.editor-title {
+    font-family: var(--font-title);
+    font-size: 1.4rem;
+    color: #fff;
+}
+
+.editor-top-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-gold-small {
+    background: var(--gold-primary);
+    color: #000;
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-outline-gold-small {
+    background: transparent;
+    border: 1px solid var(--gold-primary);
+    color: var(--gold-primary);
+    font-size: 0.8rem;
+    padding: 7px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.story-modal-close-static {
+    background: transparent;
+    border: none;
+    color: var(--gold-primary);
+    font-size: 2rem;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.editor-body-layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.editor-tabs {
+    width: 220px;
+    background: #111;
+    border-right: 1px solid rgba(212, 175, 55, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.editor-tab-btn {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: var(--text-muted);
+    padding: 15px 20px;
+    text-align: left;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.editor-tab-btn.active,
+.editor-tab-btn:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--gold-primary);
+    font-weight: 600;
+}
+
+.editor-content-area {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+.editor-hint {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+}
+
+.editor-divider {
+    border: 0;
+    height: 1px;
+    background: rgba(212, 175, 55, 0.2);
+    margin: 30px 0;
+}
+
+.inline-form {
+    display: flex;
+    gap: 10px;
+}
+
+.inline-form input {
+    flex: 1;
+}
+
+/* BOTÓN WHATSAPP & FOOTER */
 .whatsapp-btn {
     position: fixed;
     bottom: 25px;
@@ -742,16 +953,7 @@ footer {
 }
 
 @media (max-width: 600px) {
-    .contact-buttons-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 900px) {
-    .nav-menu { display: none; }
-    .slide-title { font-size: 2.5rem; }
-    .logo-img { max-height: 52px; }
-    .split-layout { grid-template-columns: 1fr; gap: 30px; }
-    .story-modal-card { padding: 25px; }
-    .story-body { font-size: 0.92rem; text-align: left; }
+    .contact-buttons-grid { grid-template-columns: 1fr; }
+    .editor-body-layout { flex-direction: column; }
+    .editor-tabs { width: 100%; flex-direction: row; overflow-x: auto; }
 }
