@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haute Parfumerie | Elegancia & Exclusividad</title>
+    
+    <!-- Google Fonts: Playfair Display (Títulos) y Montserrat (Texto) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           VARIABLES GLOBALES Y CONFIGURACIÓN BASE (CSS)
+           ========================================================================== */
+        :root {
+            /* Colores Principales */
+            --bg-black: #0D0D0D;
+            --bg-black-soft: #141414;
+            --gold-primary: #D4AF37;
+            --gold-light: #F3E5AB;
+            --gold-dark: #AA820A;
+            
+            /* Colores Secundarios (Marfil / Crema) */
+            --bg-ivory: #FAFAFA;
+            --bg-ivory-soft: #F5F5DC;
+            
+            /* Colores de Texto */
+            --text-dark: #1A1A1A;
+            --text-light: #F5F5F5;
+            --text-gold: #D4AF37;
+            --text-muted: #A0A0A0;
+            
+            /* Fuentes */
+            --font-title: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+
+            /* Transiciones universales */
+            --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Reset Básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-light);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ==========================================================================
+           ESTILOS BASE PARA PLACEHOLDERS (Evita colapso estructural)
+           ========================================================================== */
+        .placeholder-box {
+            background-color: rgba(212, 175, 55, 0.05);
+            border: 1px dashed var(--gold-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold-light);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .placeholder-logo {
+            min-height: 50px;
+            max-width: 200px;
+        }
+
+        .placeholder-video {
+            min-height: 350px;
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        .placeholder-product-img {
+            min-height: 260px;
+            width: 100%;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .placeholder-social-img {
+            min-height: 200px;
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        .placeholder-about-img {
+            min-height: 400px;
+            width: 100%;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. HEADER (Navegación Fija) -->
+    <header id="main-header">
+        <nav class="nav-container">
+            <div class="logo-wrapper">
+                <!-- PLACEHOLDER: LOGO AQUI -->
+                <div class="placeholder-box placeholder-logo">
+                    [ Logo de Perfumería ]
+                </div>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="#hero">Inicio</a></li>
+                <li><a href="#catalogo">Colección</a></li>
+                <li><a href="#sobre-nosotros">Nosotros</a></li>
+                <li><a href="#redes">Experiencia</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="cart-btn" aria-label="Carrito de compras">
+                    <span>🛒</span> (0)
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 2. HERO SECTION -->
+    <section id="hero">
+        <div class="hero-bg-container">
+            <!-- PLACEHOLDER: VIDEO MARKETING AQUI -->
+            <div class="placeholder-box placeholder-video">
+                [ Video / Banner de Marketing ]
+            </div>
+        </div>
+
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <h1 class="hero-title">El Arte de la Alta Perfumería</h1>
+                <p class="hero-subtitle">Esencias exclusivas diseñadas para dejar una huella imborrable.</p>
+                <a href="#catalogo" class="btn-gold-solid">Explorar Colección</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. SECCIÓN 1 - CATÁLOGO -->
+    <section id="catalogo" class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nuestra Colección Exclusiva</h2>
+                <div class="gold-divider"></div>
+            </div>
+
+            <div class="product-grid">
+                <!-- Tarjeta de Producto 1 -->
+                <article class="product-card">
+                    <!-- PLACEHOLDER: IMAGEN PRODUCTO AQUI -->
+                    <div class="placeholder-box placeholder-product-img">
+                        [ Imagen Producto 1 ]
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Élixir de Nuit</h3>
+                        <p class="product-category">Eau de Parfum (100ml)</p>
+                        <p class="product-price">$240.00 USD</p>
+                        <div class="product-actions">
+                            <button class="btn-gold-outline">Ver Detalles</button>
+                            <button class="btn-gold-solid">Añadir al Carrito</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Tarjeta de Producto 2 -->
+                <article class="product-card">
+                    <!-- PLACEHOLDER: IMAGEN PRODUCTO AQUI -->
+                    <div class="placeholder-box placeholder-product-img">
+                        [ Imagen Producto 2 ]
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Or Imperial</h3>
+                        <p class="product-category">Extrait de Parfum (50ml)</p>
+                        <p class="product-price">$310.00 USD</p>
+                        <div class="product-actions">
+                            <button class="btn-gold-outline">Ver Detalles</button>
+                            <button class="btn-gold-solid">Añadir al Carrito</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Tarjeta de Producto 3 -->
+                <article class="product-card">
+                    <!-- PLACEHOLDER: IMAGEN PRODUCTO AQUI -->
+                    <div class="placeholder-box placeholder-product-img">
+                        [ Imagen Producto 3 ]
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Velours Blanc</h3>
+                        <p class="product-category">Eau de Parfum (100ml)</p>
+                        <p class="product-price">$195.00 USD</p>
+                        <div class="product-actions">
+                            <button class="btn-gold-outline">Ver Detalles</button>
+                            <button class="btn-gold-solid">Añadir al Carrito</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SECCIÓN 4 - SOBRE NOSOTROS -->
+    <section id="sobre-nosotros" class="section-padding bg-dark-soft">
+        <div class="container split-layout">
+            <div class="split-text">
+                <span class="gold-subtitle">Legado y Pasión</span>
+                <h2>La Maestría Detrás de Cada Gota</h2>
+                <p>Nuestra casa de perfumería combina ingredientes raros de origen ético con la artesanía tradicional francesa. Cada fragancia es una obra de arte olfativa pensada para personalidades exigentes que buscan sofisticación y permanencia.</p>
+            </div>
+            <div class="split-image">
+                <!-- PLACEHOLDER: IMAGEN SOBRE NOSOTROS AQUI -->
+                <div class="placeholder-box placeholder-about-img">
+                    [ Imagen Sobre Nosotros / Taller ]
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. SECCIÓN 2 - NUESTRAS REDES SOCIALES -->
+    <section id="redes" class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Únete al Universo de Lujo</h2>
+                <p class="section-subtitle">Síguenos en Instagram @HauteParfumerie</p>
+                <div class="gold-divider"></div>
+            </div>
+
+            <div class="social-feed-grid">
+                <!-- Feed Card 1 -->
+                <div class="social-card">
+                    <!-- PLACEHOLDER: IMAGEN FEED REDES AQUI -->
+                    <div class="placeholder-box placeholder-social-img">
+                        [ Post Instagram 1 ]
+                    </div>
+                </div>
+                <!-- Feed Card 2 -->
+                <div class="social-card">
+                    <!-- PLACEHOLDER: IMAGEN FEED REDES AQUI -->
+                    <div class="placeholder-box placeholder-social-img">
+                        [ Post Instagram 2 ]
+                    </div>
+                </div>
+                <!-- Feed Card 3 -->
+                <div class="social-card">
+                    <!-- PLACEHOLDER: IMAGEN FEED REDES AQUI -->
+                    <div class="placeholder-box placeholder-social-img">
+                        [ Post Instagram 3 ]
+                    </div>
+                </div>
+            </div>
+
+            <div class="social-buttons">
+                <a href="#" class="btn-gold-outline">Instagram</a>
+                <a href="#" class="btn-gold-outline">Facebook</a>
+                <a href="#" class="btn-gold-outline">TikTok</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. SECCIÓN 3 - CONTACTO -->
+    <section id="contacto" class="section-padding bg-dark-soft">
+        <div class="container small-container">
+            <div class="section-header">
+                <h2 class="section-title">Atención Personalizada</h2>
+                <p class="section-subtitle">¿Requiere asesoría olfativa o un pedido personalizado?</p>
+                <div class="gold-divider"></div>
+            </div>
+
+            <form class="contact-form" action="#" method="POST">
+                <div class="form-group">
+                    <label for="nombre">Nombre Completo</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Ej. Lord / Lady Harrison" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Correo Electrónico</label>
+                    <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="mensaje">Mensaje o Consulta</label>
+                    <textarea id="mensaje" name="mensaje" rows="5" placeholder="Escriba su mensaje aquí..." required></textarea>
+                </div>
+                <button type="submit" class="btn-gold-solid btn-full">Enviar Mensaje</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- 7. FOOTER -->
+    <footer id="main-footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 Haute Parfumerie. Todos los derechos reservados.</p>
+            <div class="legal-links">
+                <a href="#">Términos y Condiciones</a>
+                <a href="#">Política de Privacidad</a>
+                <a href="#">Envíos y Devoluciones</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
