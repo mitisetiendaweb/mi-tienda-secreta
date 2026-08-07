@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "brand": "Lattafa Exclusif",
+    "name": "Atheeri Gold Edition",
+    "price": 85.00,
+    "image": "IMG/LOGO FN.png"
+  },
+  {
+    "id": 2,
+    "brand": "Haute Parfumerie",
+    "name": "Élixir de Nuit",
+    "price": 120.00,
+    "image": "IMG/LOGO FN.png"
+  },
+  {
+    "id": 3,
+    "brand": "Royal Collection",
+    "name": "Velours Imperial",
+    "price": 95.00,
+    "image": "IMG/LOGO FN.png"
+  },
+  {
+    "id": 4,
+    "brand": "Oriental Oud",
+    "name": "Oud Royal Gold",
+    "price": 140.00,
+    "image": "IMG/LOGO FN.png"
+  }
+]
