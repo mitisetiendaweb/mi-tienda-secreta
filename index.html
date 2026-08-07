@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <!-- 2. HEADER PRINCIPAL RESPONSIVO -->
+    <!-- 2. HEADER PRINCIPAL -->
     <header id="main-header">
         <div class="header-container">
             <!-- Logo Oficial -->
@@ -37,19 +37,20 @@
                 <img src="IMG/LOGO%20FN.png" alt="Logo Mitise" class="logo-img" id="main-logo-img">
             </a>
 
-            <!-- Botón Menú Hamburguesa para Móviles -->
+            <!-- Botón Menú Hamburguesa Móvil -->
             <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menú">☰</button>
 
-            <!-- Menú Central (Escritorio + Drawer Móvil) -->
+            <!-- Menú Central -->
             <ul class="nav-menu" id="nav-menu">
                 <li><a href="#catalogo" class="nav-link">Perfumería</a></li>
                 <li><a href="#sobre-nosotros" class="nav-link" id="nav-about">Sobre Nosotros</a></li>
                 <li><a href="#contacto" class="nav-link" id="nav-contact">Contacto</a></li>
             </ul>
 
-            <!-- Iconos de Acción -->
+            <!-- Iconos de Acción para Clientes -->
             <div class="header-icons">
-                <button class="icon-btn" id="btn-login-trigger" title="Mi Cuenta">👤</button>
+                <button class="icon-btn" title="Buscar">🔍</button>
+                <button class="icon-btn" title="Favoritos">🖤</button>
                 <button class="icon-btn" title="Carrito">
                     🛒
                     <span class="cart-badge" id="cart-count">0</span>
@@ -137,7 +138,7 @@
         </div>
     </div>
 
-    <!-- 8. VENTANA LOGIN FULLSCREEN (MI CUENTA / EDITOR) -->
+    <!-- 8. VENTANA LOGIN FULLSCREEN (EDITOR) -->
     <div id="login-modal" class="fullscreen-modal-backdrop">
         <div class="login-card">
             <button class="fullscreen-modal-close" id="close-login-modal">&times;</button>
@@ -314,9 +315,13 @@
         <span>💬</span> ¡Hola!
     </a>
 
-    <!-- 11. FOOTER -->
+    <!-- 11. FOOTER CON BOTÓN DE MI CUENTA DISCRETO -->
     <footer id="contacto">
-        <p>&copy; 2026 Mitise - Luxury Fragrance. Todos los derechos reservados.</p>
+        <div class="footer-container">
+            <p>&copy; 2026 Mitise - Luxury Fragrance. Todos los derechos reservados.</p>
+            <!-- Botón discreto en gris oscuro en la parte inferior derecha -->
+            <button class="footer-admin-btn" id="btn-login-trigger" title="Acceso Administrativo">Mi Cuenta</button>
+        </div>
     </footer>
 
     <!-- Lógica JS Externa -->
