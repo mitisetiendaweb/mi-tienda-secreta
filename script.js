@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tiktok: "",
             facebook: "",
             telegram: "https://t.me/+584242032510",
-            gmail: "mailto:mitisefragance@gmail.com",
+            gmail: "https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=mitisefragance@gmail.com",
             whatsapp: "https://wa.me/+584242032510"
         }
     };
@@ -159,29 +159,30 @@ document.addEventListener('DOMContentLoaded', () => {
             { key: 'tiktok', label: 'TikTok', icon: 'IMG/TIKTOK.png', defaultUrl: '#' },
             { key: 'facebook', label: 'Facebook', icon: 'IMG/FACEBOOK.png', defaultUrl: '#' },
             { key: 'telegram', label: 'Telegram', icon: 'IMG/TELEGREAM.png', defaultUrl: 'https://t.me/+584242032510' },
-            { key: 'gmail', label: 'Gmail', icon: 'IMG/GMAIL.png', defaultUrl: 'mailto:mitisefragance@gmail.com' },
+            { key: 'gmail', label: 'Gmail', icon: 'IMG/GMAIL.png', defaultUrl: 'https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=mitisefragance@gmail.com' },
             { key: 'whatsapp', label: 'WhatsApp', icon: 'IMG/WHATSAPP.png', defaultUrl: 'https://wa.me/+584242032510' }
         ];
 
         grid.innerHTML = config.map(item => {
             let url = links[item.key] && links[item.key].trim() !== '' ? links[item.key].trim() : item.defaultUrl;
 
-            // Auto-corrección inteligente para Gmail / Correo
+            // Auto-corrección para Gmail: Convertir a URL de redacción directa en Gmail Web
             if (item.key === 'gmail') {
-                if (url.includes('@') && !url.startsWith('http') && !url.startsWith('mailto:')) {
-                    url = `mailto:${url}`;
+                if (!url.startsWith('https://mail.google.com')) {
+                    const cleanEmail = url.replace('mailto:', '').trim();
+                    url = `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=${cleanEmail}`;
                 }
             }
 
-            // Auto-corrección para URLs sin protocolo
-            if (url !== '#' && !url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('mailto:')) {
+            // Auto-corrección para otras URLs sin protocolo
+            if (url !== '#' && !url.startsWith('http://') && !url.startsWith('https://')) {
                 url = `https://${url}`;
             }
 
-            const isTarget = url !== '#' && !url.startsWith('mailto:');
+            const isTarget = url !== '#';
             
             return `
-                <a href="${url}" ${isTarget ? 'target="_blank" rel="noopener noreferrer"' : ''} class="btn-social-gold">
+                <a href="${url}" ${isTarget ? 'target="_blank" rel="noopener noreferrer"' : 'onclick="event.preventDefault()"'} class="btn-social-gold">
                     <img src="${item.icon}" alt="${item.label}" class="btn-social-icon" onerror="this.style.display='none'">
                     <span>${item.label}</span>
                 </a>
@@ -358,10 +359,11 @@ document.addEventListener('DOMContentLoaded', () => {
         siteData.contactLinks.facebook = document.getElementById('link-facebook').value;
         siteData.contactLinks.telegram = document.getElementById('link-telegram').value;
         
-        // Auto-formatear Gmail si se guarda solo la dirección
+        // Formatear Gmail automáticamente
         let inputGmail = document.getElementById('link-gmail').value.trim();
-        if(inputGmail.includes('@') && !inputGmail.startsWith('http') && !inputGmail.startsWith('mailto:')) {
-            inputGmail = 'mailto:' + inputGmail;
+        if(inputGmail && !inputGmail.startsWith('https://mail.google.com')) {
+            const clean = inputGmail.replace('mailto:', '').trim();
+            inputGmail = `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=${clean}`;
         }
         siteData.contactLinks.gmail = inputGmail;
 
