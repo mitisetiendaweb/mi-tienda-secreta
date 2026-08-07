@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. LÓGICA DEL BANNER SLIDER INTELIGENTE (RESPETA LA DURACIÓN COMPLETA DEL VIDEO)
+    // 2. LÓGICA DEL BANNER SLIDER INTELIGENTE
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
     const prevBtn = document.getElementById('prevSlide');
@@ -51,37 +51,32 @@ document.addEventListener('DOMContentLoaded', () => {
     let slideTimer = null;
 
     function showSlide(index) {
-        // Cancelar temporizadores previos
         if (slideTimer) clearTimeout(slideTimer);
 
         slides.forEach((slide, i) => {
             slide.classList.remove('active');
             const vid = slide.querySelector('video');
-            if (vid) vid.pause(); // Pausar videos de slides inactivas
+            if (vid) vid.pause();
 
             if (i === index) {
                 slide.classList.add('active');
                 
                 const currentVideo = slide.querySelector('video');
                 if (currentVideo) {
-                    // Reiniciar y reproducir el video desde el segundo 0
                     currentVideo.currentTime = 0;
                     
                     const playPromise = currentVideo.play();
                     if (playPromise !== undefined) {
                         playPromise.catch(err => {
-                            console.log("Autoplay omitido o restringido por navegador:", err);
-                            // Fallback en caso de bloqueo: cambiar a los 8 segundos
+                            console.log("Autoplay omitido o restringido:", err);
                             slideTimer = setTimeout(() => moveSlide(1), 8000);
                         });
                     }
 
-                    // Evento clave: Esperar a que el video TERMINE para pasar al siguiente slide
                     currentVideo.onended = () => {
                         moveSlide(1);
                     };
                 } else {
-                    // Para banners sin video (imágenes fijas), esperar 6 segundos
                     slideTimer = setTimeout(() => moveSlide(1), 6000);
                 }
             }
@@ -101,52 +96,71 @@ document.addEventListener('DOMContentLoaded', () => {
         nextBtn.addEventListener('click', () => moveSlide(1));
     }
 
-    // Iniciar el slider en el slide 0
     showSlide(0);
 
-    // 3. LÓGICA DE APERTURA/CIERRE DEL MODAL DE HISTORIA
+    // 3. LÓGICA DE APERTURA Y CIERRE DE MODALES (SOBRE NOSOTROS & CONTACTO)
     const storyModal = document.getElementById('story-modal');
+    const contactModal = document.getElementById('contact-modal');
+    
     const navAbout = document.getElementById('nav-about');
+    const navContact = document.getElementById('nav-contact');
     const btnReadStory = document.getElementById('btn-read-story');
+    
     const closeStoryModal = document.getElementById('close-story-modal');
+    const closeContactModal = document.getElementById('close-contact-modal');
+    
     const allNavLinks = document.querySelectorAll('.nav-link');
 
-    function openModal() {
-        if(storyModal) storyModal.classList.add('active');
+    function openModal(modal) {
+        closeAllModals();
+        if(modal) modal.classList.add('active');
     }
 
-    function closeModal() {
+    function closeAllModals() {
         if(storyModal) storyModal.classList.remove('active');
+        if(contactModal) contactModal.classList.remove('active');
     }
 
+    // Eventos para abrir el modal de Sobre Nosotros
     if(navAbout) {
         navAbout.addEventListener('click', (e) => {
             e.preventDefault();
-            openModal();
+            openModal(storyModal);
         });
     }
 
     if(btnReadStory) {
-        btnReadStory.addEventListener('click', openModal);
+        btnReadStory.addEventListener('click', () => openModal(storyModal));
     }
 
-    if(closeStoryModal) {
-        closeStoryModal.addEventListener('click', closeModal);
-    }
-
-    if(storyModal) {
-        storyModal.addEventListener('click', (e) => {
-            if(e.target === storyModal) closeModal();
+    // Eventos para abrir el modal de Contacto
+    if(navContact) {
+        navContact.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal(contactModal);
         });
     }
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeModal();
+    // Eventos de Cierre
+    if(closeStoryModal) closeStoryModal.addEventListener('click', closeAllModals);
+    if(closeContactModal) closeContactModal.addEventListener('click', closeAllModals);
+
+    // Cerrar al hacer clic fuera del cuadro
+    window.addEventListener('click', (e) => {
+        if(e.target === storyModal || e.target === contactModal) {
+            closeAllModals();
+        }
     });
 
+    // Cerrar al presionar la tecla ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeAllModals();
+    });
+
+    // Cerrar modales si hace clic en CUALQUIER otro enlace del menú (ej. Perfumería)
     allNavLinks.forEach(link => {
-        if(link !== navAbout) {
-            link.addEventListener('click', closeModal);
+        if(link !== navAbout && link !== navContact) {
+            link.addEventListener('click', closeAllModals);
         }
     });
 
