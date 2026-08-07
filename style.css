@@ -286,3 +286,134 @@
         margin-bottom: 25px;
     }
 }
+
+/* ==========================================================================
+   3. SECCIÓN CATÁLOGO DE PRODUCTOS (GRILLA & TARJETAS LUJO)
+   ========================================================================== */
+
+/* Grilla Responsiva para Productos */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 35px;
+    margin-top: 40px;
+}
+
+/* Tarjeta de Producto (Contenedor Marfil) */
+.product-card {
+    background-color: var(--bg-ivory);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: var(--transition-smooth);
+}
+
+/* Efecto de elevación y brillo dorado al pasar el cursor sobre la tarjeta */
+.product-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--gold-primary);
+    box-shadow: 0 18px 35px rgba(212, 175, 55, 0.25);
+}
+
+/* Contenedor de la Imagen del Producto */
+.product-card .placeholder-product-img,
+.product-card-img-wrapper {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    background-color: #f0eee9; /* Tono beige suave mientras carga */
+    overflow: hidden;
+}
+
+.product-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.6s ease;
+}
+
+/* Zoom suave en la imagen del producto al hacer hover */
+.product-card:hover img {
+    transform: scale(1.06);
+}
+
+/* Información del Producto dentro de la Tarjeta */
+.product-info {
+    padding: 25px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+}
+
+.product-name {
+    font-family: var(--font-title);
+    font-size: 1.35rem;
+    color: var(--text-dark); /* Texto oscuro para legibilidad impecable */
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+}
+
+.product-category {
+    font-size: 0.78rem;
+    color: #777777;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.product-price {
+    font-family: var(--font-body);
+    font-size: 1.25rem;
+    color: var(--gold-dark); /* Tono dorado oscuro para mayor contraste */
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* Botones dentro de la Tarjeta de Producto */
+.product-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.product-actions .btn-gold-outline {
+    padding: 10px 14px;
+    font-size: 0.75rem;
+    border-color: var(--gold-dark);
+    color: var(--text-dark);
+}
+
+.product-actions .btn-gold-outline:hover {
+    background-color: var(--text-dark);
+    color: var(--bg-ivory);
+    border-color: var(--text-dark);
+}
+
+.product-actions .btn-gold-solid {
+    padding: 10px 14px;
+    font-size: 0.75rem;
+}
+
+/* ==========================================================================
+   RESPONSIVO PARA CATÁLOGO
+   ========================================================================== */
+@media (max-width: 480px) {
+    .product-grid {
+        grid-template-columns: 1fr; /* Una sola columna en dispositivos muy pequeños */
+        gap: 25px;
+    }
+
+    .product-actions {
+        flex-direction: column; /* Botones apilados verticalmente en móviles */
+    }
+}
