@@ -69,7 +69,7 @@ a {
 }
 
 /* ==========================================
-   2. HEADER PRINCIPAL Y LOGO
+   2. HEADER PRINCIPAL Y LOGO DESTACADO
    ========================================== */
 #main-header {
     position: sticky;
@@ -296,6 +296,8 @@ a {
     letter-spacing: 2px;
     padding: 14px 32px;
     border-radius: 30px;
+    border: none;
+    cursor: pointer;
     transition: var(--transition);
     box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
 }
@@ -431,12 +433,19 @@ a {
 }
 
 /* ==========================================
-   5. SECCIÓN SOBRE NOSOTROS (NARRATIVA Y STORYTELLING)
+   5. SECCIÓN SOBRE NOSOTROS
    ========================================== */
 .bg-dark-soft {
     background-color: var(--bg-dark-soft);
-    border-top: 1px solid rgba(212, 175, 55, 0.15);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.split-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
 }
 
 .gold-subtitle {
@@ -445,129 +454,151 @@ a {
     text-transform: uppercase;
     letter-spacing: 2.5px;
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     display: block;
 }
 
-/* Cita Destacada */
-.story-quote-box {
-    max-width: 900px;
-    margin: 0 auto 50px auto;
-    padding: 30px 40px;
-    background: linear-gradient(135deg, rgba(20,20,20,0.8), rgba(11,11,11,0.95));
-    border-left: 3px solid var(--gold-primary);
-    border-right: 3px solid var(--gold-primary);
-    border-radius: 6px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    text-align: center;
-}
-
-.story-quote {
+.section-title-left {
     font-family: var(--font-title);
-    font-size: 1.35rem;
-    font-style: italic;
-    color: var(--gold-light);
-    line-height: 1.6;
-}
-
-/* Tarjetas de Capítulos */
-.story-timeline {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    margin-bottom: 60px;
-}
-
-.timeline-card {
-    background-color: var(--bg-dark-card);
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    border-radius: 8px;
-    padding: 30px 25px;
-    transition: var(--transition);
-    display: flex;
-    flex-direction: column;
-}
-
-.timeline-card:hover {
-    border-color: var(--gold-primary);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.15);
-}
-
-.timeline-badge {
-    align-self: flex-start;
-    background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
-    color: #000;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    padding: 6px 14px;
-    border-radius: 20px;
-    margin-bottom: 20px;
-}
-
-.timeline-title {
-    font-family: var(--font-title);
-    font-size: 1.4rem;
-    color: var(--text-light);
-    margin-bottom: 15px;
-}
-
-.timeline-card p {
-    color: var(--text-muted);
-    font-size: 0.92rem;
-    line-height: 1.75;
-    margin-bottom: 12px;
-}
-
-.timeline-card p strong {
-    color: var(--gold-light);
-}
-
-/* Pilares de Marca */
-.story-pillars {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 25px;
-    text-align: center;
-    border-top: 1px dashed rgba(212, 175, 55, 0.25);
-    padding-top: 50px;
-}
-
-.pillar-box {
-    background-color: rgba(20, 20, 20, 0.6);
-    border: 1px solid rgba(212, 175, 55, 0.15);
-    padding: 25px 20px;
-    border-radius: 8px;
-    transition: var(--transition);
-}
-
-.pillar-box:hover {
-    border-color: var(--gold-primary);
-    background-color: var(--bg-dark-card);
-}
-
-.pillar-icon {
     font-size: 2.2rem;
-    display: block;
-    margin-bottom: 12px;
+    color: var(--text-light);
+    margin-bottom: 20px;
+    line-height: 1.2;
 }
 
-.pillar-box h4 {
-    font-family: var(--font-title);
-    font-size: 1.1rem;
-    color: var(--gold-light);
-    margin-bottom: 8px;
-}
-
-.pillar-box p {
-    font-size: 0.85rem;
+.split-text p {
     color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+.about-img-frame {
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    padding: 15px;
+    border-radius: 8px;
+    background-color: var(--bg-black);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-img {
+    max-width: 100%;
+    max-height: 250px;
+    object-fit: contain;
 }
 
 /* ==========================================
-   6. BOTÓN WHATSAPP & FOOTER
+   6. MODAL LLAMATIVO DE LA HISTORIA MITISE
+   ========================================== */
+.story-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(5, 5, 5, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.story-modal-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.story-modal-card {
+    background: linear-gradient(145deg, #121212 0%, #0a0a0a 100%);
+    border: 1px solid var(--gold-primary);
+    box-shadow: 0 0 35px rgba(212, 175, 55, 0.25);
+    width: 90%;
+    max-width: 800px;
+    max-height: 85vh;
+    border-radius: 12px;
+    padding: 40px;
+    position: relative;
+    overflow-y: auto;
+    transform: scale(0.92);
+    transition: transform 0.4s ease;
+}
+
+.story-modal-backdrop.active .story-modal-card {
+    transform: scale(1);
+}
+
+.story-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background: transparent;
+    border: none;
+    color: var(--gold-primary);
+    font-size: 2.2rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.story-modal-close:hover {
+    color: var(--gold-light);
+    transform: scale(1.15);
+}
+
+.story-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.story-title {
+    font-family: var(--font-title);
+    font-size: 2.2rem;
+    color: var(--text-light);
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.story-body {
+    color: #E0E0E0;
+    font-size: 1rem;
+    line-height: 1.85;
+    text-align: justify;
+    font-weight: 300;
+}
+
+.story-body p {
+    margin-bottom: 22px;
+    text-indent: 15px;
+}
+
+.story-body p::first-letter {
+    font-family: var(--font-title);
+    font-size: 1.5rem;
+    color: var(--gold-primary);
+    font-weight: 700;
+}
+
+/* Personalización de la barra de desplazamiento del Modal */
+.story-modal-card::-webkit-scrollbar {
+    width: 6px;
+}
+
+.story-modal-card::-webkit-scrollbar-track {
+    background: #111;
+}
+
+.story-modal-card::-webkit-scrollbar-thumb {
+    background: var(--gold-primary);
+    border-radius: 10px;
+}
+
+/* ==========================================
+   7. BOTÓN WHATSAPP & FOOTER
    ========================================== */
 .whatsapp-btn {
     position: fixed;
@@ -583,7 +614,7 @@ a {
     font-weight: 600;
     font-size: 0.9rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-    z-index: 9999;
+    z-index: 999;
     transition: var(--transition);
 }
 
@@ -605,6 +636,7 @@ footer {
     .nav-menu { display: none; }
     .slide-title { font-size: 2.5rem; }
     .logo-img { max-height: 52px; }
-    .story-quote-box { padding: 20px; }
-    .story-quote { font-size: 1.15rem; }
+    .split-layout { grid-template-columns: 1fr; gap: 30px; }
+    .story-modal-card { padding: 25px; }
+    .story-body { font-size: 0.92rem; text-align: left; }
 }
