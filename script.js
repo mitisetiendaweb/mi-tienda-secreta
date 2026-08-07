@@ -308,13 +308,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if(activeUser) {
                 openEditorDashboard(activeUser);
             } else {
-                loginModal.classList.add('active');
+                openModal(loginModal);
             }
         });
     }
 
     if(closeLoginModal) {
-        closeLoginModal.addEventListener('click', () => loginModal.classList.remove('active'));
+        closeLoginModal.addEventListener('click', () => closeAllModals(true));
     }
 
     if(loginForm) {
@@ -326,7 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(USERS[user] && USERS[user] === pass) {
                 loginErrorMsg.innerText = "";
                 sessionStorage.setItem('mitise_active_editor', user);
-                loginModal.classList.remove('active');
+                closeAllModals(false);
                 loginForm.reset();
                 openEditorDashboard(user);
             } else {
@@ -338,7 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function openEditorDashboard(username) {
         document.getElementById('active-editor-name').innerText = username;
         fillEditorInputs();
-        editorPanel.classList.add('active');
+        openModal(editorPanel);
     }
 
     function fillEditorInputs() {
@@ -419,16 +419,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('btn-logout-editor').addEventListener('click', () => {
         sessionStorage.removeItem('mitise_active_editor');
-        editorPanel.classList.remove('active');
+        closeAllModals(true);
         alert('Sesión de editor cerrada.');
     });
 
-    document.getElementById('close-editor-panel').addEventListener('click', () => {
-        editorPanel.classList.remove('active');
-    });
+    document.getElementById('close-editor-panel').addEventListener('click', () => closeAllModals(true));
 
     // ==========================================
-    // 5. MODALES INTERACTIVOS
+    // 5. MODALES INTERACTIVOS Y MANEJO DEL BOTÓN "ATRÁS" DEL MÓVIL
     // ==========================================
     const storyModal = document.getElementById('story-modal');
     const contactModal = document.getElementById('contact-modal');
@@ -440,22 +438,61 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeStoryModal = document.getElementById('close-story-modal');
     const closeContactModal = document.getElementById('close-contact-modal');
 
+    let modalPushedState = false;
+
     function openModal(modal) {
-        closeAllModals();
-        if(modal) modal.classList.add('active');
+        closeAllModals(false);
+        if (modal) {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Registra un estado en el historial para capturar el botón "ATRÁS" del teléfono
+            if (!modalPushedState) {
+                history.pushState({ modalActive: true }, '');
+                modalPushedState = true;
+            }
+        }
     }
 
-    function closeAllModals() {
-        if(storyModal) storyModal.classList.remove('active');
-        if(contactModal) contactModal.classList.remove('active');
+    function closeAllModals(shouldGoBack = true) {
+        let wasOpen = false;
+        const modals = [storyModal, contactModal, loginModal, editorPanel];
+        modals.forEach(m => {
+            if (m && m.classList.contains('active')) {
+                m.classList.remove('active');
+                wasOpen = true;
+            }
+        });
+
+        document.body.style.overflow = '';
+
+        if (wasOpen && modalPushedState && shouldGoBack) {
+            modalPushedState = false;
+            history.back();
+        }
     }
+
+    // Captura el botón físico/gesto "ATRÁS" del teléfono celular
+    window.addEventListener('popstate', (e) => {
+        if (modalPushedState) {
+            modalPushedState = false;
+            closeAllModals(false); // Cierra la ventana emergente y mantiene al usuario en la página
+        }
+    });
 
     if(navAbout) navAbout.onclick = (e) => { e.preventDefault(); openModal(storyModal); };
     if(btnReadStory) btnReadStory.onclick = () => openModal(storyModal);
     if(navContact) navContact.onclick = (e) => { e.preventDefault(); openModal(contactModal); };
 
-    if(closeStoryModal) closeStoryModal.onclick = closeAllModals;
-    if(closeContactModal) closeContactModal.onclick = closeAllModals;
+    if(closeStoryModal) closeStoryModal.onclick = () => closeAllModals(true);
+    if(closeContactModal) closeContactModal.onclick = () => closeAllModals(true);
+
+    // Cerrar al hacer clic fuera del recuadro
+    window.onclick = (e) => {
+        if(e.target === storyModal || e.target === contactModal || e.target === loginModal) {
+            closeAllModals(true);
+        }
+    };
 
     renderAllContent();
 });
