@@ -93,6 +93,46 @@
       "name": "EAU POUR HOME",
       "price": 10,
       "image": "IMG/prod_1786226085278_1786226128002.webp"
+    },
+    {
+      "id": 1786229018534,
+      "section": "PARA ELLOS",
+      "brand": "POLO",
+      "name": "BLACK",
+      "price": 10,
+      "image": "IMG/prod_1786229018534_1786229265934.png"
+    },
+    {
+      "id": 1786229021111,
+      "section": "PARA ELLOS",
+      "brand": "CALVIN KLEIN",
+      "name": "CK1",
+      "price": 10,
+      "image": "IMG/prod_1786229021111_1786229268546.png"
+    },
+    {
+      "id": 1786229023614,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Mitise",
+      "name": "Nuevo Perfume",
+      "price": 90,
+      "image": "IMG/LOGO_ENTERO.png"
+    },
+    {
+      "id": 1786229025030,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Mitise",
+      "name": "Nuevo Perfume",
+      "price": 90,
+      "image": "IMG/LOGO_ENTERO.png"
+    },
+    {
+      "id": 1786229026470,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Mitise",
+      "name": "Nuevo Perfume",
+      "price": 90,
+      "image": "IMG/LOGO_ENTERO.png"
     }
   ],
   "about": {
