@@ -694,20 +694,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const previewLogo = document.getElementById('preview-logo-img');
         if(previewLogo) previewLogo.src = siteData.logoPath;
 
-        if (siteData.banners[0]) {
-            document.getElementById('edit-banner1-tag').value = siteData.banners[0].tag || '';
-            document.getElementById('edit-banner1-title').value = siteData.banners[0].title || '';
-            document.getElementById('edit-banner1-desc').value = siteData.banners[0].desc || '';
-            document.getElementById('edit-banner1-bg').value = siteData.banners[0].media || '';
-        }
-
-        if (siteData.banners[1]) {
-            document.getElementById('edit-banner2-tag').value = siteData.banners[1].tag || '';
-            document.getElementById('edit-banner2-title').value = siteData.banners[1].title || '';
-            document.getElementById('edit-banner2-desc').value = siteData.banners[1].desc || '';
-            document.getElementById('edit-banner2-bg').value = siteData.banners[1].media || '';
-        }
-        
         document.getElementById('edit-about-subtitle').value = siteData.about.subtitle || '';
         document.getElementById('edit-about-title').value = siteData.about.title || '';
         document.getElementById('edit-about-desc').value = siteData.about.desc || '';
@@ -758,8 +744,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     setupFileInputReader('edit-logo-file', 'edit-logo-path', 'preview-logo-img');
-    setupFileInputReader('edit-banner1-file', 'edit-banner1-bg', null);
-    setupFileInputReader('edit-banner2-file', 'edit-banner2-bg', null);
     setupFileInputReader('new-banner-file', 'new-banner-media', null);
     setupFileInputReader('new-prod-file', 'new-prod-img', null);
     setupFileInputReader('edit-about-file', 'edit-about-img-path', null);
@@ -776,39 +760,56 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
+    // RENDERIZADO Y EDICIÓN DINÁMICA DE TODOS LOS BANNERS CON OPCIÓN DE ELIMINAR
     function renderEditorBannersList() {
-        const grid = document.getElementById('editor-banners-list');
-        if(!grid) return;
+        const container = document.getElementById('editor-banners-container');
+        if (!container) return;
 
-        const extraBanners = siteData.banners.slice(2);
-
-        if(extraBanners.length === 0) {
-            grid.innerHTML = '<p class="editor-hint">No hay banners adicionales registrados.</p>';
+        if (!siteData.banners || siteData.banners.length === 0) {
+            container.innerHTML = '<p class="editor-hint">No hay banners registrados en el slider.</p>';
             return;
         }
 
-        grid.innerHTML = extraBanners.map((b, idx) => {
-            const realIndex = idx + 2;
-            return `
-                <div class="editor-prod-row">
-                    <div class="editor-prod-info">
-                        <div>
-                            <p class="editor-prod-title">Banner ${realIndex + 1}: ${b.title}</p>
-                            <p class="editor-prod-sub">${b.tag} | ${b.desc.substring(0, 45)}...</p>
-                        </div>
-                    </div>
-                    <div class="editor-prod-actions">
-                        <button class="btn-fav-remove" onclick="deleteBannerFromCMS(${realIndex})" title="Eliminar Banner">
-                            🗑️ Eliminar
-                        </button>
-                    </div>
+        container.innerHTML = siteData.banners.map((b, idx) => `
+            <div class="editor-section-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                    <h4 style="margin: 0; color: var(--gold-primary);">Banner ${idx + 1} - Edición Completa</h4>
+                    <button class="btn-fav-remove" onclick="deleteBannerFromCMS(${idx})" title="Eliminar Banner">
+                        🗑️ Eliminar Banner ${idx + 1}
+                    </button>
                 </div>
-            `;
-        }).join('');
+                <div class="form-group-gold">
+                    <label>Etiqueta / Tag:</label>
+                    <input type="text" id="edit-banner-tag-${idx}" value="${b.tag || ''}" placeholder="Ej: Colección Exclusiva 2026">
+                </div>
+                <div class="form-group-gold">
+                    <label>Título Principal:</label>
+                    <input type="text" id="edit-banner-title-${idx}" value="${b.title || ''}" placeholder="Ej: Fragancias que Dejan Huella">
+                </div>
+                <div class="form-group-gold">
+                    <label>Descripción:</label>
+                    <textarea id="edit-banner-desc-${idx}" rows="2" placeholder="Ej: Descubre notas olfativas...">${b.desc || ''}</textarea>
+                </div>
+                <div class="form-group-gold">
+                    <label>Seleccionar Archivo Local de Fondo (Imagen o Video MP4):</label>
+                    <input type="file" id="edit-banner-file-${idx}" accept="image/*,video/mp4" class="file-input-gold">
+                </div>
+                <div class="form-group-gold">
+                    <label>O Ruta Relativa del Archivo:</label>
+                    <input type="text" id="edit-banner-media-${idx}" value="${b.media || ''}" placeholder="VID/3BHARARA.mp4 o IMG/banner.jpg">
+                </div>
+            </div>
+        `).join('');
+
+        // Conectar lector de archivos para cada banner
+        siteData.banners.forEach((_, idx) => {
+            setupFileInputReader(`edit-banner-file-${idx}`, `edit-banner-media-${idx}`, null);
+        });
     }
 
+    // ELIMINAR BANNER DEL CMS
     window.deleteBannerFromCMS = function(index) {
-        if(confirm(`¿Deseas eliminar el Banner ${index + 1}?`)) {
+        if(confirm(`¿Estás seguro de que deseas eliminar el Banner ${index + 1}?`)) {
             siteData.banners.splice(index, 1);
             saveSiteDataLocal();
             renderEditorBannersList();
@@ -846,7 +847,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         `).join('');
     }
 
-    // CIERRA ÚNICAMENTE EL MODAL DE EDICIÓN SIN AFECTAR EL PANEL CMS NI NAVEGAR ATRÁS
     function closeEditProductModal() {
         const editModal = document.getElementById('edit-product-modal');
         if (editModal) {
@@ -854,7 +854,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // ASEGURAR Y AUTO-CREAR EL MODAL DE EDICIÓN EN DOM
     function ensureEditProductModalExists() {
         let modalDiv = document.getElementById('edit-product-modal');
         if (!modalDiv) {
@@ -910,7 +909,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             modalDiv.style.zIndex = '3500';
         }
 
-        // ASIGNAR MANEJADORES DE EVENTOS
         const formEdit = document.getElementById('form-edit-product');
         if (formEdit && !formEdit.dataset.bound) {
             formEdit.dataset.bound = "true";
@@ -942,7 +940,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (cancelBtn) cancelBtn.onclick = (e) => { e.preventDefault(); e.stopPropagation(); closeEditProductModal(); };
     }
 
-    // ABRIR MODAL PARA EDITAR PRODUCTO (POR ENCIMA DEL PANEL CMS)
     window.openEditProductModal = function(productId) {
         ensureEditProductModalExists();
 
@@ -1047,23 +1044,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             let rawLogo = document.getElementById('edit-logo-path').value;
             siteData.logoPath = await processAndUploadImageIfBase64(rawLogo, 'logo');
 
-            if (!siteData.banners[0]) siteData.banners[0] = { type: 'image', media: '', tag: '', title: '', desc: '' };
-            siteData.banners[0].tag = document.getElementById('edit-banner1-tag').value;
-            siteData.banners[0].title = document.getElementById('edit-banner1-title').value;
-            siteData.banners[0].desc = document.getElementById('edit-banner1-desc').value;
-            
-            let rawB1 = document.getElementById('edit-banner1-bg').value;
-            siteData.banners[0].media = await processAndUploadImageIfBase64(rawB1, 'banner1');
-            siteData.banners[0].type = (siteData.banners[0].media.startsWith('data:video') || siteData.banners[0].media.endsWith('.mp4')) ? 'video' : 'image';
+            // ACTUALIZAR TODOS LOS BANNERS DE LA LISTA DINÁMICA
+            for (let i = 0; i < siteData.banners.length; i++) {
+                const tagElem = document.getElementById(`edit-banner-tag-${i}`);
+                const titleElem = document.getElementById(`edit-banner-title-${i}`);
+                const descElem = document.getElementById(`edit-banner-desc-${i}`);
+                const mediaElem = document.getElementById(`edit-banner-media-${i}`);
 
-            if (!siteData.banners[1]) siteData.banners[1] = { type: 'image', media: '', tag: '', title: '', desc: '' };
-            siteData.banners[1].tag = document.getElementById('edit-banner2-tag').value;
-            siteData.banners[1].title = document.getElementById('edit-banner2-title').value;
-            siteData.banners[1].desc = document.getElementById('edit-banner2-desc').value;
-            
-            let rawB2 = document.getElementById('edit-banner2-bg').value;
-            siteData.banners[1].media = await processAndUploadImageIfBase64(rawB2, 'banner2');
-            siteData.banners[1].type = (siteData.banners[1].media.startsWith('data:video') || siteData.banners[1].media.endsWith('.mp4')) ? 'video' : 'image';
+                if (tagElem) siteData.banners[i].tag = tagElem.value.trim();
+                if (titleElem) siteData.banners[i].title = titleElem.value.trim();
+                if (descElem) siteData.banners[i].desc = descElem.value.trim();
+                if (mediaElem) {
+                    let rawMedia = mediaElem.value.trim();
+                    siteData.banners[i].media = await processAndUploadImageIfBase64(rawMedia, `banner_${i + 1}`);
+                    siteData.banners[i].type = (siteData.banners[i].media.startsWith('data:video') || siteData.banners[i].media.endsWith('.mp4')) ? 'video' : 'image';
+                }
+            }
 
             siteData.about.subtitle = document.getElementById('edit-about-subtitle').value;
             siteData.about.title = document.getElementById('edit-about-title').value;
@@ -1103,11 +1099,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+    // AÑADIR NUEVO BANNER CON VALIDACIÓN OBLIGATORIA DE CAMPOS
     document.getElementById('btn-add-banner').addEventListener('click', async () => {
-        const tag = document.getElementById('new-banner-tag').value || 'Colección Especial';
-        const title = document.getElementById('new-banner-title').value || 'Nuevo Banner';
-        const desc = document.getElementById('new-banner-desc').value || 'Descripción del nuevo banner';
-        let media = document.getElementById('new-banner-media').value || 'IMG/OFERTON.png';
+        const tag = document.getElementById('new-banner-tag').value.trim();
+        const title = document.getElementById('new-banner-title').value.trim();
+        const desc = document.getElementById('new-banner-desc').value.trim();
+        let media = document.getElementById('new-banner-media').value.trim();
+
+        // VALIDACIÓN OBLIGATORIA DE CAMPOS
+        if (!tag || !title || !desc || !media) {
+            alert("⚠️ Todos los campos son OBLIGATORIOS para agregar un nuevo banner:\n\n1. Etiqueta / Tag\n2. Título Principal\n3. Descripción\n4. Fondo (Archivo subido o Ruta de texto)");
+            return;
+        }
 
         const isVideo = media.startsWith('data:video') || media.endsWith('.mp4');
 
@@ -1119,6 +1122,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('new-banner-title').value = '';
         document.getElementById('new-banner-desc').value = '';
         document.getElementById('new-banner-media').value = '';
+        document.getElementById('new-banner-file').value = '';
 
         alert('¡Nuevo banner añadido! Recuerda hacer clic en "🚀 Publicar Cambios Globales" para enviarlo a GitHub.');
     });
@@ -1137,6 +1141,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('new-prod-name').value = '';
         document.getElementById('new-prod-price').value = '';
         document.getElementById('new-prod-img').value = '';
+        document.getElementById('new-prod-file').value = '';
         
         alert('¡Producto añadido! Recuerda hacer clic en "🚀 Publicar Cambios Globales" para guardarlo en GitHub.');
     });
