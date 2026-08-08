@@ -352,7 +352,7 @@
         </div>
     </div>
 
-    <!-- 14. PANEL DE EDITOR CMS DE GESTIÓN (CON CONEXIÓN GITHUB API) -->
+    <!-- 14. PANEL DE EDITOR CMS DE GESTIÓN GLOBAL -->
     <div id="editor-panel" class="fullscreen-modal-backdrop">
         <div class="editor-dashboard-card">
             
@@ -444,14 +444,27 @@
                         </div>
                     </div>
 
-                    <!-- PANE 3: BANNERS DEL SLIDER -->
+                    <!-- PANE 3: BANNERS DEL SLIDER (CON EDICIÓN COMPLETA DE TEXTOS) -->
                     <div id="tab-banners" class="tab-pane">
                         <h3>Banners del Slider</h3>
                         
+                        <!-- EDICIÓN COMPLETA BANNER 1 -->
                         <div class="editor-section-card">
-                            <h4>Banner 1 - Fondo (Imagen o Video)</h4>
+                            <h4>Banner 1 - Edición Completa</h4>
                             <div class="form-group-gold">
-                                <label>Seleccionar Archivo Local (Imagen o Video MP4):</label>
+                                <label>Etiqueta / Tag:</label>
+                                <input type="text" id="edit-banner1-tag" placeholder="Ej: Colección Exclusiva 2026">
+                            </div>
+                            <div class="form-group-gold">
+                                <label>Título Principal:</label>
+                                <input type="text" id="edit-banner1-title" placeholder="Ej: Fragancias que Dejan Huella">
+                            </div>
+                            <div class="form-group-gold">
+                                <label>Descripción:</label>
+                                <textarea id="edit-banner1-desc" rows="2" placeholder="Ej: Descubre notas olfativas de oro..."></textarea>
+                            </div>
+                            <div class="form-group-gold">
+                                <label>Seleccionar Archivo Local de Fondo (Imagen o Video MP4):</label>
                                 <input type="file" id="edit-banner1-file" accept="image/*,video/mp4" class="file-input-gold">
                             </div>
                             <div class="form-group-gold">
@@ -462,10 +475,23 @@
 
                         <hr class="editor-divider">
 
+                        <!-- EDICIÓN COMPLETA BANNER 2 -->
                         <div class="editor-section-card">
-                            <h4>Banner 2 - Fondo (Imagen o Video)</h4>
+                            <h4>Banner 2 - Edición Completa</h4>
                             <div class="form-group-gold">
-                                <label>Seleccionar Archivo Local (Imagen o Video MP4):</label>
+                                <label>Etiqueta / Tag:</label>
+                                <input type="text" id="edit-banner2-tag" placeholder="Ej: Edición Especial">
+                            </div>
+                            <div class="form-group-gold">
+                                <label>Título Principal:</label>
+                                <input type="text" id="edit-banner2-title" placeholder="Ej: Lujo & Distinción Olfativa">
+                            </div>
+                            <div class="form-group-gold">
+                                <label>Descripción:</label>
+                                <textarea id="edit-banner2-desc" rows="2" placeholder="Ej: Aprovecha precios exclusivos..."></textarea>
+                            </div>
+                            <div class="form-group-gold">
+                                <label>Seleccionar Archivo Local de Fondo (Imagen o Video MP4):</label>
                                 <input type="file" id="edit-banner2-file" accept="image/*,video/mp4" class="file-input-gold">
                             </div>
                             <div class="form-group-gold">
@@ -476,6 +502,13 @@
 
                         <hr class="editor-divider">
 
+                        <!-- LISTA Y GESTIÓN DE BANNERS ADICIONALES -->
+                        <h3>Banners Adicionales Registrados</h3>
+                        <div id="editor-banners-list" class="editor-products-grid"></div>
+
+                        <hr class="editor-divider">
+
+                        <!-- AÑADIR NUEVO BANNER -->
                         <h4>Añadir Nuevo Banner</h4>
                         <div class="form-group-gold">
                             <label>Etiqueta / Tag:</label>
