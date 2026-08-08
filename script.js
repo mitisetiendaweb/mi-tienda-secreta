@@ -33,7 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
             subtitle: "Pasión por el Aroma Real",
             title: "La Selección Perfecta Detrás de Cada Gota",
             desc: "Curamos y distribuimos las mejores inspiraciones olfativas del mundo, seleccionadas meticulosamente por su fidelidad y formuladas a base de aceites concentrados. Disfruta de una fijación extraordinaria y máxima duración en tu piel sin pagar sobreprecios.",
-            modalStory: `<p>A mediados de 2011 en Puerto Rico, Mitise es bautizada bajo el concepto revelador de <strong>Mi Tienda Secreta</strong>. nació tras identificar una gran verdad del mercado: la mayoría de las personas paga sumas exorbitantes no por la esencia en sí, sino por la marca, el frasco de diseño y la publicidad, recibiendo a cambio fórmulas diluidas en alcohol que se evaporaban al cabo de unas horas.</p>\n\n<p>Frente a esta realidad, la propuesta no fue crear fragancias desde cero, sino democratizar el acceso al lujo mediante la curaduría y distribución de las mejores equivalencias olfativas. Mitise se enfocó en rastrear y seleccionar meticulosamente las mejores inspiraciones de los perfumes más codiciados del mundo, garantizando la más alta fidelidad y, sobre todo, una formulación superior a base de aceites.</p>\n\n<p>El secreto del éxito radicó en la fijación. Al prescindir del alcohol y apostar por concentrados de óleo de alta pureza, las fragancias distribuidas por Mitise no se evaporan rápidamente; penetran en la piel e interactúan con el calor corporal para ofrecer una durabilidad extraordinaria durante todo el día. El cliente descubrió que podía llevar la misma presencia, elegancia y rastro distintivo de una marca de alta gama, pero a un precio justo y accesible.</p>\n\n<p>Hoy, esa misma filosofía cruza el Atlántico para desembarcar en el mercado español. Mitise se presenta en España como el puente directo hacia las mejores inspiraciones en aceite del mundo: un espacio donde la altísima fijación, el rendimiento real y la honestidad en el precio se unen para redefinir la forma en que las personas disfrutan de su perfume diario.</p>`
+            image: "IMG/LOGO FN.png",
+            modalStory: `<p>A mediados de 2011 en Puerto Rico, Mitise es bautizada bajo el concepto revelador de <strong>Mi Tienda Secreta</strong>. Nació tras identificar una gran verdad del mercado: la mayoría de las personas paga sumas exorbitantes no por la esencia en sí, sino por la marca, el frasco de diseño y la publicidad, recibiendo a cambio fórmulas diluidas en alcohol que se evaporaban al cabo de unas horas.</p>\n\n<p>Frente a esta realidad, la propuesta no fue crear fragancias desde cero, sino democratizar el acceso al lujo mediante la curaduría y distribución de las mejores equivalencias olfativas. Mitise se enfocó en rastrear y seleccionar meticulosamente las mejores inspiraciones de los perfumes más codiciados del mundo, garantizando la más alta fidelidad y, sobre todo, una formulación superior a base de aceites.</p>\n\n<p>El secreto del éxito radicó en la fijación. Al prescindir del alcohol y apostar por concentrados de óleo de alta pureza, las fragancias distribuidas por Mitise no se evaporan rápidamente; penetran en la piel e interactúan con el calor corporal para ofrecer una durabilidad extraordinaria durante todo el día. El cliente descubrió que podía llevar la misma presencia, elegancia y rastro distintivo de una marca de alta gama, pero a un precio justo y accesible.</p>\n\n<p>Hoy, esa misma filosofía cruza el Atlántico para desembarcar en el mercado español. Mitise se presenta en España como el puente directo hacia las mejores inspiraciones en aceite del mundo: un espacio donde la altísima fijación, el rendimiento real y la honestidad en el precio se unen para redefinir la forma en que las personas disfrutan de su perfume diario.</p>`
         },
         contactLinks: {
             instagram: "https://www.instagram.com/mitisefragrance/",
@@ -49,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let favoritesList = JSON.parse(localStorage.getItem('mitise_favorites')) || [];
     let cartList = JSON.parse(localStorage.getItem('mitise_cart_items')) || [];
 
-    // Estado temporal para el checkout y la selección de cantidad
+    // Estado temporal para checkout y selección de cantidad
     let currentSelectedProduct = null;
     let checkoutData = {
         fullname: '',
@@ -132,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tickerContainer.innerHTML = items + items;
         }
 
-        // Logo
+        // Logo Principal
         const logoImg = document.getElementById('main-logo-img');
         if(logoImg && siteData.logoPath) logoImg.src = siteData.logoPath;
 
@@ -143,13 +144,18 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCatalog();
 
         // Sobre Nosotros
-        document.getElementById('about-subtitle-display').innerText = siteData.about.subtitle;
-        document.getElementById('about-title-display').innerText = siteData.about.title;
-        document.getElementById('about-desc-display').innerText = siteData.about.desc;
+        document.getElementById('about-subtitle-display').innerText = siteData.about.subtitle || "Pasión por el Aroma Real";
+        document.getElementById('about-title-display').innerText = siteData.about.title || "La Selección Perfecta Detrás de Cada Gota";
+        document.getElementById('about-desc-display').innerText = siteData.about.desc || "";
         
+        const aboutImgDisplay = document.getElementById('about-img-display');
+        if(aboutImgDisplay) {
+            aboutImgDisplay.src = siteData.about.image || siteData.logoPath || "IMG/LOGO FN.png";
+        }
+
         const storyBody = document.getElementById('story-modal-body-display');
         if(storyBody) {
-            let storyHtml = siteData.about.modalStory;
+            let storyHtml = siteData.about.modalStory || "";
             if(!storyHtml.includes('<p>')) {
                 storyHtml = storyHtml.split(/\n\s*\n/).map(para => `<p>${para.trim()}</p>`).join('');
             }
@@ -175,9 +181,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const slideDiv = document.createElement('div');
             slideDiv.className = `slide slide-${index + 1} ${index === 0 ? 'active' : ''}`;
             
-            let bgMedia = banner.media.endsWith('.mp4') 
+            const isVideo = banner.media.startsWith('data:video') || banner.media.endsWith('.mp4');
+            let bgMedia = isVideo 
                 ? `<video autoplay muted playsinline class="hero-bg-video"><source src="${banner.media}" type="video/mp4"></video>`
-                : `<img src="${banner.media}" alt="Banner ${index+1}" class="hero-bg-img">`;
+                : `<img src="${banner.media}" alt="Banner ${index+1}" class="hero-bg-img" onerror="this.src='IMG/OFERTON.png'">`;
 
             slideDiv.innerHTML = `
                 ${bgMedia}
@@ -339,7 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('qty-modal-subtotal').innerText = `$${subtotal.toFixed(2)}`;
     }
 
-    // Botones + y - de cantidad
+    // Botones + y -
     document.getElementById('qty-btn-minus').addEventListener('click', () => {
         const input = document.getElementById('qty-modal-input');
         let val = parseInt(input.value) || 1;
@@ -363,7 +370,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if(!currentSelectedProduct) return;
         const qty = parseInt(document.getElementById('qty-modal-input').value) || 1;
 
-        // Comprobar si ya existe en el carrito
         const existingIndex = cartList.findIndex(item => item.id === currentSelectedProduct.id);
         if(existingIndex > -1) {
             cartList[existingIndex].quantity += qty;
@@ -426,7 +432,6 @@ document.addEventListener('DOMContentLoaded', () => {
         saveCart();
     };
 
-    // Botón Aceptar y Comprar (Paso 2 -> Paso 3)
     document.getElementById('btn-cart-checkout-start').addEventListener('click', () => {
         if(cartList.length === 0) {
             alert('Agrega al menos un producto al carrito para comprar.');
@@ -452,7 +457,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Envío del Formulario Paso 3 -> Ir a Paso 4 (Resumen)
     document.getElementById('checkout-info-form').addEventListener('submit', (e) => {
         e.preventDefault();
         
@@ -471,7 +475,7 @@ document.addEventListener('DOMContentLoaded', () => {
         openModal(document.getElementById('cart-modal'));
     });
 
-    // PASO 4: RENDIMIENTO DEL RESUMEN Y REDIRECCIÓN WHATSAPP
+    // PASO 4: RESUMEN Y REDIRECCIÓN WHATSAPP
     function renderSummaryModal() {
         const dataCard = document.getElementById('summary-data-card');
         const itemsList = document.getElementById('summary-items-list');
@@ -512,7 +516,6 @@ document.addEventListener('DOMContentLoaded', () => {
         openModal(document.getElementById('checkout-info-modal'));
     });
 
-    // Botón Aceptar Final -> Redireccionar a WhatsApp
     document.getElementById('btn-summary-accept').addEventListener('click', () => {
         let total = cartList.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         
@@ -531,19 +534,16 @@ document.addEventListener('DOMContentLoaded', () => {
             `💰 *TOTAL A PAGAR:* $${total.toFixed(2)} USD\n\n` +
             `_¡Hola! Deseo confirmar mi pedido realizado en la tienda web._`;
 
-        // URL de destino configurada en el panel o por defecto
         let targetPhone = siteData.contactLinks.whatsapp || 'https://wa.me/+584242032510';
         let waNumber = targetPhone.replace(/[^0-9]/g, '');
         if(!waNumber) waNumber = '584242032510';
 
         let finalWaUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
 
-        // Limpiar carrito tras pedido exitoso
         cartList = [];
         saveCart();
         closeAllModals(false);
 
-        // Abrir WhatsApp
         window.open(finalWaUrl, '_blank');
     });
 
@@ -650,19 +650,25 @@ document.addEventListener('DOMContentLoaded', () => {
     function openEditorDashboard(username) {
         document.getElementById('active-editor-name').innerText = username;
         fillEditorInputs();
+        renderEditorProductsList();
         openModal(editorPanel);
     }
 
     function fillEditorInputs() {
         document.getElementById('edit-ticker-text').value = siteData.tickerText;
         document.getElementById('edit-logo-path').value = siteData.logoPath;
+        
+        const previewLogo = document.getElementById('preview-logo-img');
+        if(previewLogo) previewLogo.src = siteData.logoPath;
+
         document.getElementById('edit-banner1-bg').value = siteData.banners[0] ? siteData.banners[0].media : '';
         document.getElementById('edit-banner2-bg').value = siteData.banners[1] ? siteData.banners[1].media : '';
         
-        document.getElementById('edit-about-subtitle').value = siteData.about.subtitle;
-        document.getElementById('edit-about-title').value = siteData.about.title;
-        document.getElementById('edit-about-desc').value = siteData.about.desc;
-        document.getElementById('edit-story-modal-text').value = siteData.about.modalStory;
+        document.getElementById('edit-about-subtitle').value = siteData.about.subtitle || '';
+        document.getElementById('edit-about-title').value = siteData.about.title || '';
+        document.getElementById('edit-about-desc').value = siteData.about.desc || '';
+        document.getElementById('edit-about-img-path').value = siteData.about.image || siteData.logoPath;
+        document.getElementById('edit-story-modal-text').value = siteData.about.modalStory || '';
 
         document.getElementById('link-instagram').value = siteData.contactLinks.instagram || '';
         document.getElementById('link-tiktok').value = siteData.contactLinks.tiktok || '';
@@ -672,6 +678,40 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('link-whatsapp').value = siteData.contactLinks.whatsapp || '';
     }
 
+    // Helper FileReader para convertir imagen local a DataURL
+    function setupFileInputReader(fileInputId, targetInputId, previewImgId) {
+        const fileInput = document.getElementById(fileInputId);
+        if (!fileInput) return;
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const dataUrl = evt.target.result;
+                    if (targetInputId) {
+                        const targetInput = document.getElementById(targetInputId);
+                        if (targetInput) targetInput.value = dataUrl;
+                    }
+                    if (previewImgId) {
+                        const previewImg = document.getElementById(previewImgId);
+                        if (previewImg) previewImg.src = dataUrl;
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    // Configuración de escuchadores para archivos locales
+    setupFileInputReader('edit-logo-file', 'edit-logo-path', 'preview-logo-img');
+    setupFileInputReader('edit-banner1-file', 'edit-banner1-bg', null);
+    setupFileInputReader('edit-banner2-file', 'edit-banner2-bg', null);
+    setupFileInputReader('new-banner-file', 'new-banner-media', null);
+    setupFileInputReader('new-prod-file', 'new-prod-img', null);
+    setupFileInputReader('edit-about-file', 'edit-about-img-path', null);
+
+    // Navegación por pestañas del Editor
     const tabBtns = document.querySelectorAll('.editor-tab-btn');
     const tabPanes = document.querySelectorAll('.tab-pane');
 
@@ -684,6 +724,43 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Renderizado de lista para Editar/Eliminar Productos en CMS
+    function renderEditorProductsList() {
+        const grid = document.getElementById('editor-products-list');
+        if(!grid) return;
+
+        if(siteData.products.length === 0) {
+            grid.innerHTML = '<p class="editor-hint">No hay productos en el catálogo.</p>';
+            return;
+        }
+
+        grid.innerHTML = siteData.products.map(p => `
+            <div class="editor-prod-row">
+                <div class="editor-prod-info">
+                    <img src="${p.image}" alt="${p.name}" class="editor-prod-thumb" onerror="this.src='IMG/LOGO_ENTERO.png'">
+                    <div>
+                        <p class="editor-prod-title">${p.name}</p>
+                        <p class="editor-prod-sub">${p.brand} - $${Number(p.price).toFixed(2)} USD</p>
+                    </div>
+                </div>
+                <div class="editor-prod-actions">
+                    <button class="btn-fav-remove" onclick="deleteProductFromCMS(${p.id})" title="Eliminar Producto">
+                        🗑️ Eliminar
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    window.deleteProductFromCMS = function(productId) {
+        if(confirm('¿Estás seguro de que deseas eliminar este producto del catálogo?')) {
+            siteData.products = siteData.products.filter(p => p.id !== productId);
+            saveSiteData();
+            renderEditorProductsList();
+        }
+    };
+
+    // Guardar cambios globales del Editor
     document.getElementById('btn-save-all').addEventListener('click', () => {
         siteData.tickerText = document.getElementById('edit-ticker-text').value;
         siteData.logoPath = document.getElementById('edit-logo-path').value;
@@ -694,6 +771,7 @@ document.addEventListener('DOMContentLoaded', () => {
         siteData.about.subtitle = document.getElementById('edit-about-subtitle').value;
         siteData.about.title = document.getElementById('edit-about-title').value;
         siteData.about.desc = document.getElementById('edit-about-desc').value;
+        siteData.about.image = document.getElementById('edit-about-img-path').value;
         siteData.about.modalStory = document.getElementById('edit-story-modal-text').value;
 
         siteData.contactLinks.instagram = document.getElementById('link-instagram').value;
@@ -704,20 +782,24 @@ document.addEventListener('DOMContentLoaded', () => {
         siteData.contactLinks.whatsapp = document.getElementById('link-whatsapp').value;
 
         saveSiteData();
-        alert('¡Todos los cambios han sido guardados!');
+        alert('¡Todos los cambios han sido guardados con éxito!');
     });
 
+    // Agregar nuevo banner
     document.getElementById('btn-add-banner').addEventListener('click', () => {
         const tag = document.getElementById('new-banner-tag').value || 'Colección Especial';
         const title = document.getElementById('new-banner-title').value || 'Nuevo Banner';
         const desc = document.getElementById('new-banner-desc').value || 'Descripción del nuevo banner';
         const media = document.getElementById('new-banner-media').value || 'IMG/OFERTON.png';
 
-        siteData.banners.push({ type: media.endsWith('.mp4') ? 'video' : 'image', media, tag, title, desc });
+        const isVideo = media.startsWith('data:video') || media.endsWith('.mp4');
+
+        siteData.banners.push({ type: isVideo ? 'video' : 'image', media, tag, title, desc });
         saveSiteData();
         alert('¡Nuevo banner agregado!');
     });
 
+    // Agregar nuevo producto
     document.getElementById('btn-add-product').addEventListener('click', () => {
         const brand = document.getElementById('new-prod-brand').value || 'Mitise';
         const name = document.getElementById('new-prod-name').value || 'Nuevo Perfume';
@@ -726,7 +808,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         siteData.products.push({ id: Date.now(), brand, name, price, image });
         saveSiteData();
-        alert('¡Producto añadido!');
+        renderEditorProductsList();
+        
+        // Limpiar campos
+        document.getElementById('new-prod-brand').value = '';
+        document.getElementById('new-prod-name').value = '';
+        document.getElementById('new-prod-price').value = '';
+        document.getElementById('new-prod-img').value = '';
+        
+        alert('¡Producto añadido al catálogo!');
     });
 
     document.getElementById('btn-logout-editor').addEventListener('click', () => {
@@ -802,7 +892,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.closeAllModals = closeAllModals;
 
-    window.addEventListener('popstate', (e) => {
+    window.addEventListener('popstate', () => {
         if (modalPushedState) {
             modalPushedState = false;
             closeAllModals(false);
