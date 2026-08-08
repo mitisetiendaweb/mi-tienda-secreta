@@ -23,35 +23,70 @@
   "products": [
     {
       "id": 1,
-      "brand": "Lattafa Exclusif",
-      "name": "Atheeri Gold Edition",
+      "brand": "ARMANI",
+      "name": "ACQUA DI GIO GIORGIO",
       "price": 10,
-      "image": "IMG/LOGO_ENTERO.png",
+      "image": "IMG/prod_1_1786175525846.webp",
       "subsection": "Recomendados"
     },
     {
       "id": 2,
-      "brand": "Haute Parfumerie",
-      "name": "Élixir de Nuit",
+      "brand": "DIOR",
+      "name": "SUAVAGE",
       "price": 10,
-      "image": "IMG/LOGO_ENTERO.png",
+      "image": "IMG/prod_2_1786175527032.webp",
       "subsection": "Recomendados"
     },
     {
       "id": 3,
-      "brand": "Royal Collection",
-      "name": "Velours Imperial",
+      "brand": "DIOR",
+      "name": "MISS DIOR",
       "price": 10,
-      "image": "IMG/LOGO_ENTERO.png",
+      "image": "IMG/prod_3_1786175527944.webp",
       "subsection": "Recomendados"
     },
     {
       "id": 4,
-      "brand": "Oriental Oud",
-      "name": "Oud Royal Gold",
+      "brand": "LANCOME",
+      "name": "LA VIE EST BELLE",
       "price": 10,
-      "image": "IMG/LOGO_ENTERO.png",
+      "image": "IMG/prod_4_1786175528957.webp",
       "subsection": "Recomendados"
+    },
+    {
+      "id": 1786175393158,
+      "brand": "INVICTUS",
+      "name": "INVICTUS",
+      "price": 10,
+      "image": "IMG/prod_1786175393158_1786175529907.webp"
+    },
+    {
+      "id": 1786175423734,
+      "brand": "GUCCI ",
+      "name": "BLOOM",
+      "price": 10,
+      "image": "IMG/prod_1786175423734_1786175530847.webp"
+    },
+    {
+      "id": 1786175457774,
+      "brand": "CAROLINA HERRERA",
+      "name": "GOOD GIRL ",
+      "price": 10,
+      "image": "IMG/prod_1786175457774_1786175531827.webp"
+    },
+    {
+      "id": 1786175494822,
+      "brand": "DOLCE GABBANA",
+      "name": "LIGHT BLUE",
+      "price": 10,
+      "image": "IMG/prod_1786175494822_1786175532843.webp"
+    },
+    {
+      "id": 1786175521477,
+      "brand": "ARMANI ",
+      "name": "EAU POUR HOME ",
+      "price": 10,
+      "image": "IMG/prod_1786175521477_1786175533748.webp"
     }
   ],
   "about": {
