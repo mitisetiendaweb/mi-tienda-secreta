@@ -1,7 +1,7 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 
     // ==========================================
-    // 0. ESTADO INICIAL Y ALMACENAMIENTO (localStorage)
+    // 0. ESTADO INICIAL Y CONEXIÓN GITHUB API
     // ==========================================
     const DEFAULT_DATA = {
         tickerText: "⚜️ LUXURY FRAGRANCE ⚜️,💎 PERFUMERÍA 100% ORIGINAL Y DE LUJO 💎,👑 LUXURY FRAGRANCE 👑",
@@ -50,7 +50,23 @@ document.addEventListener('DOMContentLoaded', () => {
     let favoritesList = JSON.parse(localStorage.getItem('mitise_favorites')) || [];
     let cartList = JSON.parse(localStorage.getItem('mitise_cart_items')) || [];
 
-    // Estado temporal para checkout y selección de cantidad
+    // Cargar la configuración remota publicada globalmente en GitHub al iniciar
+    async function fetchRemoteSiteData() {
+        try {
+            const response = await fetch(`sitedata.json?t=${Date.now()}`);
+            if (response.ok) {
+                const remoteData = await response.json();
+                if (remoteData && typeof remoteData === 'object') {
+                    siteData = remoteData;
+                    localStorage.setItem('mitise_site_data', JSON.stringify(siteData));
+                }
+            }
+        } catch (error) {
+            console.log("Cargando datos locales o predeterminados:", error);
+        }
+        renderAllContent();
+    }
+
     let currentSelectedProduct = null;
     let checkoutData = {
         fullname: '',
@@ -61,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         courierCompany: ''
     };
 
-    function saveSiteData() {
+    function saveSiteDataLocal() {
         localStorage.setItem('mitise_site_data', JSON.stringify(siteData));
         renderAllContent();
     }
@@ -123,12 +139,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 2. RENDERIZADO DINÁMICO
+    // 2. RENDERIZADO DINÁMICO DE LA TIENDA
     // ==========================================
     function renderAllContent() {
-        // Ticker
+        // Ticker Promocional
         const tickerContainer = document.getElementById('ticker-track-container');
-        if(tickerContainer) {
+        if(tickerContainer && siteData.tickerText) {
             const items = siteData.tickerText.split(',').map(item => `<span class="ticker-item">${item.trim()}</span>`).join('');
             tickerContainer.innerHTML = items + items;
         }
@@ -176,6 +192,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const slidesWrapper = document.getElementById('slides-wrapper');
         if(!slidesWrapper) return;
         slidesWrapper.innerHTML = '';
+
+        if (!siteData.banners || siteData.banners.length === 0) return;
 
         siteData.banners.forEach((banner, index) => {
             const slideDiv = document.createElement('div');
@@ -317,8 +335,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // 3. PASO 1 - PASO 4: CARRITO Y CHECKOUT
     // ==========================================
-
-    // PASO 1: ABRIR MODAL SELECCIÓN DE CANTIDAD
     window.triggerQuantityModal = function(productId) {
         const prod = siteData.products.find(p => p.id === productId);
         if(!prod) return;
@@ -346,7 +362,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('qty-modal-subtotal').innerText = `$${subtotal.toFixed(2)}`;
     }
 
-    // Botones + y -
     document.getElementById('qty-btn-minus').addEventListener('click', () => {
         const input = document.getElementById('qty-modal-input');
         let val = parseInt(input.value) || 1;
@@ -365,7 +380,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('qty-modal-input').addEventListener('input', updateQtySubtotalDisplay);
 
-    // Botón Aceptar Paso 1 -> Agrega al Carrito
     document.getElementById('btn-qty-accept').addEventListener('click', () => {
         if(!currentSelectedProduct) return;
         const qty = parseInt(document.getElementById('qty-modal-input').value) || 1;
@@ -390,7 +404,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('btn-qty-cancel').addEventListener('click', () => closeAllModals(true));
 
-    // PASO 2: MOSTRAR Y RENDERIZAR MODAL DEL CARRITO
     function renderCartModal() {
         const listContainer = document.getElementById('cart-items-list-container');
         const grandTotalElem = document.getElementById('cart-grand-total-amount');
@@ -442,7 +455,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('btn-cart-cancel').addEventListener('click', () => closeAllModals(true));
 
-    // PASO 3: FORMULARIO CLIENTE Y PAQUETERÍA CONDICIONAL
     const deliverySelect = document.getElementById('cust-delivery-method');
     const courierGroup = document.getElementById('courier-field-group');
 
@@ -475,7 +487,6 @@ document.addEventListener('DOMContentLoaded', () => {
         openModal(document.getElementById('cart-modal'));
     });
 
-    // PASO 4: RESUMEN Y REDIRECCIÓN WHATSAPP
     function renderSummaryModal() {
         const dataCard = document.getElementById('summary-data-card');
         const itemsList = document.getElementById('summary-items-list');
@@ -548,7 +559,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
-    // 4. SLIDER Y EDITOR DE ADMINISTRACIÓN
+    // 4. HERO SLIDER E INTEGRACIÓN CMS GITHUB
     // ==========================================
     let currentSlide = 0;
     let slideTimer = null;
@@ -602,6 +613,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showSlide(currentSlide);
     }
 
+    // LOGIN & EDITOR CMS
     const loginModal = document.getElementById('login-modal');
     const editorPanel = document.getElementById('editor-panel');
     const btnLoginTrigger = document.getElementById('btn-login-trigger');
@@ -647,14 +659,43 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function openEditorDashboard(username) {
-        document.getElementById('active-editor-name').innerText = username;
-        fillEditorInputs();
-        renderEditorProductsList();
-        openModal(editorPanel);
+    function getGitHubConfig() {
+        return JSON.parse(localStorage.getItem('mitise_gh_config')) || {
+            owner: 'mitisetiendaweb',
+            repo: 'mi-tienda-secreta',
+            branch: 'main',
+            token: ''
+        };
+    }
+
+    function saveGitHubConfig() {
+        const config = {
+            owner: document.getElementById('gh-owner').value.trim(),
+            repo: document.getElementById('gh-repo').value.trim(),
+            branch: document.getElementById('gh-branch').value.trim(),
+            token: document.getElementById('gh-token').value.trim()
+        };
+        localStorage.setItem('mitise_gh_config', JSON.stringify(config));
+        
+        const statusMsg = document.getElementById('gh-status-msg');
+        if(statusMsg) {
+            statusMsg.innerText = config.token ? "✅ Estado: Token guardado correctamente." : "⚠️ Estado: Sin token de GitHub ingresado.";
+        }
+        alert('Configuración de GitHub guardada en este dispositivo.');
     }
 
     function fillEditorInputs() {
+        const ghConfig = getGitHubConfig();
+        document.getElementById('gh-owner').value = ghConfig.owner || 'mitisetiendaweb';
+        document.getElementById('gh-repo').value = ghConfig.repo || 'mi-tienda-secreta';
+        document.getElementById('gh-branch').value = ghConfig.branch || 'main';
+        document.getElementById('gh-token').value = ghConfig.token || '';
+
+        const statusMsg = document.getElementById('gh-status-msg');
+        if(statusMsg) {
+            statusMsg.innerText = ghConfig.token ? "✅ Estado: Token listo para publicar cambios." : "⚠️ Estado: Ingrese su token para activar la publicación global.";
+        }
+
         document.getElementById('edit-ticker-text').value = siteData.tickerText;
         document.getElementById('edit-logo-path').value = siteData.logoPath;
         
@@ -678,7 +719,15 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('link-whatsapp').value = siteData.contactLinks.whatsapp || '';
     }
 
-    // Helper FileReader para convertir imagen local a DataURL
+    document.getElementById('btn-save-gh-config').addEventListener('click', saveGitHubConfig);
+
+    function openEditorDashboard(username) {
+        document.getElementById('active-editor-name').innerText = username;
+        fillEditorInputs();
+        renderEditorProductsList();
+        openModal(editorPanel);
+    }
+
     function setupFileInputReader(fileInputId, targetInputId, previewImgId) {
         const fileInput = document.getElementById(fileInputId);
         if (!fileInput) return;
@@ -703,7 +752,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Configuración de escuchadores para archivos locales
     setupFileInputReader('edit-logo-file', 'edit-logo-path', 'preview-logo-img');
     setupFileInputReader('edit-banner1-file', 'edit-banner1-bg', null);
     setupFileInputReader('edit-banner2-file', 'edit-banner2-bg', null);
@@ -711,7 +759,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setupFileInputReader('new-prod-file', 'new-prod-img', null);
     setupFileInputReader('edit-about-file', 'edit-about-img-path', null);
 
-    // Navegación por pestañas del Editor
     const tabBtns = document.querySelectorAll('.editor-tab-btn');
     const tabPanes = document.querySelectorAll('.tab-pane');
 
@@ -724,7 +771,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Renderizado de lista para Editar/Eliminar Productos en CMS
     function renderEditorProductsList() {
         const grid = document.getElementById('editor-products-list');
         if(!grid) return;
@@ -755,51 +801,155 @@ document.addEventListener('DOMContentLoaded', () => {
     window.deleteProductFromCMS = function(productId) {
         if(confirm('¿Estás seguro de que deseas eliminar este producto del catálogo?')) {
             siteData.products = siteData.products.filter(p => p.id !== productId);
-            saveSiteData();
+            saveSiteDataLocal();
             renderEditorProductsList();
         }
     };
 
-    // Guardar cambios globales del Editor
-    document.getElementById('btn-save-all').addEventListener('click', () => {
-        siteData.tickerText = document.getElementById('edit-ticker-text').value;
-        siteData.logoPath = document.getElementById('edit-logo-path').value;
-        
-        if(siteData.banners[0]) siteData.banners[0].media = document.getElementById('edit-banner1-bg').value;
-        if(siteData.banners[1]) siteData.banners[1].media = document.getElementById('edit-banner2-bg').value;
+    // FUNCIÓN CORE: SUBIR ARCHIVO O ACTUALIZAR VÍA GITHUB API
+    async function commitFileToGitHub(pathInRepo, base64Content, commitMessage) {
+        const config = getGitHubConfig();
+        if(!config.token) {
+            throw new Error("No has ingresado tu Token de Acceso de GitHub. Ve a la pestaña '🔑 GitHub API' para configurarlo.");
+        }
 
-        siteData.about.subtitle = document.getElementById('edit-about-subtitle').value;
-        siteData.about.title = document.getElementById('edit-about-title').value;
-        siteData.about.desc = document.getElementById('edit-about-desc').value;
-        siteData.about.image = document.getElementById('edit-about-img-path').value;
-        siteData.about.modalStory = document.getElementById('edit-story-modal-text').value;
+        const apiUrl = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${pathInRepo}`;
 
-        siteData.contactLinks.instagram = document.getElementById('link-instagram').value;
-        siteData.contactLinks.tiktok = document.getElementById('link-tiktok').value;
-        siteData.contactLinks.facebook = document.getElementById('link-facebook').value;
-        siteData.contactLinks.telegram = document.getElementById('link-telegram').value;
-        siteData.contactLinks.gmail = document.getElementById('link-gmail').value;
-        siteData.contactLinks.whatsapp = document.getElementById('link-whatsapp').value;
+        // 1. Verificar SHA del archivo si ya existe en el repositorio
+        let sha = null;
+        try {
+            const checkRes = await fetch(`${apiUrl}?ref=${config.branch}`, {
+                headers: {
+                    'Authorization': `Bearer ${config.token}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            });
+            if (checkRes.ok) {
+                const checkData = await checkRes.json();
+                sha = checkData.sha;
+            }
+        } catch(err) {
+            console.log("Archivo nuevo en GitHub, no requiere SHA previo.");
+        }
 
-        saveSiteData();
-        alert('¡Todos los cambios han sido guardados con éxito!');
+        // 2. Preparar el Body para la API de GitHub
+        const payload = {
+            message: commitMessage || `Actualización desde Panel CMS Mitise (${new Date().toLocaleString()})`,
+            content: base64Content,
+            branch: config.branch
+        };
+        if(sha) payload.sha = sha;
+
+        // 3. Enviar solicitud PUT a la API de GitHub
+        const putRes = await fetch(apiUrl, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${config.token}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/vnd.github.v3+json'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if(!putRes.ok) {
+            const errorInfo = await putRes.json();
+            throw new Error(errorInfo.message || "Error al conectar con la API de GitHub");
+        }
+
+        return await putRes.json();
+    }
+
+    // Helper para convertir cualquier imagen subida en Base64 listo para API de GitHub
+    async function processAndUploadImageIfBase64(imageStr, defaultFilenamePrefix) {
+        if (imageStr.startsWith('data:')) {
+            const parts = imageStr.split(',');
+            const mimeMatch = parts[0].match(/:(.*?);/);
+            const ext = mimeMatch ? mimeMatch[1].split('/')[1] : 'png';
+            const base64Data = parts[1];
+            
+            const newPath = `IMG/${defaultFilenamePrefix}_${Date.now()}.${ext}`;
+            await commitFileToGitHub(newPath, base64Data, `Subida de imagen ${newPath} desde CMS`);
+            return newPath;
+        }
+        return imageStr;
+    }
+
+    // BOTÓN PRINCIPAL: PUBLICAR CAMBIOS GLOBALES EN GITHUB
+    document.getElementById('btn-save-all').addEventListener('click', async () => {
+        const loadingOverlay = document.getElementById('github-loading-overlay');
+        if (loadingOverlay) loadingOverlay.style.display = 'flex';
+
+        try {
+            // Recoger valores del formulario
+            siteData.tickerText = document.getElementById('edit-ticker-text').value;
+            
+            let rawLogo = document.getElementById('edit-logo-path').value;
+            siteData.logoPath = await processAndUploadImageIfBase64(rawLogo, 'logo');
+
+            if(siteData.banners[0]) {
+                let rawB1 = document.getElementById('edit-banner1-bg').value;
+                siteData.banners[0].media = await processAndUploadImageIfBase64(rawB1, 'banner1');
+            }
+            if(siteData.banners[1]) {
+                let rawB2 = document.getElementById('edit-banner2-bg').value;
+                siteData.banners[1].media = await processAndUploadImageIfBase64(rawB2, 'banner2');
+            }
+
+            siteData.about.subtitle = document.getElementById('edit-about-subtitle').value;
+            siteData.about.title = document.getElementById('edit-about-title').value;
+            siteData.about.desc = document.getElementById('edit-about-desc').value;
+            
+            let rawAboutImg = document.getElementById('edit-about-img-path').value;
+            siteData.about.image = await processAndUploadImageIfBase64(rawAboutImg, 'about');
+            
+            siteData.about.modalStory = document.getElementById('edit-story-modal-text').value;
+
+            siteData.contactLinks.instagram = document.getElementById('link-instagram').value;
+            siteData.contactLinks.tiktok = document.getElementById('link-tiktok').value;
+            siteData.contactLinks.facebook = document.getElementById('link-facebook').value;
+            siteData.contactLinks.telegram = document.getElementById('link-telegram').value;
+            siteData.contactLinks.gmail = document.getElementById('link-gmail').value;
+            siteData.contactLinks.whatsapp = document.getElementById('link-whatsapp').value;
+
+            // Procesar imágenes de productos si están en formato Base64
+            for (let i = 0; i < siteData.products.length; i++) {
+                if (siteData.products[i].image.startsWith('data:')) {
+                    siteData.products[i].image = await processAndUploadImageIfBase64(siteData.products[i].image, `prod_${siteData.products[i].id}`);
+                }
+            }
+
+            // Guardar localmente
+            saveSiteDataLocal();
+
+            // Convertir objeto siteData a JSON en Base64 para GitHub
+            const jsonString = JSON.stringify(siteData, null, 2);
+            const jsonBase64 = btoa(unescape(encodeURIComponent(jsonString)));
+
+            // Publicar sitedata.json en GitHub
+            await commitFileToGitHub('sitedata.json', jsonBase64, `Actualización global de sitedata.json vía CMS`);
+
+            if (loadingOverlay) loadingOverlay.style.display = 'none';
+            alert('🚀 ¡PUBLICACIÓN GLOBAL EXITOSA!\n\nLos cambios e imágenes han sido guardados en tu repositorio de GitHub. En 1-2 minutos GitHub Pages actualizará la web para todos tus clientes en el mundo.');
+
+        } catch (error) {
+            if (loadingOverlay) loadingOverlay.style.display = 'none';
+            alert(`⚠️ Error al publicar en GitHub:\n${error.message}`);
+        }
     });
 
-    // Agregar nuevo banner
-    document.getElementById('btn-add-banner').addEventListener('click', () => {
+    document.getElementById('btn-add-banner').addEventListener('click', async () => {
         const tag = document.getElementById('new-banner-tag').value || 'Colección Especial';
         const title = document.getElementById('new-banner-title').value || 'Nuevo Banner';
         const desc = document.getElementById('new-banner-desc').value || 'Descripción del nuevo banner';
-        const media = document.getElementById('new-banner-media').value || 'IMG/OFERTON.png';
+        let media = document.getElementById('new-banner-media').value || 'IMG/OFERTON.png';
 
         const isVideo = media.startsWith('data:video') || media.endsWith('.mp4');
 
         siteData.banners.push({ type: isVideo ? 'video' : 'image', media, tag, title, desc });
-        saveSiteData();
-        alert('¡Nuevo banner agregado!');
+        saveSiteDataLocal();
+        alert('¡Nuevo banner añadido! Recuerda hacer clic en "🚀 Publicar Cambios Globales" para enviarlo a GitHub.');
     });
 
-    // Agregar nuevo producto
     document.getElementById('btn-add-product').addEventListener('click', () => {
         const brand = document.getElementById('new-prod-brand').value || 'Mitise';
         const name = document.getElementById('new-prod-name').value || 'Nuevo Perfume';
@@ -807,16 +957,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const image = document.getElementById('new-prod-img').value || 'IMG/LOGO_ENTERO.png';
 
         siteData.products.push({ id: Date.now(), brand, name, price, image });
-        saveSiteData();
+        saveSiteDataLocal();
         renderEditorProductsList();
         
-        // Limpiar campos
         document.getElementById('new-prod-brand').value = '';
         document.getElementById('new-prod-name').value = '';
         document.getElementById('new-prod-price').value = '';
         document.getElementById('new-prod-img').value = '';
         
-        alert('¡Producto añadido al catálogo!');
+        alert('¡Producto añadido! Recuerda hacer clic en "🚀 Publicar Cambios Globales" para guardarlo en GitHub.');
     });
 
     document.getElementById('btn-logout-editor').addEventListener('click', () => {
@@ -828,7 +977,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('close-editor-panel').addEventListener('click', () => closeAllModals(true));
 
     // ==========================================
-    // 5. MODALES INTERACTIVOS Y MANEJO DEL BOTÓN "ATRÁS"
+    // 5. MODALES INTERACTIVOS Y MANEJO DE BOTÓN "ATRÁS"
     // ==========================================
     const storyModal = document.getElementById('story-modal');
     const contactModal = document.getElementById('contact-modal');
@@ -923,5 +1072,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    renderAllContent();
+    // Cargar los datos publicados globalmente desde GitHub
+    await fetchRemoteSiteData();
 });
