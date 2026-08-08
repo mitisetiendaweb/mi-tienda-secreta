@@ -22,15 +22,16 @@
 </head>
 <body>
 
-    <!-- 1. BARRA SUPERIOR DE ANUNCIOS -->
-    <div class="top-announcement-bar">
-        <div class="ticker-track" id="ticker-track-container">
-            <!-- Cargado Dinámicamente -->
-        </div>
-    </div>
-
-    <!-- 2. HEADER PRINCIPAL -->
+    <!-- 1. ENCABEZADO COMPLETO FIJO PERMANENTE -->
     <header id="main-header">
+        <!-- Barra de Anuncios Ticker -->
+        <div class="top-announcement-bar">
+            <div class="ticker-track" id="ticker-track-container">
+                <!-- Cargado Dinámicamente -->
+            </div>
+        </div>
+
+        <!-- Renglón del Logo, Secciones y Carrito -->
         <div class="header-container">
             <!-- Logo Oficial -->
             <a href="#" class="logo-area">
@@ -44,7 +45,7 @@
                 <li><a href="#contacto" class="nav-link" id="nav-contact">Contacto</a></li>
             </ul>
 
-            <!-- Acciones Derecha (Sin Búsqueda) -->
+            <!-- Acciones Derecha -->
             <div class="header-right-actions">
                 <button class="icon-btn" id="btn-favorites-trigger" title="Favoritos">
                     🖤
@@ -60,7 +61,7 @@
         </div>
     </header>
 
-    <!-- 3. BANNER SLIDER PRINCIPAL DINÁMICO -->
+    <!-- 2. BANNER SLIDER PRINCIPAL DINÁMICO -->
     <section class="hero-slider" id="hero-slider-container">
         <button class="slider-arrow arrow-left" id="prevSlide">&#10094;</button>
         <button class="slider-arrow arrow-right" id="nextSlide">&#10095;</button>
@@ -68,7 +69,7 @@
         <div id="slides-wrapper" style="width: 100%; height: 100%; position: relative;"></div>
     </section>
 
-    <!-- 4. CATÁLOGO DE PRODUCTOS -->
+    <!-- 3. CATÁLOGO DE PRODUCTOS -->
     <section id="catalogo" class="section-container">
         <div class="section-header">
             <h2 class="section-title">Nuestra Colección Exclusiva</h2>
@@ -79,7 +80,7 @@
         <div class="products-grid" id="products-container"></div>
     </section>
 
-    <!-- 5. SECCIÓN SOBRE NOSOTROS -->
+    <!-- 4. SECCIÓN SOBRE NOSOTROS -->
     <section id="sobre-nosotros" class="bg-dark-soft">
         <div class="section-container split-layout">
             <div class="split-text">
@@ -97,7 +98,7 @@
         </div>
     </section>
 
-    <!-- 6. MODAL INTERACTIVO DE HISTORIA MITISE -->
+    <!-- 5. MODAL INTERACTIVO DE HISTORIA MITISE -->
     <div id="story-modal" class="story-modal-backdrop">
         <div class="story-modal-card">
             <button class="story-modal-close" id="close-story-modal" aria-label="Cerrar">&times;</button>
@@ -112,7 +113,7 @@
         </div>
     </div>
 
-    <!-- 7. MODAL INTERACTIVO DE CONTACTO -->
+    <!-- 6. MODAL INTERACTIVO DE CONTACTO -->
     <div id="contact-modal" class="story-modal-backdrop">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-contact-modal" aria-label="Cerrar">&times;</button>
@@ -138,7 +139,7 @@
         </div>
     </div>
 
-    <!-- 8. MODAL INTERACTIVO DE FAVORITOS / LISTA DE DESEOS -->
+    <!-- 7. MODAL INTERACTIVO DE FAVORITOS -->
     <div id="favorites-modal" class="story-modal-backdrop">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-fav-modal" aria-label="Cerrar">&times;</button>
@@ -149,13 +150,11 @@
                 <div class="gold-divider"></div>
             </div>
 
-            <div id="favorites-modal-body">
-                <!-- Se genera dinámicamente -->
-            </div>
+            <div id="favorites-modal-body"></div>
         </div>
     </div>
 
-    <!-- 9. VENTANA LOGIN FULLSCREEN (EDITOR) -->
+    <!-- 8. VENTANA LOGIN FULLSCREEN (EDITOR) -->
     <div id="login-modal" class="fullscreen-modal-backdrop">
         <div class="login-card">
             <button class="fullscreen-modal-close" id="close-login-modal">&times;</button>
@@ -180,7 +179,7 @@
         </div>
     </div>
 
-    <!-- 10. PANEL DE EDITOR EN PANTALLA COMPLETA -->
+    <!-- 9. PANEL DE EDITOR EN PANTALLA COMPLETA -->
     <div id="editor-panel" class="fullscreen-modal-backdrop">
         <div class="editor-dashboard-card">
             <div class="editor-top-bar">
@@ -327,12 +326,12 @@
         </div>
     </div>
 
-    <!-- 11. BOTÓN FLOTANTE DE WHATSAPP -->
+    <!-- 10. BOTÓN FLOTANTE DE WHATSAPP -->
     <a href="https://wa.me/1234567890?text=Hola,%20quisiera%20informaci%C3%B3n%20sobre%20sus%20perfumes" target="_blank" class="whatsapp-btn" id="floating-whatsapp-btn">
         <span>💬</span> ¡Hola!
     </a>
 
-    <!-- 12. FOOTER -->
+    <!-- 11. FOOTER -->
     <footer id="contacto">
         <div class="footer-container">
             <p>&copy; 2026 Mitise - Luxury Fragrance. Todos los derechos reservados.</p>
