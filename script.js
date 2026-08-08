@@ -22,12 +22,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 desc: "Aprovecha precios exclusivos en líneas seleccionadas de la mejor perfumería."
             }
         ],
-        subsections: ["Recomendados"],
+        sections: ["Nuestra Colección Exclusiva"],
         products: [
-            { id: 1, brand: "Lattafa Exclusif", name: "Atheeri Gold Edition", price: 85.00, image: "IMG/LOGO_ENTERO.png", subsection: "Recomendados" },
-            { id: 2, brand: "Haute Parfumerie", name: "Élixir de Nuit", price: 120.00, image: "IMG/LOGO_ENTERO.png", subsection: "Recomendados" },
-            { id: 3, brand: "Royal Collection", name: "Velours Imperial", price: 95.00, image: "IMG/LOGO_ENTERO.png", subsection: "Recomendados" },
-            { id: 4, brand: "Oriental Oud", name: "Oud Royal Gold", price: 140.00, image: "IMG/LOGO_ENTERO.png", subsection: "Recomendados" }
+            { id: 1, brand: "Lattafa Exclusif", name: "Atheeri Gold Edition", price: 85.00, image: "IMG/LOGO_ENTERO.png", section: "Nuestra Colección Exclusiva" },
+            { id: 2, brand: "Haute Parfumerie", name: "Élixir de Nuit", price: 120.00, image: "IMG/LOGO_ENTERO.png", section: "Nuestra Colección Exclusiva" },
+            { id: 3, brand: "Royal Collection", name: "Velours Imperial", price: 95.00, image: "IMG/LOGO_ENTERO.png", section: "Nuestra Colección Exclusiva" },
+            { id: 4, brand: "Oriental Oud", name: "Oud Royal Gold", price: 140.00, image: "IMG/LOGO_ENTERO.png", section: "Nuestra Colección Exclusiva" }
         ],
         about: {
             subtitle: "Pasión por el Aroma Real",
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // ==========================================
-    // 2. RENDERIZADO DINÁMICO DE LA TIENDA
+    // 2. RENDERIZADO DINÁMICO DE LA TIENDA Y SECCIONES
     // ==========================================
     function renderAllContent() {
         const tickerContainer = document.getElementById('ticker-track-container');
@@ -212,36 +212,89 @@ document.addEventListener('DOMContentLoaded', async () => {
         initSliderLogic();
     }
 
+    // RENDERIZADO DEL CATÁLOGO AGRUPADO POR SECCIONES
     function renderCatalog() {
-        const container = document.getElementById('products-container');
-        if(!container) return;
-        container.innerHTML = '';
+        const wrapper = document.getElementById('catalog-sections-wrapper');
+        if (!wrapper) return;
+        wrapper.innerHTML = '';
 
-        siteData.products.forEach(product => {
-            const isFav = favoritesList.includes(product.id);
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.innerHTML = `
-                <div class="product-img-box">
-                    <button class="btn-fav-card ${isFav ? 'active' : ''}" onclick="toggleFavorite(${product.id})" title="Guardar en Favoritos">
-                        ${isFav ? '❤️' : '🖤'}
-                    </button>
-                    <img src="${product.image}" alt="${product.name}" onerror="this.src='IMG/LOGO_ENTERO.png'">
-                </div>
-                <div class="product-details">
-                    <div>
-                        <p class="product-brand">${product.brand}</p>
-                        <h3 class="product-name">${product.name}</h3>
+        const sections = (siteData.sections && siteData.sections.length > 0) 
+            ? siteData.sections 
+            : ["Nuestra Colección Exclusiva"];
+
+        sections.forEach(sectionName => {
+            const sectionProducts = siteData.products.filter(p => (p.section || sections[0]) === sectionName);
+            
+            if (sectionProducts.length > 0 || sections.length === 1) {
+                const sectionBlock = document.createElement('div');
+                sectionBlock.className = 'catalog-section-block';
+                
+                sectionBlock.innerHTML = `
+                    <div class="catalog-section-header">
+                        <h2 class="catalog-section-title">${sectionName}</h2>
+                        <div class="gold-divider"></div>
                     </div>
-                    <div>
-                        <p class="product-price">$${Number(product.price).toFixed(2)} USD</p>
-                        <button class="btn-add-cart" onclick="triggerQuantityModal(${product.id})">Añadir al Carrito</button>
+                    <div class="products-grid">
+                        ${sectionProducts.map(product => {
+                            const isFav = favoritesList.includes(product.id);
+                            return `
+                                <div class="product-card">
+                                    <div class="product-img-box" onclick="openProductLightbox(${product.id})" title="Haz clic para agrandar foto">
+                                        <button class="btn-fav-card ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite(${product.id})" title="Guardar en Favoritos">
+                                            ${isFav ? '❤️' : '🖤'}
+                                        </button>
+                                        <img src="${product.image}" alt="${product.name}" onerror="this.src='IMG/LOGO_ENTERO.png'">
+                                    </div>
+                                    <div class="product-details">
+                                        <div>
+                                            <p class="product-brand">${product.brand}</p>
+                                            <h3 class="product-name">${product.name}</h3>
+                                        </div>
+                                        <div>
+                                            <p class="product-price">$${Number(product.price).toFixed(2)} USD</p>
+                                            <button class="btn-add-cart" onclick="triggerQuantityModal(${product.id})">Añadir al Carrito</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
                     </div>
-                </div>
-            `;
-            container.appendChild(card);
+                `;
+                wrapper.appendChild(sectionBlock);
+            }
         });
     }
+
+    // ABRIR LIGHTBOX / MODAL DE FOTO AGRANDADA DEL PRODUCTO
+    window.openProductLightbox = function(productId) {
+        const prod = siteData.products.find(p => p.id === productId);
+        if (!prod) return;
+
+        document.getElementById('lightbox-brand').innerText = prod.brand || 'Mitise Fragrance';
+        document.getElementById('lightbox-title').innerText = prod.name || 'Perfume';
+        document.getElementById('lightbox-price').innerText = `$${Number(prod.price).toFixed(2)} USD`;
+        
+        const img = document.getElementById('lightbox-img');
+        if (img) {
+            img.src = prod.image;
+            img.onerror = () => { img.src = 'IMG/LOGO_ENTERO.png'; };
+        }
+
+        const addCartBtn = document.getElementById('lightbox-btn-add-cart');
+        if (addCartBtn) {
+            addCartBtn.onclick = () => {
+                closeAllModals(false);
+                triggerQuantityModal(prod.id);
+            };
+        }
+
+        openModal(document.getElementById('product-lightbox-modal'));
+    };
+
+    const closeLightboxBtn = document.getElementById('close-lightbox-modal');
+    const lightboxBtnClose = document.getElementById('lightbox-btn-close');
+    if (closeLightboxBtn) closeLightboxBtn.onclick = () => closeAllModals(true);
+    if (lightboxBtnClose) lightboxBtnClose.onclick = () => closeAllModals(true);
 
     function renderFavoritesModal() {
         const favBody = document.getElementById('favorites-modal-body');
@@ -676,6 +729,86 @@ document.addEventListener('DOMContentLoaded', async () => {
         alert('Configuración de GitHub guardada en este dispositivo.');
     }
 
+    function populateSectionDropdowns() {
+        const sections = (siteData.sections && siteData.sections.length > 0) ? siteData.sections : ["Nuestra Colección Exclusiva"];
+        
+        const newSelect = document.getElementById('new-prod-section');
+        const editSelect = document.getElementById('edit-prod-section');
+
+        const optionsHtml = sections.map(s => `<option value="${s}">${s}</option>`).join('');
+
+        if (newSelect) newSelect.innerHTML = optionsHtml;
+        if (editSelect) editSelect.innerHTML = optionsHtml;
+    }
+
+    function renderEditorSectionsList() {
+        const grid = document.getElementById('editor-sections-list');
+        if (!grid) return;
+
+        if (!siteData.sections || siteData.sections.length === 0) {
+            siteData.sections = ["Nuestra Colección Exclusiva"];
+        }
+
+        grid.innerHTML = siteData.sections.map((sec, idx) => `
+            <div class="editor-prod-row">
+                <div class="editor-prod-info">
+                    <p class="editor-prod-title">Sección ${idx + 1}: <strong>${sec}</strong></p>
+                </div>
+                <div class="editor-prod-actions">
+                    ${siteData.sections.length > 1 ? `
+                        <button class="btn-fav-remove" onclick="deleteSectionFromCMS(${idx})" title="Eliminar Sección">
+                            🗑️ Eliminar
+                        </button>
+                    ` : '<span class="editor-hint" style="margin:0;">(Sección Principal)</span>'}
+                </div>
+            </div>
+        `).join('');
+
+        populateSectionDropdowns();
+    }
+
+    window.deleteSectionFromCMS = function(index) {
+        if (confirm(`¿Estás seguro de que deseas eliminar la sección "${siteData.sections[index]}"? Los productos asignados pasarán a la sección principal.`)) {
+            const deletedSec = siteData.sections[index];
+            siteData.sections.splice(index, 1);
+            
+            siteData.products.forEach(p => {
+                if (p.section === deletedSec) {
+                    p.section = siteData.sections[0];
+                }
+            });
+
+            saveSiteDataLocal();
+            renderEditorSectionsList();
+        }
+    };
+
+    const btnAddSection = document.getElementById('btn-add-section');
+    if (btnAddSection) {
+        btnAddSection.addEventListener('click', () => {
+            const input = document.getElementById('new-section-name');
+            const name = input ? input.value.trim() : '';
+
+            if (!name) {
+                alert('Por favor, ingresa un nombre para la nueva sección.');
+                return;
+            }
+
+            if (!siteData.sections) siteData.sections = [];
+            if (siteData.sections.includes(name)) {
+                alert('Esa sección ya existe.');
+                return;
+            }
+
+            siteData.sections.push(name);
+            if (input) input.value = '';
+
+            saveSiteDataLocal();
+            renderEditorSectionsList();
+            alert(`¡Sección "${name}" creada exitosamente!`);
+        });
+    }
+
     function fillEditorInputs() {
         const ghConfig = getGitHubConfig();
         document.getElementById('gh-owner').value = ghConfig.owner || 'mitisetiendaweb';
@@ -707,6 +840,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('link-gmail').value = siteData.contactLinks.gmail || '';
         document.getElementById('link-whatsapp').value = siteData.contactLinks.whatsapp || '';
 
+        renderEditorSectionsList();
         renderEditorBannersList();
     }
 
@@ -748,7 +882,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupFileInputReader('new-prod-file', 'new-prod-img', null);
     setupFileInputReader('edit-about-file', 'edit-about-img-path', null);
 
-    // ESCUCHADOR DEDICADO PARA SELECCIÓN DE FOTO EN EL MODAL DE EDICIÓN DE PRODUCTO
     const editProdFileInput = document.getElementById('edit-prod-file');
     if (editProdFileInput) {
         editProdFileInput.addEventListener('change', (e) => {
@@ -848,7 +981,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <img src="${p.image}" alt="${p.name}" class="editor-prod-thumb" onerror="this.src='IMG/LOGO_ENTERO.png'">
                     <div>
                         <p class="editor-prod-title">${p.name}</p>
-                        <p class="editor-prod-sub">${p.brand} - $${Number(p.price).toFixed(2)} USD</p>
+                        <p class="editor-prod-sub">${p.brand} (${p.section || 'Nuestra Colección Exclusiva'}) - $${Number(p.price).toFixed(2)} USD</p>
                     </div>
                 </div>
                 <div class="editor-prod-actions" onclick="event.stopPropagation()">
@@ -871,6 +1004,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     window.openEditProductModal = function(productId) {
+        populateSectionDropdowns();
+
         const prod = siteData.products.find(p => p.id === productId);
         if (!prod) return;
 
@@ -879,6 +1014,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('edit-prod-name').value = prod.name || '';
         document.getElementById('edit-prod-price').value = prod.price || 0;
         document.getElementById('edit-prod-img').value = prod.image || '';
+
+        const selectSec = document.getElementById('edit-prod-section');
+        if (selectSec) selectSec.value = prod.section || siteData.sections[0] || "Nuestra Colección Exclusiva";
 
         const fileInput = document.getElementById('edit-prod-file');
         if (fileInput) fileInput.value = '';
@@ -893,7 +1031,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // FORMULARIO DE EDICIÓN DE PRODUCTOS
     const formEditProd = document.getElementById('form-edit-product');
     if (formEditProd) {
         formEditProd.addEventListener('submit', (e) => {
@@ -904,6 +1041,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const prod = siteData.products.find(p => p.id === prodId);
 
             if (prod) {
+                prod.section = document.getElementById('edit-prod-section').value;
                 prod.brand = document.getElementById('edit-prod-brand').value.trim();
                 prod.name = document.getElementById('edit-prod-name').value.trim();
                 prod.price = parseFloat(document.getElementById('edit-prod-price').value) || 0;
@@ -1009,7 +1147,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             let rawLogo = document.getElementById('edit-logo-path').value;
             siteData.logoPath = await processAndUploadImageIfBase64(rawLogo, 'logo');
 
-            // ACTUALIZAR BANNERS
             for (let i = 0; i < siteData.banners.length; i++) {
                 const tagElem = document.getElementById(`edit-banner-tag-${i}`);
                 const titleElem = document.getElementById(`edit-banner-title-${i}`);
@@ -1042,7 +1179,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             siteData.contactLinks.gmail = document.getElementById('link-gmail').value;
             siteData.contactLinks.whatsapp = document.getElementById('link-whatsapp').value;
 
-            // PROCESAR FOTOS DE PRODUCTOS INDIVIDUALMENTE CON NOMBRE ÚNICO POR ID
             for (let i = 0; i < siteData.products.length; i++) {
                 if (siteData.products[i].image.startsWith('data:')) {
                     siteData.products[i].image = await processAndUploadImageIfBase64(siteData.products[i].image, `prod_${siteData.products[i].id}`);
@@ -1092,12 +1228,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     document.getElementById('btn-add-product').addEventListener('click', () => {
+        const section = document.getElementById('new-prod-section').value || siteData.sections[0] || "Nuestra Colección Exclusiva";
         const brand = document.getElementById('new-prod-brand').value || 'Mitise';
         const name = document.getElementById('new-prod-name').value || 'Nuevo Perfume';
         const price = parseFloat(document.getElementById('new-prod-price').value) || 90;
         const image = document.getElementById('new-prod-img').value || 'IMG/LOGO_ENTERO.png';
 
-        siteData.products.push({ id: Date.now(), brand, name, price, image });
+        siteData.products.push({ id: Date.now(), section, brand, name, price, image });
         saveSiteDataLocal();
         renderEditorProductsList();
         
@@ -1161,10 +1298,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     function closeAllModals(shouldGoBack = true) {
         let wasOpen = false;
         const editModalElem = document.getElementById('edit-product-modal');
+        const lightboxModalElem = document.getElementById('product-lightbox-modal');
         const modals = [
             storyModal, contactModal, favoritesModal, cartModal, 
             qtyModal, checkoutInfoModal, checkoutSummaryModal, 
-            loginModal, editorPanel, editModalElem
+            loginModal, editorPanel, editModalElem, lightboxModalElem
         ];
 
         modals.forEach(m => {
@@ -1207,9 +1345,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     window.onclick = (e) => {
         const editModalElem = document.getElementById('edit-product-modal');
+        const lightboxModalElem = document.getElementById('product-lightbox-modal');
         const modals = [
             storyModal, contactModal, favoritesModal, cartModal, 
-            qtyModal, checkoutInfoModal, checkoutSummaryModal, loginModal, editModalElem
+            qtyModal, checkoutInfoModal, checkoutSummaryModal, loginModal, editModalElem, lightboxModalElem
         ];
         if(modals.includes(e.target)) {
             closeAllModals(true);
