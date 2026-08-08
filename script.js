@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             subtitle: "Pasión por el Aroma Real",
             title: "La Selección Perfecta Detrás de Cada Gota",
             desc: "Curamos y distribuimos las mejores inspiraciones olfativas del mundo, seleccionadas meticulosamente por su fidelidad y formuladas a base de aceites concentrados. Disfruta de una fijación extraordinaria y máxima duración en tu piel sin pagar sobreprecios.",
-            modalStory: `<p>A mediados de 2011 en Puerto Rico, Mitise es bautizada bajo el concepto revelador de <strong>Mi Tienda Secreta</strong>. nació tras identificar una gran verdad del mercado: la mayoría de las personas paga sumas exorbitantes no por la esencia en sí, sino por la marca, el frasco de diseño y la publicidad, recibiendo a cambio fórmulas diluidas en alcohol que se evaporaban al cabo de unas horas.</p>\n\n<p>Frente a esta realidad, la propuesta no fue crear fragancias desde cero, sino democratizar el acceso al lujo mediante la curaduría y distribución de las mejores equivalencias olfativas. Mitise se enfocó en rastrear y seleccionar meticulosamente las mejores inspiraciones de los perfumes más codiciados del mundo, garantizando la más alta fidelidad y, sobre todo, una formulación superior a base de aceites.</p>\n\n<p>El secreto del éxito radicó en la fijación. Al prescindir del alcohol y apostar por concentrados de óleo de alta pureza, las fragancias distribuidas por Mitise no se evaporan rápidamente; penetran en la piel e interactúan con el calor corporal para ofrecer una durabilidad extraordinaria durante todo el día. El cliente descubrió que podía llevar la misma presencia, elegancia y rastro distintivo de una marca de alta gama, pero a un precio justo y accesible.</p>\n\n<p>Ese concepto de compra inteligente convirtió a la tienda en un secreto imposible de guardar. La marca dio el salto a Miami, posicionándose en el mercado estadounidense como la alternativa definitiva para quienes buscan la máxima calidad olfativa sin pagar sobreprecios innecesarios.</p>\n\n<p>Hoy, esa misma filosofía cruza el Atlántico para desembarcar en el mercado español. Mitise se presenta en España como el puente directo hacia las mejores inspiraciones en aceite del mundo: un espacio donde la altísima fijación, el rendimiento real y la honestidad en el precio se unen para redefinir la forma en que las personas disfrutan de su perfume diario.</p>`
+            modalStory: `<p>A mediados de 2011 en Puerto Rico, Mitise es bautizada bajo el concepto revelador de <strong>Mi Tienda Secreta</strong>. nació tras identificar una gran verdad del mercado: la mayoría de las personas paga sumas exorbitantes no por la esencia en sí, sino por la marca, el frasco de diseño y la publicidad, recibiendo a cambio fórmulas diluidas en alcohol que se evaporaban al cabo de unas horas.</p>\n\n<p>Frente a esta realidad, la propuesta no fue crear fragancias desde cero, sino democratizar el acceso al lujo mediante la curaduría y distribución de las mejores equivalencias olfativas. Mitise se enfocó en rastrear y seleccionar meticulosamente las mejores inspiraciones de los perfumes más codiciados del mundo, garantizando la más alta fidelidad y, sobre todo, una formulación superior a base de aceites.</p>\n\n<p>El secreto del éxito radicó en la fijación. Al prescindir del alcohol y apostar por concentrados de óleo de alta pureza, las fragancias distribuidas por Mitise no se evaporan rápidamente; penetran en la piel e interactúan con el calor corporal para ofrecer una durabilidad extraordinaria durante todo el día. El cliente descubrió que podía llevar la misma presencia, elegancia y rastro distintivo de una marca de alta gama, pero a un precio justo y accesible.</p>\n\n<p>Hoy, esa misma filosofía cruza el Atlántico para desembarcar en el mercado español. Mitise se presenta en España como el puente directo hacia las mejores inspiraciones en aceite del mundo: un espacio donde la altísima fijación, el rendimiento real y la honestidad en el precio se unen para redefinir la forma en que las personas disfrutan de su perfume diario.</p>`
         },
         contactLinks: {
             instagram: "https://www.instagram.com/mitisefragrance/",
@@ -47,6 +47,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let siteData = JSON.parse(localStorage.getItem('mitise_site_data')) || DEFAULT_DATA;
     let favoritesList = JSON.parse(localStorage.getItem('mitise_favorites')) || [];
+    let cartList = JSON.parse(localStorage.getItem('mitise_cart_items')) || [];
+
+    // Estado temporal para el checkout y la selección de cantidad
+    let currentSelectedProduct = null;
+    let checkoutData = {
+        fullname: '',
+        countryCode: '+58',
+        phone: '',
+        paymentMethod: 'Efectivo',
+        deliveryMethod: 'Delivery',
+        courierCompany: ''
+    };
 
     function saveSiteData() {
         localStorage.setItem('mitise_site_data', JSON.stringify(siteData));
@@ -58,6 +70,12 @@ document.addEventListener('DOMContentLoaded', () => {
         updateFavBadge();
         renderCatalog();
         renderFavoritesModal();
+    }
+
+    function saveCart() {
+        localStorage.setItem('mitise_cart_items', JSON.stringify(cartList));
+        updateCartBadge();
+        renderCartModal();
     }
 
     function toggleFavorite(productId) {
@@ -72,9 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateFavBadge() {
         const favCountBadge = document.getElementById('fav-count');
-        if (favCountBadge) {
-            favCountBadge.innerText = favoritesList.length;
-        }
+        if (favCountBadge) favCountBadge.innerText = favoritesList.length;
+    }
+
+    function updateCartBadge() {
+        const cartCountBadge = document.getElementById('cart-count');
+        const totalQty = cartList.reduce((sum, item) => sum + item.quantity, 0);
+        if (cartCountBadge) cartCountBadge.innerText = totalQty;
     }
 
     window.toggleFavorite = toggleFavorite;
@@ -100,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 2. RENDERIZADO DINÁMICO DE LA WEB
+    // 2. RENDERIZADO DINÁMICO
     // ==========================================
     function renderAllContent() {
         // Ticker
@@ -129,10 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(storyBody) {
             let storyHtml = siteData.about.modalStory;
             if(!storyHtml.includes('<p>')) {
-                storyHtml = storyHtml
-                    .split(/\n\s*\n/)
-                    .map(para => `<p>${para.trim()}</p>`)
-                    .join('');
+                storyHtml = storyHtml.split(/\n\s*\n/).map(para => `<p>${para.trim()}</p>`).join('');
             }
             storyBody.innerHTML = storyHtml;
         }
@@ -140,9 +159,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Redes
         renderContactGrid();
 
-        // Actualizar Favoritos
+        // Badges
         updateFavBadge();
+        updateCartBadge();
         renderFavoritesModal();
+        renderCartModal();
     }
 
     function renderBanners() {
@@ -154,12 +175,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const slideDiv = document.createElement('div');
             slideDiv.className = `slide slide-${index + 1} ${index === 0 ? 'active' : ''}`;
             
-            let bgMedia = '';
-            if(banner.media.endsWith('.mp4')) {
-                bgMedia = `<video autoplay muted playsinline class="hero-bg-video"><source src="${banner.media}" type="video/mp4"></video>`;
-            } else {
-                bgMedia = `<img src="${banner.media}" alt="Banner ${index+1}" class="hero-bg-img">`;
-            }
+            let bgMedia = banner.media.endsWith('.mp4') 
+                ? `<video autoplay muted playsinline class="hero-bg-video"><source src="${banner.media}" type="video/mp4"></video>`
+                : `<img src="${banner.media}" alt="Banner ${index+1}" class="hero-bg-img">`;
 
             slideDiv.innerHTML = `
                 ${bgMedia}
@@ -200,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div>
                         <p class="product-price">$${Number(product.price).toFixed(2)} USD</p>
-                        <button class="btn-add-cart" onclick="addToCart('${product.name}', ${product.price})">Añadir al Carrito</button>
+                        <button class="btn-add-cart" onclick="triggerQuantityModal(${product.id})">Añadir al Carrito</button>
                     </div>
                 </div>
             `;
@@ -237,8 +255,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         </div>
                         <div class="fav-item-actions">
-                            <button class="btn-fav-move-cart" onclick="addToCart('${p.name}', ${p.price}); toggleFavorite(${p.id});">
-                                🛒 Carrito
+                            <button class="btn-fav-move-cart" onclick="triggerQuantityModal(${p.id}); toggleFavorite(${p.id});">
+                                🛒 Añadir
                             </button>
                             <button class="btn-fav-remove" onclick="toggleFavorite(${p.id})" title="Quitar">
                                 🗑️
@@ -255,7 +273,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if(!grid) return;
 
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
         const links = siteData.contactLinks;
         const config = [
             { key: 'instagram', label: '@mitisefragrance', icon: 'IMG/INSTAGRAM.png', defaultUrl: 'https://www.instagram.com/mitisefragrance/' },
@@ -269,23 +286,9 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.innerHTML = config.map(item => {
             let url = links[item.key] && links[item.key].trim() !== '' ? links[item.key].trim() : item.defaultUrl;
 
-            if (item.key === 'tiktok' && url !== '#') {
-                if (url.startsWith('@')) url = `https://www.tiktok.com/${url}`;
-                else if (!url.startsWith('http')) url = `https://www.tiktok.com/@${url}`;
-            }
-
-            if (item.key === 'instagram' && url !== '#') {
-                if (url.startsWith('@')) url = `https://www.instagram.com/${url.replace('@', '')}/`;
-                else if (!url.startsWith('http')) url = `https://www.instagram.com/${url}/`;
-            }
-
             if (item.key === 'gmail') {
                 const cleanEmail = url.replace('mailto:', '').replace('https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=', '').trim();
-                if (isMobile) {
-                    url = `mailto:${cleanEmail}`;
-                } else {
-                    url = `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=${cleanEmail}`;
-                }
+                url = isMobile ? `mailto:${cleanEmail}` : `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=${cleanEmail}`;
             }
 
             if (url !== '#' && !url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('mailto:')) {
@@ -302,16 +305,250 @@ document.addEventListener('DOMContentLoaded', () => {
                 </a>
             `;
         }).join('');
-
-        const floatWa = document.getElementById('floating-whatsapp-btn');
-        if(floatWa) {
-            const waUrl = links.whatsapp && links.whatsapp.trim() !== '' ? links.whatsapp : 'https://wa.me/+584242032510';
-            floatWa.href = waUrl.startsWith('http') ? waUrl : `https://${waUrl}`;
-        }
     }
 
     // ==========================================
-    // 3. SLIDER INTERACTIVO INTELIGENTE
+    // 3. PASO 1 - PASO 4: CARRITO Y CHECKOUT
+    // ==========================================
+
+    // PASO 1: ABRIR MODAL SELECCIÓN DE CANTIDAD
+    window.triggerQuantityModal = function(productId) {
+        const prod = siteData.products.find(p => p.id === productId);
+        if(!prod) return;
+
+        currentSelectedProduct = prod;
+        document.getElementById('qty-modal-brand').innerText = prod.brand;
+        document.getElementById('qty-modal-title').innerText = prod.name;
+        document.getElementById('qty-modal-unit-price').innerText = Number(prod.price).toFixed(2);
+        
+        const img = document.getElementById('qty-modal-img');
+        img.src = prod.image;
+        img.onerror = () => { img.src = 'IMG/LOGO_ENTERO.png'; };
+
+        const qtyInput = document.getElementById('qty-modal-input');
+        qtyInput.value = 1;
+
+        updateQtySubtotalDisplay();
+        openModal(document.getElementById('quantity-modal'));
+    };
+
+    function updateQtySubtotalDisplay() {
+        if(!currentSelectedProduct) return;
+        const qty = parseInt(document.getElementById('qty-modal-input').value) || 1;
+        const subtotal = currentSelectedProduct.price * qty;
+        document.getElementById('qty-modal-subtotal').innerText = `$${subtotal.toFixed(2)}`;
+    }
+
+    // Botones + y - de cantidad
+    document.getElementById('qty-btn-minus').addEventListener('click', () => {
+        const input = document.getElementById('qty-modal-input');
+        let val = parseInt(input.value) || 1;
+        if(val > 1) {
+            input.value = val - 1;
+            updateQtySubtotalDisplay();
+        }
+    });
+
+    document.getElementById('qty-btn-plus').addEventListener('click', () => {
+        const input = document.getElementById('qty-modal-input');
+        let val = parseInt(input.value) || 1;
+        input.value = val + 1;
+        updateQtySubtotalDisplay();
+    });
+
+    document.getElementById('qty-modal-input').addEventListener('input', updateQtySubtotalDisplay);
+
+    // Botón Aceptar Paso 1 -> Agrega al Carrito
+    document.getElementById('btn-qty-accept').addEventListener('click', () => {
+        if(!currentSelectedProduct) return;
+        const qty = parseInt(document.getElementById('qty-modal-input').value) || 1;
+
+        // Comprobar si ya existe en el carrito
+        const existingIndex = cartList.findIndex(item => item.id === currentSelectedProduct.id);
+        if(existingIndex > -1) {
+            cartList[existingIndex].quantity += qty;
+        } else {
+            cartList.push({
+                id: currentSelectedProduct.id,
+                brand: currentSelectedProduct.brand,
+                name: currentSelectedProduct.name,
+                price: currentSelectedProduct.price,
+                image: currentSelectedProduct.image,
+                quantity: qty
+            });
+        }
+
+        saveCart();
+        closeAllModals(true);
+    });
+
+    document.getElementById('btn-qty-cancel').addEventListener('click', () => closeAllModals(true));
+
+    // PASO 2: MOSTRAR Y RENDERIZAR MODAL DEL CARRITO
+    function renderCartModal() {
+        const listContainer = document.getElementById('cart-items-list-container');
+        const grandTotalElem = document.getElementById('cart-grand-total-amount');
+        if(!listContainer || !grandTotalElem) return;
+
+        if(cartList.length === 0) {
+            listContainer.innerHTML = `
+                <div class="empty-fav-msg">
+                    <p>Tu carrito de compras está vacío.</p>
+                </div>
+            `;
+            grandTotalElem.innerText = '$0.00 USD';
+            return;
+        }
+
+        let total = 0;
+        listContainer.innerHTML = cartList.map((item, index) => {
+            const subtotal = item.price * item.quantity;
+            total += subtotal;
+            return `
+                <div class="cart-item-row">
+                    <div class="cart-item-info">
+                        <img src="${item.image}" alt="${item.name}" class="cart-item-thumb" onerror="this.src='IMG/LOGO_ENTERO.png'">
+                        <div>
+                            <h4 class="fav-item-title">${item.name}</h4>
+                            <p class="fav-item-price">$${Number(item.price).toFixed(2)} x ${item.quantity} = <strong>$${subtotal.toFixed(2)}</strong></p>
+                        </div>
+                    </div>
+                    <button class="btn-fav-remove" onclick="removeCartItem(${index})" title="Quitar">🗑️</button>
+                </div>
+            `;
+        }).join('');
+
+        grandTotalElem.innerText = `$${total.toFixed(2)} USD`;
+    }
+
+    window.removeCartItem = function(index) {
+        cartList.splice(index, 1);
+        saveCart();
+    };
+
+    // Botón Aceptar y Comprar (Paso 2 -> Paso 3)
+    document.getElementById('btn-cart-checkout-start').addEventListener('click', () => {
+        if(cartList.length === 0) {
+            alert('Agrega al menos un producto al carrito para comprar.');
+            return;
+        }
+        openModal(document.getElementById('checkout-info-modal'));
+    });
+
+    document.getElementById('btn-cart-cancel').addEventListener('click', () => closeAllModals(true));
+
+    // PASO 3: FORMULARIO CLIENTE Y PAQUETERÍA CONDICIONAL
+    const deliverySelect = document.getElementById('cust-delivery-method');
+    const courierGroup = document.getElementById('courier-field-group');
+
+    deliverySelect.addEventListener('change', () => {
+        const val = deliverySelect.value;
+        if(val === 'Envíos nacionales' || val === 'Envíos internacionales') {
+            courierGroup.style.display = 'flex';
+            document.getElementById('cust-courier-company').required = true;
+        } else {
+            courierGroup.style.display = 'none';
+            document.getElementById('cust-courier-company').required = false;
+        }
+    });
+
+    // Envío del Formulario Paso 3 -> Ir a Paso 4 (Resumen)
+    document.getElementById('checkout-info-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        checkoutData.fullname = document.getElementById('cust-fullname').value.trim();
+        checkoutData.countryCode = document.getElementById('cust-country-code').value;
+        checkoutData.phone = document.getElementById('cust-phone').value.trim();
+        checkoutData.paymentMethod = document.getElementById('cust-payment-method').value;
+        checkoutData.deliveryMethod = document.getElementById('cust-delivery-method').value;
+        checkoutData.courierCompany = document.getElementById('cust-courier-company').value.trim();
+
+        renderSummaryModal();
+        openModal(document.getElementById('checkout-summary-modal'));
+    });
+
+    document.getElementById('btn-info-back').addEventListener('click', () => {
+        openModal(document.getElementById('cart-modal'));
+    });
+
+    // PASO 4: RENDIMIENTO DEL RESUMEN Y REDIRECCIÓN WHATSAPP
+    function renderSummaryModal() {
+        const dataCard = document.getElementById('summary-data-card');
+        const itemsList = document.getElementById('summary-items-list');
+        const grandTotalElem = document.getElementById('summary-grand-total-amount');
+
+        let courierText = (checkoutData.deliveryMethod !== 'Delivery' && checkoutData.courierCompany) 
+            ? `<br><strong>Empresa de Paquetería:</strong> ${checkoutData.courierCompany}` 
+            : '';
+
+        dataCard.innerHTML = `
+            <strong>Cliente:</strong> ${checkoutData.fullname}<br>
+            <strong>Teléfono:</strong> ${checkoutData.countryCode} ${checkoutData.phone}<br>
+            <strong>Método de Pago:</strong> ${checkoutData.paymentMethod}<br>
+            <strong>Entrega:</strong> ${checkoutData.deliveryMethod} ${courierText}
+        `;
+
+        let total = 0;
+        itemsList.innerHTML = cartList.map(item => {
+            const subtotal = item.price * item.quantity;
+            total += subtotal;
+            return `
+                <div class="cart-item-row">
+                    <div class="cart-item-info">
+                        <div>
+                            <h4 class="fav-item-title">${item.quantity}x ${item.name}</h4>
+                            <p class="fav-item-price">PU: $${Number(item.price).toFixed(2)} USD</p>
+                        </div>
+                    </div>
+                    <strong>$${subtotal.toFixed(2)}</strong>
+                </div>
+            `;
+        }).join('');
+
+        grandTotalElem.innerText = `$${total.toFixed(2)} USD`;
+    }
+
+    document.getElementById('btn-summary-back').addEventListener('click', () => {
+        openModal(document.getElementById('checkout-info-modal'));
+    });
+
+    // Botón Aceptar Final -> Redireccionar a WhatsApp
+    document.getElementById('btn-summary-accept').addEventListener('click', () => {
+        let total = cartList.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        
+        let courierLine = (checkoutData.deliveryMethod !== 'Delivery' && checkoutData.courierCompany)
+            ? `\n📦 *Empresa Paquetería:* ${checkoutData.courierCompany}`
+            : '';
+
+        let itemsText = cartList.map(i => `• ${i.quantity}x ${i.name} ($${Number(i.price).toFixed(2)}) = $${(i.price * i.quantity).toFixed(2)}`).join('\n');
+
+        let message = `👑 *NUEVO PEDIDO - MITISE* 👑\n\n` +
+            `👤 *Cliente:* ${checkoutData.fullname}\n` +
+            `📞 *Teléfono:* ${checkoutData.countryCode} ${checkoutData.phone}\n` +
+            `💳 *Método de Pago:* ${checkoutData.paymentMethod}\n` +
+            `🚚 *Método de Entrega:* ${checkoutData.deliveryMethod}${courierLine}\n\n` +
+            `🛍️ *DETALLE DEL PEDIDO:*\n${itemsText}\n\n` +
+            `💰 *TOTAL A PAGAR:* $${total.toFixed(2)} USD\n\n` +
+            `_¡Hola! Deseo confirmar mi pedido realizado en la tienda web._`;
+
+        // URL de destino configurada en el panel o por defecto
+        let targetPhone = siteData.contactLinks.whatsapp || 'https://wa.me/+584242032510';
+        let waNumber = targetPhone.replace(/[^0-9]/g, '');
+        if(!waNumber) waNumber = '584242032510';
+
+        let finalWaUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+
+        // Limpiar carrito tras pedido exitoso
+        cartList = [];
+        saveCart();
+        closeAllModals(false);
+
+        // Abrir WhatsApp
+        window.open(finalWaUrl, '_blank');
+    });
+
+    // ==========================================
+    // 4. SLIDER Y EDITOR DE ADMINISTRACIÓN
     // ==========================================
     let currentSlide = 0;
     let slideTimer = null;
@@ -365,9 +602,6 @@ document.addEventListener('DOMContentLoaded', () => {
         showSlide(currentSlide);
     }
 
-    // ==========================================
-    // 4. AUTENTICACIÓN Y EDITOR
-    // ==========================================
     const loginModal = document.getElementById('login-modal');
     const editorPanel = document.getElementById('editor-panel');
     const btnLoginTrigger = document.getElementById('btn-login-trigger');
@@ -504,20 +738,29 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('close-editor-panel').addEventListener('click', () => closeAllModals(true));
 
     // ==========================================
-    // 5. MODALES INTERACTIVOS
+    // 5. MODALES INTERACTIVOS Y MANEJO DEL BOTÓN "ATRÁS"
     // ==========================================
     const storyModal = document.getElementById('story-modal');
     const contactModal = document.getElementById('contact-modal');
     const favoritesModal = document.getElementById('favorites-modal');
-    
+    const cartModal = document.getElementById('cart-modal');
+    const qtyModal = document.getElementById('quantity-modal');
+    const checkoutInfoModal = document.getElementById('checkout-info-modal');
+    const checkoutSummaryModal = document.getElementById('checkout-summary-modal');
+
     const navAbout = document.getElementById('nav-about');
     const navContact = document.getElementById('nav-contact');
     const btnReadStory = document.getElementById('btn-read-story');
     const btnFavoritesTrigger = document.getElementById('btn-favorites-trigger');
-    
+    const btnCartTrigger = document.getElementById('btn-cart-trigger');
+
     const closeStoryModal = document.getElementById('close-story-modal');
     const closeContactModal = document.getElementById('close-contact-modal');
     const closeFavModal = document.getElementById('close-fav-modal');
+    const closeCartModal = document.getElementById('close-cart-modal');
+    const closeQtyModal = document.getElementById('close-qty-modal');
+    const closeInfoModal = document.getElementById('close-info-modal');
+    const closeSummaryModal = document.getElementById('close-summary-modal');
 
     let modalPushedState = false;
 
@@ -536,7 +779,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function closeAllModals(shouldGoBack = true) {
         let wasOpen = false;
-        const modals = [storyModal, contactModal, favoritesModal, loginModal, editorPanel];
+        const modals = [
+            storyModal, contactModal, favoritesModal, cartModal, 
+            qtyModal, checkoutInfoModal, checkoutSummaryModal, 
+            loginModal, editorPanel
+        ];
+
         modals.forEach(m => {
             if (m && m.classList.contains('active')) {
                 m.classList.remove('active');
@@ -565,28 +813,25 @@ document.addEventListener('DOMContentLoaded', () => {
     if(btnReadStory) btnReadStory.onclick = () => openModal(storyModal);
     if(navContact) navContact.onclick = (e) => { e.preventDefault(); openModal(contactModal); };
     if(btnFavoritesTrigger) btnFavoritesTrigger.onclick = () => openModal(favoritesModal);
+    if(btnCartTrigger) btnCartTrigger.onclick = () => openModal(cartModal);
 
     if(closeStoryModal) closeStoryModal.onclick = () => closeAllModals(true);
     if(closeContactModal) closeContactModal.onclick = () => closeAllModals(true);
     if(closeFavModal) closeFavModal.onclick = () => closeAllModals(true);
+    if(closeCartModal) closeCartModal.onclick = () => closeAllModals(true);
+    if(closeQtyModal) closeQtyModal.onclick = () => closeAllModals(true);
+    if(closeInfoModal) closeInfoModal.onclick = () => closeAllModals(true);
+    if(closeSummaryModal) closeSummaryModal.onclick = () => closeAllModals(true);
 
     window.onclick = (e) => {
-        if(e.target === storyModal || e.target === contactModal || e.target === favoritesModal || e.target === loginModal) {
+        const modals = [
+            storyModal, contactModal, favoritesModal, cartModal, 
+            qtyModal, checkoutInfoModal, checkoutSummaryModal, loginModal
+        ];
+        if(modals.includes(e.target)) {
             closeAllModals(true);
         }
     };
 
     renderAllContent();
 });
-
-// Carrito de compras
-let itemCount = 0;
-let totalPrice = 0;
-
-function addToCart(name, price) {
-    itemCount++;
-    totalPrice += price;
-    
-    const cartCountElem = document.getElementById('cart-count');
-    if (cartCountElem) cartCountElem.innerText = itemCount;
-}
