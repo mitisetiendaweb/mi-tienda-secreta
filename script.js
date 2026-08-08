@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             title: "La Selección Perfecta Detrás de Cada Gota",
             desc: "Curamos y distribuimos las mejores inspiraciones olfativas del mundo, seleccionadas meticulosamente por su fidelidad y formuladas a base de aceites concentrados. Disfruta de una fijación extraordinaria y máxima duración en tu piel sin pagar sobreprecios.",
             image: "IMG/LOGO FN.png",
-            modalStory: `<p>A mediados de 2011 en Puerto Rico, Mitise es bautizada bajo el concepto revelador de <strong>Mi Tienda Secreta</strong>. Nació tras identificar una gran verdad del mercado: la mayoría de las personas paga sumas exorbitantes no por la esencia en sí, sino por la marca, el frasco de diseño y la publicidad, recibiendo a cambio fórmulas diluidas en alcohol que se evaporaban al cabo de unas horas.</p>\n\n<p>Frente a esta realidad, la propuesta no fue crear fragancias desde cero, sino democratizar el acceso al lujo mediante la curaduría y distribución de las mejores equivalencias olfativas. Mitise se enfocó en rastrear y seleccionar meticulosamente las mejores inspiraciones de los perfumes más codiciados del mundo, garantizando la más alta fidelidad y, sobre todo, una formulación superior a base de aceites.</p>\n\n<p>El secreto del éxito radicó en la fijación. Al prescindir del alcohol y apostar por concentrados de óleo de alta pureza, las fragancias distribuidas por Mitise no se evaporan rápidamente; penetran en la piel e interactúan con el calor corporal para ofrecer una durabilidad extraordinaria durante todo el día. El cliente descubrió que podía llevar la misma presencia, elegancia y rastro distintivo de una marca de alta gama, pero a un precio justo y accesible.</p>\n\n<p>Hoy, esa misma filosofía cruza el Atlántico para desembarcar en el mercado español. Mitise se presenta en España como el puente directo hacia las mejores inspiraciones en aceite del mundo: un espacio donde la altísima fijación, el rendimiento real y la honestidad en el precio se unen para redefinir la forma en que las personas disfrutan de su perfume diario.</p>`
+            modalStory: `<p>A mediados de 2011 en Puerto Rico, Mitise es bautizada bajo el concepto revelador de <strong>Mi Tienda Secreta</strong>. Nació tras identificar una gran verdad del mercado: la mayoría de las personas paga sumas exorbitantemente no por la esencia en sí, sino por la marca, el frasco de diseño y la publicidad, recibiendo a cambio fórmulas diluidas en alcohol que se evaporaban al cabo de unas horas.</p>\n\n<p>Frente a esta realidad, la propuesta no fue crear fragancias desde cero, sino democratizar el acceso al lujo mediante la curaduría y distribución de las mejores equivalencias olfativas. Mitise se enfocó en rastrear y seleccionar meticulosamente las mejores inspiraciones de los perfumes más codiciados del mundo, garantizando la más alta fidelidad y, sobre todo, una formulación superior a base de aceites.</p>\n\n<p>El secreto del éxito radicó en la fijación. Al prescindir del alcohol y apostar por concentrados de óleo de alta pureza, las fragancias distribuidas por Mitise no se evaporan rápidamente; penetran en la piel e interactúan con el calor corporal para ofrecer una durabilidad extraordinaria durante todo el día. El cliente descubrió que podía llevar la misma presencia, elegancia y rastro distintivo de una marca de alta gama, pero a un precio justo y accesible.</p>\n\n<p>Hoy, esa misma filosofía cruza el Atlántico para desembarcar en el mercado español. Mitise se presenta en España como el puente directo hacia las mejores inspiraciones en aceite del mundo: un espacio donde la altísima fijación, el rendimiento real y la honestidad en el precio se unen para redefinir la forma en que las personas disfrutan de su perfume diario.</p>`
         },
         contactLinks: {
             instagram: "https://www.instagram.com/mitisefragrance/",
@@ -142,24 +142,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 2. RENDERIZADO DINÁMICO DE LA TIENDA
     // ==========================================
     function renderAllContent() {
-        // Ticker Promocional
         const tickerContainer = document.getElementById('ticker-track-container');
         if(tickerContainer && siteData.tickerText) {
             const items = siteData.tickerText.split(',').map(item => `<span class="ticker-item">${item.trim()}</span>`).join('');
             tickerContainer.innerHTML = items + items;
         }
 
-        // Logo Principal
         const logoImg = document.getElementById('main-logo-img');
         if(logoImg && siteData.logoPath) logoImg.src = siteData.logoPath;
 
-        // Banners
         renderBanners();
-
-        // Productos
         renderCatalog();
 
-        // Sobre Nosotros
         document.getElementById('about-subtitle-display').innerText = siteData.about.subtitle || "Pasión por el Aroma Real";
         document.getElementById('about-title-display').innerText = siteData.about.title || "La Selección Perfecta Detrás de Cada Gota";
         document.getElementById('about-desc-display').innerText = siteData.about.desc || "";
@@ -178,10 +172,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             storyBody.innerHTML = storyHtml;
         }
 
-        // Redes
         renderContactGrid();
 
-        // Badges
         updateFavBadge();
         updateCartBadge();
         renderFavoritesModal();
@@ -702,8 +694,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         const previewLogo = document.getElementById('preview-logo-img');
         if(previewLogo) previewLogo.src = siteData.logoPath;
 
-        document.getElementById('edit-banner1-bg').value = siteData.banners[0] ? siteData.banners[0].media : '';
-        document.getElementById('edit-banner2-bg').value = siteData.banners[1] ? siteData.banners[1].media : '';
+        if (siteData.banners[0]) {
+            document.getElementById('edit-banner1-tag').value = siteData.banners[0].tag || '';
+            document.getElementById('edit-banner1-title').value = siteData.banners[0].title || '';
+            document.getElementById('edit-banner1-desc').value = siteData.banners[0].desc || '';
+            document.getElementById('edit-banner1-bg').value = siteData.banners[0].media || '';
+        }
+
+        if (siteData.banners[1]) {
+            document.getElementById('edit-banner2-tag').value = siteData.banners[1].tag || '';
+            document.getElementById('edit-banner2-title').value = siteData.banners[1].title || '';
+            document.getElementById('edit-banner2-desc').value = siteData.banners[1].desc || '';
+            document.getElementById('edit-banner2-bg').value = siteData.banners[1].media || '';
+        }
         
         document.getElementById('edit-about-subtitle').value = siteData.about.subtitle || '';
         document.getElementById('edit-about-title').value = siteData.about.title || '';
@@ -717,6 +720,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('link-telegram').value = siteData.contactLinks.telegram || '';
         document.getElementById('link-gmail').value = siteData.contactLinks.gmail || '';
         document.getElementById('link-whatsapp').value = siteData.contactLinks.whatsapp || '';
+
+        renderEditorBannersList();
     }
 
     document.getElementById('btn-save-gh-config').addEventListener('click', saveGitHubConfig);
@@ -771,17 +776,57 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
+    function renderEditorBannersList() {
+        const grid = document.getElementById('editor-banners-list');
+        if(!grid) return;
+
+        const extraBanners = siteData.banners.slice(2);
+
+        if(extraBanners.length === 0) {
+            grid.innerHTML = '<p class="editor-hint">No hay banners adicionales registrados.</p>';
+            return;
+        }
+
+        grid.innerHTML = extraBanners.map((b, idx) => {
+            const realIndex = idx + 2;
+            return `
+                <div class="editor-prod-row">
+                    <div class="editor-prod-info">
+                        <div>
+                            <p class="editor-prod-title">Banner ${realIndex + 1}: ${b.title}</p>
+                            <p class="editor-prod-sub">${b.tag} | ${b.desc.substring(0, 45)}...</p>
+                        </div>
+                    </div>
+                    <div class="editor-prod-actions">
+                        <button class="btn-fav-remove" onclick="deleteBannerFromCMS(${realIndex})" title="Eliminar Banner">
+                            🗑️ Eliminar
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    window.deleteBannerFromCMS = function(index) {
+        if(confirm(`¿Deseas eliminar el Banner ${index + 1}?`)) {
+            siteData.banners.splice(index, 1);
+            saveSiteDataLocal();
+            renderEditorBannersList();
+        }
+    };
+
+    // RENDERIZADO Y EDICIÓN DE PRODUCTOS (HACIENDO CLIC EN CUALQUIER PARTE DE LA FILA O BOTÓN)
     function renderEditorProductsList() {
         const grid = document.getElementById('editor-products-list');
         if(!grid) return;
 
-        if(siteData.products.length === 0) {
+        if(!siteData.products || siteData.products.length === 0) {
             grid.innerHTML = '<p class="editor-hint">No hay productos en el catálogo.</p>';
             return;
         }
 
         grid.innerHTML = siteData.products.map(p => `
-            <div class="editor-prod-row">
+            <div class="editor-prod-row" style="cursor: pointer;" onclick="openEditProductModal(${p.id})">
                 <div class="editor-prod-info">
                     <img src="${p.image}" alt="${p.name}" class="editor-prod-thumb" onerror="this.src='IMG/LOGO_ENTERO.png'">
                     <div>
@@ -789,14 +834,111 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <p class="editor-prod-sub">${p.brand} - $${Number(p.price).toFixed(2)} USD</p>
                     </div>
                 </div>
-                <div class="editor-prod-actions">
-                    <button class="btn-fav-remove" onclick="deleteProductFromCMS(${p.id})" title="Eliminar Producto">
+                <div class="editor-prod-actions" onclick="event.stopPropagation()">
+                    <button class="btn-gold-small" onclick="openEditProductModal(${p.id}); event.stopPropagation();">
+                        ✏️ Editar
+                    </button>
+                    <button class="btn-fav-remove" onclick="deleteProductFromCMS(${p.id}); event.stopPropagation();" title="Eliminar Producto">
                         🗑️ Eliminar
                     </button>
                 </div>
             </div>
         `).join('');
     }
+
+    // ASEGURAR QUE EL MODAL DE EDICIÓN DE PRODUCTOS EXISTA EN DOM
+    function ensureEditProductModalExists() {
+        if (!document.getElementById('edit-product-modal')) {
+            const modalDiv = document.createElement('div');
+            modalDiv.id = 'edit-product-modal';
+            modalDiv.className = 'story-modal-backdrop';
+            modalDiv.innerHTML = `
+                <div class="story-modal-card contact-modal-card">
+                    <button class="story-modal-close" id="close-edit-prod-modal">&times;</button>
+                    <div class="story-header">
+                        <span class="gold-subtitle">SISTEMA CMS DE GESTIÓN</span>
+                        <h2 class="story-title">Editar Producto</h2>
+                        <div class="gold-divider"></div>
+                    </div>
+                    <form id="form-edit-product" class="checkout-form">
+                        <input type="hidden" id="edit-prod-id">
+                        <div class="form-group-gold">
+                            <label for="edit-prod-brand">Marca:</label>
+                            <input type="text" id="edit-prod-brand" required autocomplete="off">
+                        </div>
+                        <div class="form-group-gold">
+                            <label for="edit-prod-name">Nombre del Perfume:</label>
+                            <input type="text" id="edit-prod-name" required autocomplete="off">
+                        </div>
+                        <div class="form-group-gold">
+                            <label for="edit-prod-price">Precio ($ USD):</label>
+                            <input type="number" id="edit-prod-price" step="0.01" required autocomplete="off">
+                        </div>
+                        <div class="form-group-gold">
+                            <label>Seleccionar Nueva Foto desde el Equipo:</label>
+                            <input type="file" id="edit-prod-file" accept="image/*" class="file-input-gold">
+                        </div>
+                        <div class="form-group-gold">
+                            <label for="edit-prod-img">O Ruta Relativa de la Foto:</label>
+                            <input type="text" id="edit-prod-img" required autocomplete="off">
+                        </div>
+                        <div class="editor-preview-box" style="margin-bottom: 15px;">
+                            <p class="editor-preview-title">Vista Previa de la Foto:</p>
+                            <img id="edit-prod-preview" src="" alt="Preview Perfume" class="editor-img-thumb" onerror="this.src='IMG/LOGO_ENTERO.png'">
+                        </div>
+                        <div class="modal-actions-row">
+                            <button type="submit" class="btn-gold">Guardar Cambios de Producto</button>
+                            <button type="button" class="btn-outline-gold" id="btn-cancel-edit-prod">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modalDiv);
+
+            setupFileInputReader('edit-prod-file', 'edit-prod-img', 'edit-prod-preview');
+
+            document.getElementById('form-edit-product').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const prodId = parseInt(document.getElementById('edit-prod-id').value);
+                const prod = siteData.products.find(p => p.id === prodId);
+
+                if (prod) {
+                    prod.brand = document.getElementById('edit-prod-brand').value.trim();
+                    prod.name = document.getElementById('edit-prod-name').value.trim();
+                    prod.price = parseFloat(document.getElementById('edit-prod-price').value) || 0;
+                    prod.image = document.getElementById('edit-prod-img').value.trim();
+
+                    saveSiteDataLocal();
+                    renderEditorProductsList();
+                    closeAllModals(true);
+                    alert('¡Producto actualizado localmente! Recuerda hacer clic en "🚀 Publicar Cambios Globales" para guardar los cambios en GitHub.');
+                }
+            });
+
+            document.getElementById('close-edit-prod-modal').onclick = () => closeAllModals(true);
+            document.getElementById('btn-cancel-edit-prod').onclick = () => closeAllModals(true);
+        }
+    }
+
+    // ABRIR MODAL PARA EDITAR PRODUCTO
+    window.openEditProductModal = function(productId) {
+        ensureEditProductModalExists();
+
+        const prod = siteData.products.find(p => p.id === productId);
+        if (!prod) return;
+
+        document.getElementById('edit-prod-id').value = prod.id;
+        document.getElementById('edit-prod-brand').value = prod.brand || '';
+        document.getElementById('edit-prod-name').value = prod.name || '';
+        document.getElementById('edit-prod-price').value = prod.price || 0;
+        document.getElementById('edit-prod-img').value = prod.image || '';
+
+        const preview = document.getElementById('edit-prod-preview');
+        if (preview) preview.src = prod.image || 'IMG/LOGO_ENTERO.png';
+
+        const editModal = document.getElementById('edit-product-modal');
+        openModal(editModal);
+    };
 
     window.deleteProductFromCMS = function(productId) {
         if(confirm('¿Estás seguro de que deseas eliminar este producto del catálogo?')) {
@@ -806,7 +948,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // FUNCIÓN CORE: SUBIR ARCHIVO O ACTUALIZAR VÍA GITHUB API
+    // SUBIR ARCHIVO A GITHUB API
     async function commitFileToGitHub(pathInRepo, base64Content, commitMessage) {
         const config = getGitHubConfig();
         if(!config.token) {
@@ -815,7 +957,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const apiUrl = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${pathInRepo}`;
 
-        // 1. Verificar SHA del archivo si ya existe en el repositorio
         let sha = null;
         try {
             const checkRes = await fetch(`${apiUrl}?ref=${config.branch}`, {
@@ -832,7 +973,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log("Archivo nuevo en GitHub, no requiere SHA previo.");
         }
 
-        // 2. Preparar el Body para la API de GitHub
         const payload = {
             message: commitMessage || `Actualización desde Panel CMS Mitise (${new Date().toLocaleString()})`,
             content: base64Content,
@@ -840,7 +980,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         };
         if(sha) payload.sha = sha;
 
-        // 3. Enviar solicitud PUT a la API de GitHub
         const putRes = await fetch(apiUrl, {
             method: 'PUT',
             headers: {
@@ -859,7 +998,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         return await putRes.json();
     }
 
-    // Helper para convertir cualquier imagen subida en Base64 listo para API de GitHub
     async function processAndUploadImageIfBase64(imageStr, defaultFilenamePrefix) {
         if (imageStr.startsWith('data:')) {
             const parts = imageStr.split(',');
@@ -874,26 +1012,34 @@ document.addEventListener('DOMContentLoaded', async () => {
         return imageStr;
     }
 
-    // BOTÓN PRINCIPAL: PUBLICAR CAMBIOS GLOBALES EN GITHUB
+    // BOTÓN PRINCIPAL: PUBLICAR CAMBIOS GLOBALES
     document.getElementById('btn-save-all').addEventListener('click', async () => {
         const loadingOverlay = document.getElementById('github-loading-overlay');
         if (loadingOverlay) loadingOverlay.style.display = 'flex';
 
         try {
-            // Recoger valores del formulario
             siteData.tickerText = document.getElementById('edit-ticker-text').value;
             
             let rawLogo = document.getElementById('edit-logo-path').value;
             siteData.logoPath = await processAndUploadImageIfBase64(rawLogo, 'logo');
 
-            if(siteData.banners[0]) {
-                let rawB1 = document.getElementById('edit-banner1-bg').value;
-                siteData.banners[0].media = await processAndUploadImageIfBase64(rawB1, 'banner1');
-            }
-            if(siteData.banners[1]) {
-                let rawB2 = document.getElementById('edit-banner2-bg').value;
-                siteData.banners[1].media = await processAndUploadImageIfBase64(rawB2, 'banner2');
-            }
+            if (!siteData.banners[0]) siteData.banners[0] = { type: 'image', media: '', tag: '', title: '', desc: '' };
+            siteData.banners[0].tag = document.getElementById('edit-banner1-tag').value;
+            siteData.banners[0].title = document.getElementById('edit-banner1-title').value;
+            siteData.banners[0].desc = document.getElementById('edit-banner1-desc').value;
+            
+            let rawB1 = document.getElementById('edit-banner1-bg').value;
+            siteData.banners[0].media = await processAndUploadImageIfBase64(rawB1, 'banner1');
+            siteData.banners[0].type = (siteData.banners[0].media.startsWith('data:video') || siteData.banners[0].media.endsWith('.mp4')) ? 'video' : 'image';
+
+            if (!siteData.banners[1]) siteData.banners[1] = { type: 'image', media: '', tag: '', title: '', desc: '' };
+            siteData.banners[1].tag = document.getElementById('edit-banner2-tag').value;
+            siteData.banners[1].title = document.getElementById('edit-banner2-title').value;
+            siteData.banners[1].desc = document.getElementById('edit-banner2-desc').value;
+            
+            let rawB2 = document.getElementById('edit-banner2-bg').value;
+            siteData.banners[1].media = await processAndUploadImageIfBase64(rawB2, 'banner2');
+            siteData.banners[1].type = (siteData.banners[1].media.startsWith('data:video') || siteData.banners[1].media.endsWith('.mp4')) ? 'video' : 'image';
 
             siteData.about.subtitle = document.getElementById('edit-about-subtitle').value;
             siteData.about.title = document.getElementById('edit-about-title').value;
@@ -911,21 +1057,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             siteData.contactLinks.gmail = document.getElementById('link-gmail').value;
             siteData.contactLinks.whatsapp = document.getElementById('link-whatsapp').value;
 
-            // Procesar imágenes de productos si están en formato Base64
             for (let i = 0; i < siteData.products.length; i++) {
                 if (siteData.products[i].image.startsWith('data:')) {
                     siteData.products[i].image = await processAndUploadImageIfBase64(siteData.products[i].image, `prod_${siteData.products[i].id}`);
                 }
             }
 
-            // Guardar localmente
             saveSiteDataLocal();
 
-            // Convertir objeto siteData a JSON en Base64 para GitHub
             const jsonString = JSON.stringify(siteData, null, 2);
             const jsonBase64 = btoa(unescape(encodeURIComponent(jsonString)));
 
-            // Publicar sitedata.json en GitHub
             await commitFileToGitHub('sitedata.json', jsonBase64, `Actualización global de sitedata.json vía CMS`);
 
             if (loadingOverlay) loadingOverlay.style.display = 'none';
@@ -947,6 +1089,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         siteData.banners.push({ type: isVideo ? 'video' : 'image', media, tag, title, desc });
         saveSiteDataLocal();
+        renderEditorBannersList();
+
+        document.getElementById('new-banner-tag').value = '';
+        document.getElementById('new-banner-title').value = '';
+        document.getElementById('new-banner-desc').value = '';
+        document.getElementById('new-banner-media').value = '';
+
         alert('¡Nuevo banner añadido! Recuerda hacer clic en "🚀 Publicar Cambios Globales" para enviarlo a GitHub.');
     });
 
@@ -1018,10 +1167,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function closeAllModals(shouldGoBack = true) {
         let wasOpen = false;
+        const editModalElem = document.getElementById('edit-product-modal');
         const modals = [
             storyModal, contactModal, favoritesModal, cartModal, 
             qtyModal, checkoutInfoModal, checkoutSummaryModal, 
-            loginModal, editorPanel
+            loginModal, editorPanel, editModalElem
         ];
 
         modals.forEach(m => {
@@ -1063,9 +1213,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     if(closeSummaryModal) closeSummaryModal.onclick = () => closeAllModals(true);
 
     window.onclick = (e) => {
+        const editModalElem = document.getElementById('edit-product-modal');
         const modals = [
             storyModal, contactModal, favoritesModal, cartModal, 
-            qtyModal, checkoutInfoModal, checkoutSummaryModal, loginModal
+            qtyModal, checkoutInfoModal, checkoutSummaryModal, loginModal, editModalElem
         ];
         if(modals.includes(e.target)) {
             closeAllModals(true);
