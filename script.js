@@ -50,11 +50,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     let favoritesList = JSON.parse(localStorage.getItem('mitise_favorites')) || [];
     let cartList = JSON.parse(localStorage.getItem('mitise_cart_items')) || [];
 
-    // FUNCIÓN PARA COMPRIMIR Y OPTIMIZAR IMÁGENES EN CANVA (PREVIENE QUOTA EXCEEDED ERROR)
+    // COMPRESIÓN DE IMÁGENES AUTOMÁTICA
     function compressImage(file, maxWidth = 600, maxHeight = 600, quality = 0.8) {
         return new Promise((resolve, reject) => {
             if (!file.type.startsWith('image/')) {
-                // Si no es imagen (ej. video mp4), leer directamente
                 const reader = new FileReader();
                 reader.onload = (e) => resolve(e.target.result);
                 reader.onerror = (e) => reject(e);
@@ -98,7 +97,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Cargar la configuración remota publicada globalmente en GitHub al iniciar
     async function fetchRemoteSiteData() {
         try {
             const response = await fetch(`sitedata.json?t=${Date.now()}`);
@@ -109,7 +107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     try {
                         localStorage.setItem('mitise_site_data', JSON.stringify(siteData));
                     } catch (e) {
-                        console.warn("Memoria local llena, usando datos remotos en RAM.");
+                        console.warn("Memoria local llena, usando datos remotos.");
                     }
                 }
             }
@@ -133,7 +131,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             localStorage.setItem('mitise_site_data', JSON.stringify(siteData));
         } catch (e) {
-            console.warn("Aviso de almacenamiento: Memoria llena temporalmente. Los cambios se mantienen en pantalla y listos para '🚀 Publicar Cambios Globales'.", e);
+            console.warn("Aviso de memoria local llena. Los cambios se mantienen en pantalla listos para '🚀 Publicar Cambios Globales'.", e);
         }
         renderAllContent();
     }
@@ -907,7 +905,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         openModal(editorPanel);
     }
 
-    // HELPER CON COMPRESIÓN AUTOMÁTICA DE IMÁGENES
     function setupFileInputReader(fileInputId, targetInputId, previewImgId) {
         const fileInput = document.getElementById(fileInputId);
         if (!fileInput) return;
@@ -1127,7 +1124,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // SUBIR ARCHIVO A GITHUB API
+    // SUBIR ARCHIVO A GITHUB API CON NOMBRE ÚNICO Y LIMPIO POR ARCHIVO
     async function commitFileToGitHub(pathInRepo, base64Content, commitMessage) {
         const config = getGitHubConfig();
         if(!config.token) {
@@ -1149,7 +1146,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 sha = checkData.sha;
             }
         } catch(err) {
-            console.log("Archivo nuevo en GitHub, no requiere SHA previo.");
+            console.log("Archivo nuevo en GitHub.");
         }
 
         const payload = {
@@ -1177,14 +1174,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         return await putRes.json();
     }
 
-    async function processAndUploadImageIfBase64(imageStr, defaultFilenamePrefix) {
-        if (imageStr.startsWith('data:')) {
+    async function processAndUploadImageIfBase64(imageStr, cleanFilename) {
+        if (imageStr && imageStr.startsWith('data:')) {
             const parts = imageStr.split(',');
             const mimeMatch = parts[0].match(/:(.*?);/);
-            const ext = mimeMatch ? mimeMatch[1].split('/')[1] : 'png';
+            let ext = 'jpg';
+            if (mimeMatch) {
+                const rawExt = mimeMatch[1].split('/')[1];
+                ext = (rawExt === 'jpeg') ? 'jpg' : rawExt;
+            }
             const base64Data = parts[1];
             
-            const newPath = `IMG/${defaultFilenamePrefix}_${Date.now()}.${ext}`;
+            const newPath = `IMG/${cleanFilename}.${ext}`;
             await commitFileToGitHub(newPath, base64Data, `Subida de imagen ${newPath} desde CMS`);
             return newPath;
         }
@@ -1200,7 +1201,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             siteData.tickerText = document.getElementById('edit-ticker-text').value;
             
             let rawLogo = document.getElementById('edit-logo-path').value;
-            siteData.logoPath = await processAndUploadImageIfBase64(rawLogo, 'logo');
+            siteData.logoPath = await processAndUploadImageIfBase64(rawLogo, 'logo_oficial');
 
             for (let i = 0; i < siteData.banners.length; i++) {
                 const tagElem = document.getElementById(`edit-banner-tag-${i}`);
@@ -1223,7 +1224,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             siteData.about.desc = document.getElementById('edit-about-desc').value;
             
             let rawAboutImg = document.getElementById('edit-about-img-path').value;
-            siteData.about.image = await processAndUploadImageIfBase64(rawAboutImg, 'about');
+            siteData.about.image = await processAndUploadImageIfBase64(rawAboutImg, 'about_photo');
             
             siteData.about.modalStory = document.getElementById('edit-story-modal-text').value;
 
@@ -1234,8 +1235,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             siteData.contactLinks.gmail = document.getElementById('link-gmail').value;
             siteData.contactLinks.whatsapp = document.getElementById('link-whatsapp').value;
 
+            // NOMBRES DE ARCHIVOS ÚNICOS E INDEPENDIENTES POR ID DE PRODUCTO
             for (let i = 0; i < siteData.products.length; i++) {
-                if (siteData.products[i].image.startsWith('data:')) {
+                if (siteData.products[i].image && siteData.products[i].image.startsWith('data:')) {
                     siteData.products[i].image = await processAndUploadImageIfBase64(siteData.products[i].image, `prod_${siteData.products[i].id}`);
                 }
             }
