@@ -444,7 +444,7 @@
                         </div>
                     </div>
 
-                    <!-- PANE 3: BANNERS DEL SLIDER (CON EDICIÓN COMPLETA DE TEXTOS) -->
+                    <!-- PANE 3: BANNERS DEL SLIDER -->
                     <div id="tab-banners" class="tab-pane">
                         <h3>Banners del Slider</h3>
                         
@@ -561,7 +561,7 @@
                         <hr class="editor-divider">
 
                         <h3>Gestión de Productos Existentes</h3>
-                        <p class="editor-hint">Puedes modificar la foto o eliminar productos existentes:</p>
+                        <p class="editor-hint">Selecciona un producto para editar su información completa o eliminarlo:</p>
                         <div id="editor-products-list" class="editor-products-grid"></div>
                     </div>
 
@@ -627,12 +627,64 @@
         </div>
     </div>
 
-    <!-- 15. BOTÓN FLOTANTE DE WHATSAPP -->
+    <!-- 15. MODAL EDICIÓN COMPLETA DE PRODUCTO EXISTENTE -->
+    <div id="edit-product-modal" class="story-modal-backdrop">
+        <div class="story-modal-card contact-modal-card">
+            <button class="story-modal-close" id="close-edit-prod-modal">&times;</button>
+
+            <div class="story-header">
+                <span class="gold-subtitle">SISTEMA CMS DE GESTIÓN</span>
+                <h2 class="story-title">Editar Producto</h2>
+                <div class="gold-divider"></div>
+            </div>
+
+            <form id="form-edit-product" class="checkout-form">
+                <input type="hidden" id="edit-prod-id">
+
+                <div class="form-group-gold">
+                    <label for="edit-prod-brand">Marca:</label>
+                    <input type="text" id="edit-prod-brand" required autocomplete="off">
+                </div>
+
+                <div class="form-group-gold">
+                    <label for="edit-prod-name">Nombre del Perfume:</label>
+                    <input type="text" id="edit-prod-name" required autocomplete="off">
+                </div>
+
+                <div class="form-group-gold">
+                    <label for="edit-prod-price">Precio ($ USD):</label>
+                    <input type="number" id="edit-prod-price" step="0.01" required autocomplete="off">
+                </div>
+
+                <div class="form-group-gold">
+                    <label>Seleccionar Nueva Foto desde el Equipo:</label>
+                    <input type="file" id="edit-prod-file" accept="image/*" class="file-input-gold">
+                </div>
+
+                <div class="form-group-gold">
+                    <label for="edit-prod-img">O Ruta Relativa de la Foto:</label>
+                    <input type="text" id="edit-prod-img" required autocomplete="off">
+                </div>
+
+                <div class="editor-preview-box" style="margin-bottom: 15px;">
+                    <p class="editor-preview-title">Vista Previa de la Foto:</p>
+                    <img id="edit-prod-preview" src="" alt="Preview Perfume" class="editor-img-thumb" onerror="this.src='IMG/LOGO_ENTERO.png'">
+                </div>
+
+                <div class="modal-actions-row">
+                    <button type="submit" class="btn-gold">Guardar Cambios de Producto</button>
+                    <button type="button" class="btn-outline-gold" id="btn-cancel-edit-prod">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 16. BOTÓN FLOTANTE DE WHATSAPP -->
     <a href="https://wa.me/1234567890?text=Hola,%20quisiera%20informaci%C3%B3n%20sobre%20sus%20perfumes" target="_blank" class="whatsapp-btn" id="floating-whatsapp-btn">
         <span>💬</span> ¡Hola!
     </a>
 
-    <!-- 16. FOOTER -->
+    <!-- 17. FOOTER -->
     <footer id="contacto">
         <div class="footer-container">
             <p>&copy; 2026 Mitise - Luxury Fragrance. Todos los derechos reservados.</p>
