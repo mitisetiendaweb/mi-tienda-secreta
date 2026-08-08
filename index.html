@@ -215,7 +215,7 @@
         </div>
     </div>
 
-    <!-- 11. PASO 3: FORMULARIO DATOS DEL PEDIDO (CON BANDERAS Y FORMULARIO VERTICAL) -->
+    <!-- 11. PASO 3: FORMULARIO DATOS DEL PEDIDO -->
     <div id="checkout-info-modal" class="story-modal-backdrop">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-info-modal">&times;</button>
@@ -327,7 +327,7 @@
         </div>
     </div>
 
-    <!-- 13. VENTANA LOGIN FULLSCREEN (LOGIN REPARADO) -->
+    <!-- 13. VENTANA LOGIN FULLSCREEN -->
     <div id="login-modal" class="fullscreen-modal-backdrop">
         <div class="login-card">
             <button class="fullscreen-modal-close" id="close-login-modal">&times;</button>
@@ -352,7 +352,7 @@
         </div>
     </div>
 
-    <!-- 14. PANEL DE EDITOR -->
+    <!-- 14. PANEL DE EDITOR CMS DE GESTIÓN (CON CARGA LOCAL DE IMÁGENES) -->
     <div id="editor-panel" class="fullscreen-modal-backdrop">
         <div class="editor-dashboard-card">
             <div class="editor-top-bar">
@@ -378,6 +378,7 @@
                 </div>
 
                 <div class="editor-content-area">
+                    <!-- PANE 1: ANUNCIOS TICKER -->
                     <div id="tab-ticker" class="tab-pane active">
                         <h3>Gestión del Ticker de Anuncios</h3>
                         <p class="editor-hint">Separa cada mensaje promocional con una coma (,).</p>
@@ -387,66 +388,112 @@
                         </div>
                     </div>
 
+                    <!-- PANE 2: LOGO PRINCIPAL -->
                     <div id="tab-logo" class="tab-pane">
                         <h3>Gestión del Logo Principal</h3>
                         <div class="form-group-gold">
-                            <label>Ruta de la Imagen del Logo:</label>
-                            <input type="text" id="edit-logo-path">
+                            <label>Cargar Imagen desde su Equipo (Eliminará la anterior):</label>
+                            <input type="file" id="edit-logo-file" accept="image/*" class="file-input-gold">
+                        </div>
+                        <div class="form-group-gold">
+                            <label>O ingresar Ruta Relativa en la carpeta IMG:</label>
+                            <input type="text" id="edit-logo-path" placeholder="IMG/LOGO FN.png">
+                        </div>
+                        <div class="editor-preview-box">
+                            <p class="editor-preview-title">Vista Previa Actual:</p>
+                            <img id="preview-logo-img" src="" alt="Vista previa Logo" class="editor-img-thumb">
                         </div>
                     </div>
 
+                    <!-- PANE 3: BANNERS DEL SLIDER -->
                     <div id="tab-banners" class="tab-pane">
                         <h3>Banners del Slider</h3>
-                        <div class="form-group-gold">
-                            <label>Banner 1 - Fondo:</label>
-                            <input type="text" id="edit-banner1-bg">
+                        
+                        <div class="editor-section-card">
+                            <h4>Banner 1 - Fondo (Imagen o Video)</h4>
+                            <div class="form-group-gold">
+                                <label>Seleccionar Archivo Local (Imagen o Video MP4):</label>
+                                <input type="file" id="edit-banner1-file" accept="image/*,video/mp4" class="file-input-gold">
+                            </div>
+                            <div class="form-group-gold">
+                                <label>O Ruta Relativa del Archivo:</label>
+                                <input type="text" id="edit-banner1-bg" placeholder="VID/3BHARARA.mp4 o IMG/banner.jpg">
+                            </div>
                         </div>
-                        <div class="form-group-gold">
-                            <label>Banner 2 - Fondo:</label>
-                            <input type="text" id="edit-banner2-bg">
-                        </div>
+
                         <hr class="editor-divider">
+
+                        <div class="editor-section-card">
+                            <h4>Banner 2 - Fondo (Imagen o Video)</h4>
+                            <div class="form-group-gold">
+                                <label>Seleccionar Archivo Local (Imagen o Video MP4):</label>
+                                <input type="file" id="edit-banner2-file" accept="image/*,video/mp4" class="file-input-gold">
+                            </div>
+                            <div class="form-group-gold">
+                                <label>O Ruta Relativa del Archivo:</label>
+                                <input type="text" id="edit-banner2-bg" placeholder="IMG/OFERTON.png">
+                            </div>
+                        </div>
+
+                        <hr class="editor-divider">
+
                         <h4>Añadir Nuevo Banner</h4>
                         <div class="form-group-gold">
                             <label>Etiqueta / Tag:</label>
-                            <input type="text" id="new-banner-tag">
+                            <input type="text" id="new-banner-tag" placeholder="Ej: Colección 2026">
                         </div>
                         <div class="form-group-gold">
                             <label>Título:</label>
-                            <input type="text" id="new-banner-title">
+                            <input type="text" id="new-banner-title" placeholder="Ej: Perfumería Real">
                         </div>
                         <div class="form-group-gold">
                             <label>Descripción:</label>
-                            <input type="text" id="new-banner-desc">
+                            <input type="text" id="new-banner-desc" placeholder="Ej: Esencias de altísima fijación">
                         </div>
                         <div class="form-group-gold">
-                            <label>Fondo (Imagen/Video):</label>
-                            <input type="text" id="new-banner-media">
+                            <label>Seleccionar Imagen/Video del Equipo:</label>
+                            <input type="file" id="new-banner-file" accept="image/*,video/mp4" class="file-input-gold">
+                        </div>
+                        <div class="form-group-gold">
+                            <label>O Ruta del Fondo:</label>
+                            <input type="text" id="new-banner-media" placeholder="IMG/BANNER_NUEVO.png">
                         </div>
                         <button class="btn-gold" id="btn-add-banner">+ Agregar Banner</button>
                     </div>
 
+                    <!-- PANE 4: PRODUCTOS Y CATÁLOGO -->
                     <div id="tab-catalog" class="tab-pane">
-                        <h3>Añadir Nuevo Producto</h3>
+                        <h3>Añadir Nuevo Producto al Catálogo</h3>
                         <div class="form-group-gold">
                             <label>Marca:</label>
-                            <input type="text" id="new-prod-brand">
+                            <input type="text" id="new-prod-brand" placeholder="Ej: Lattafa Exclusif">
                         </div>
                         <div class="form-group-gold">
                             <label>Nombre del Perfume:</label>
-                            <input type="text" id="new-prod-name">
+                            <input type="text" id="new-prod-name" placeholder="Ej: Atheeri Gold Edition">
                         </div>
                         <div class="form-group-gold">
                             <label>Precio ($ USD):</label>
-                            <input type="number" id="new-prod-price">
+                            <input type="number" id="new-prod-price" placeholder="85.00" step="0.01">
                         </div>
                         <div class="form-group-gold">
-                            <label>Ruta de la Foto:</label>
-                            <input type="text" id="new-prod-img">
+                            <label>Seleccionar Foto desde el Equipo:</label>
+                            <input type="file" id="new-prod-file" accept="image/*" class="file-input-gold">
+                        </div>
+                        <div class="form-group-gold">
+                            <label>O Ruta de la Foto:</label>
+                            <input type="text" id="new-prod-img" placeholder="IMG/LOGO_ENTERO.png">
                         </div>
                         <button class="btn-gold" id="btn-add-product">+ Añadir Producto</button>
+
+                        <hr class="editor-divider">
+
+                        <h3>Gestión de Productos Existentes</h3>
+                        <p class="editor-hint">Puedes modificar la foto o eliminar productos existentes:</p>
+                        <div id="editor-products-list" class="editor-products-grid"></div>
                     </div>
 
+                    <!-- PANE 5: SOBRE NOSOTROS -->
                     <div id="tab-nosotros" class="tab-pane">
                         <h3>Editar Sección Sobre Nosotros</h3>
                         <div class="form-group-gold">
@@ -462,13 +509,22 @@
                             <textarea id="edit-about-desc" rows="3"></textarea>
                         </div>
                         <div class="form-group-gold">
+                            <label>Seleccionar Nueva Imagen Ilustrativa del Equipo:</label>
+                            <input type="file" id="edit-about-file" accept="image/*" class="file-input-gold">
+                        </div>
+                        <div class="form-group-gold">
+                            <label>O Ruta de la Imagen:</label>
+                            <input type="text" id="edit-about-img-path">
+                        </div>
+                        <div class="form-group-gold">
                             <label>Historia Completa (Modal):</label>
                             <textarea id="edit-story-modal-text" rows="8"></textarea>
                         </div>
                     </div>
 
+                    <!-- PANE 6: REDES SOCIALES -->
                     <div id="tab-contact" class="tab-pane">
-                        <h3>Enlaces de Contacto</h3>
+                        <h3>Enlaces de Contacto y Redes</h3>
                         <div class="form-group-gold">
                             <label>Instagram URL:</label>
                             <input type="text" id="link-instagram">
