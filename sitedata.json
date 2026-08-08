@@ -1,0 +1,72 @@
+{
+  "tickerText": "⚜️ LUXURY FRAGRANCE ⚜️,💎 PERFUMERÍA 100% ORIGINAL Y DE LUJO 💎,👑 LUXURY FRAGRANCE 👑",
+  "logoPath": "IMG/LOGO FN.png",
+  "banners": [
+    {
+      "type": "video",
+      "media": "VID/3BHARARA.mp4",
+      "tag": "Colección Exclusiva 2026",
+      "title": "Fragancias que Dejan Huella",
+      "desc": "Descubre notas olfativas de oro, maderas nobles y esencias orientales diseñadas para destacar."
+    },
+    {
+      "type": "image",
+      "media": "IMG/OFERTON.png",
+      "tag": "Edición Especial",
+      "title": "Lujo & Distinción Olfativa",
+      "desc": "Aprovecha precios exclusivos en líneas seleccionadas de la mejor perfumería."
+    }
+  ],
+  "subsections": [
+    "Recomendados"
+  ],
+  "products": [
+    {
+      "id": 1,
+      "brand": "Lattafa Exclusif",
+      "name": "Atheeri Gold Edition",
+      "price": 85.00,
+      "image": "IMG/LOGO_ENTERO.png",
+      "subsection": "Recomendados"
+    },
+    {
+      "id": 2,
+      "brand": "Haute Parfumerie",
+      "name": "Élixir de Nuit",
+      "price": 120.00,
+      "image": "IMG/LOGO_ENTERO.png",
+      "subsection": "Recomendados"
+    },
+    {
+      "id": 3,
+      "brand": "Royal Collection",
+      "name": "Velours Imperial",
+      "price": 95.00,
+      "image": "IMG/LOGO_ENTERO.png",
+      "subsection": "Recomendados"
+    },
+    {
+      "id": 4,
+      "brand": "Oriental Oud",
+      "name": "Oud Royal Gold",
+      "price": 140.00,
+      "image": "IMG/LOGO_ENTERO.png",
+      "subsection": "Recomendados"
+    }
+  ],
+  "about": {
+    "subtitle": "Pasión por el Aroma Real",
+    "title": "La Selección Perfecta Detrás de Cada Gota",
+    "desc": "Curamos y distribuimos las mejores inspiraciones olfativas del mundo, seleccionadas meticulosamente por su fidelidad y formuladas a base de aceites concentrados. Disfruta de una fijación extraordinaria y máxima duración en tu piel sin pagar sobreprecios.",
+    "image": "IMG/LOGO FN.png",
+    "modalStory": "<p>A mediados de 2011 en Puerto Rico, Mitise es bautizada bajo el concepto revelador de <strong>Mi Tienda Secreta</strong>. Nació tras identificar una gran verdad del mercado: la mayoría de las personas paga sumas exorbitantes no por la esencia en sí, sino por la marca, el frasco de diseño y la publicidad, recibiendo a cambio fórmulas diluidas en alcohol que se evaporaban al cabo de unas horas.</p>\n\n<p>Frente a esta realidad, la propuesta no fue crear fragancias desde cero, sino democratizar el acceso al lujo mediante la curaduría y distribución de las mejores equivalencias olfativas. Mitise se enfocó en rastrear y seleccionar meticulosamente las mejores inspiraciones de los perfumes más codiciados del mundo, garantizando la más alta fidelidad y, sobre todo, una formulación superior a base de aceites.</p>\n\n<p>El secreto del éxito radicó en la fijación. Al prescindir del alcohol y apostar por concentrados de óleo de alta pureza, las fragancias distribuidas por Mitise no se evaporan rápidamente; penetran en la piel e interactúan con el calor corporal para ofrecer una durabilidad extraordinaria durante todo el día. El cliente descubrió que podía llevar la misma presencia, elegancia y rastro distintivo de una marca de alta gama, pero a un precio justo y accesible.</p>\n\n<p>Hoy, esa misma filosofía cruza el Atlántico para desembarcar en el mercado español. Mitise se presenta en España como el puente directo hacia las mejores inspiraciones en aceite del mundo: un espacio donde la altísima fijación, el rendimiento real y la honestidad en el precio se unen para redefinir la forma en que las personas disfrutan de su perfume diario.</p>"
+  },
+  "contactLinks": {
+    "instagram": "https://www.instagram.com/mitisefragrance/",
+    "tiktok": "https://www.tiktok.com/@mitisefragance",
+    "facebook": "",
+    "telegram": "https://t.me/+584242032510",
+    "gmail": "mitisefragance@gmail.com",
+    "whatsapp": "https://wa.me/+584242032510"
+  }
+}
