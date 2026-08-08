@@ -815,7 +815,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // RENDERIZADO Y EDICIÓN DE PRODUCTOS (HACIENDO CLIC EN CUALQUIER PARTE DE LA FILA O BOTÓN)
+    // RENDERIZADO Y SELECCIÓN DE PRODUCTOS PARA EDICIÓN
     function renderEditorProductsList() {
         const grid = document.getElementById('editor-products-list');
         if(!grid) return;
@@ -846,12 +846,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         `).join('');
     }
 
-    // ASEGURAR QUE EL MODAL DE EDICIÓN DE PRODUCTOS EXISTA EN DOM
+    // CIERRA ÚNICAMENTE EL MODAL DE EDICIÓN SIN AFECTAR EL PANEL CMS NI NAVEGAR ATRÁS
+    function closeEditProductModal() {
+        const editModal = document.getElementById('edit-product-modal');
+        if (editModal) {
+            editModal.classList.remove('active');
+        }
+    }
+
+    // ASEGURAR Y AUTO-CREAR EL MODAL DE EDICIÓN EN DOM
     function ensureEditProductModalExists() {
-        if (!document.getElementById('edit-product-modal')) {
-            const modalDiv = document.createElement('div');
+        let modalDiv = document.getElementById('edit-product-modal');
+        if (!modalDiv) {
+            modalDiv = document.createElement('div');
             modalDiv.id = 'edit-product-modal';
             modalDiv.className = 'story-modal-backdrop';
+            modalDiv.style.zIndex = '3500';
             modalDiv.innerHTML = `
                 <div class="story-modal-card contact-modal-card">
                     <button class="story-modal-close" id="close-edit-prod-modal">&times;</button>
@@ -896,9 +906,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.body.appendChild(modalDiv);
 
             setupFileInputReader('edit-prod-file', 'edit-prod-img', 'edit-prod-preview');
+        } else {
+            modalDiv.style.zIndex = '3500';
+        }
 
-            document.getElementById('form-edit-product').addEventListener('submit', (e) => {
+        // ASIGNAR MANEJADORES DE EVENTOS
+        const formEdit = document.getElementById('form-edit-product');
+        if (formEdit && !formEdit.dataset.bound) {
+            formEdit.dataset.bound = "true";
+            formEdit.addEventListener('submit', (e) => {
                 e.preventDefault();
+                e.stopPropagation();
+                
                 const prodId = parseInt(document.getElementById('edit-prod-id').value);
                 const prod = siteData.products.find(p => p.id === prodId);
 
@@ -910,17 +929,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                     saveSiteDataLocal();
                     renderEditorProductsList();
-                    closeAllModals(true);
-                    alert('¡Producto actualizado localmente! Recuerda hacer clic en "🚀 Publicar Cambios Globales" para guardar los cambios en GitHub.');
+                    closeEditProductModal();
+                    alert('¡Producto actualizado localmente! Recuerda hacer clic en "🚀 Publicar Cambios Globales" para guardar el cambio en GitHub.');
                 }
             });
-
-            document.getElementById('close-edit-prod-modal').onclick = () => closeAllModals(true);
-            document.getElementById('btn-cancel-edit-prod').onclick = () => closeAllModals(true);
         }
+
+        const closeBtn = document.getElementById('close-edit-prod-modal');
+        if (closeBtn) closeBtn.onclick = (e) => { e.preventDefault(); e.stopPropagation(); closeEditProductModal(); };
+
+        const cancelBtn = document.getElementById('btn-cancel-edit-prod');
+        if (cancelBtn) cancelBtn.onclick = (e) => { e.preventDefault(); e.stopPropagation(); closeEditProductModal(); };
     }
 
-    // ABRIR MODAL PARA EDITAR PRODUCTO
+    // ABRIR MODAL PARA EDITAR PRODUCTO (POR ENCIMA DEL PANEL CMS)
     window.openEditProductModal = function(productId) {
         ensureEditProductModalExists();
 
@@ -937,7 +959,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (preview) preview.src = prod.image || 'IMG/LOGO_ENTERO.png';
 
         const editModal = document.getElementById('edit-product-modal');
-        openModal(editModal);
+        if (editModal) {
+            editModal.classList.add('active');
+        }
     };
 
     window.deleteProductFromCMS = function(productId) {
