@@ -510,7 +510,6 @@ a {
     box-shadow: 0 0 12px rgba(212, 175, 55, 0.4) !important;
 }
 
-/* Estilo personalizado para botones de subida de archivos */
 .file-input-gold {
     width: 100% !important;
     background: #181818 !important;
@@ -1020,6 +1019,7 @@ a {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    position: relative;
 }
 
 .editor-top-bar {
@@ -1101,7 +1101,6 @@ a {
     margin-left: 8px;
 }
 
-/* Estilos Adicionales del Editor para Vista Previa y Tarjetas */
 .editor-hint {
     font-size: 0.8rem;
     color: var(--gold-light);
@@ -1157,7 +1156,6 @@ a {
     background: #000;
 }
 
-/* Lista de Gestión de Productos Existentes en CMS */
 .editor-products-grid {
     display: flex;
     flex-direction: column;
@@ -1208,6 +1206,63 @@ a {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+/* OVERLAY DE CARGA DE GITHUB API */
+.editor-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 5, 5, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.editor-loading-box {
+    background: #141414;
+    border: 1px solid var(--gold-primary);
+    border-radius: 12px;
+    padding: 35px 25px;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 0 40px rgba(212, 175, 55, 0.35);
+}
+
+.spinner-gold {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(212, 175, 55, 0.2);
+    border-top: 4px solid var(--gold-primary);
+    border-radius: 50%;
+    animation: spinGold 1s linear infinite;
+}
+
+@keyframes spinGold {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.editor-loading-title {
+    font-family: var(--font-title);
+    color: var(--gold-primary);
+    font-size: 1.35rem;
+}
+
+.editor-loading-sub {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.6;
 }
 
 /* ==========================================
