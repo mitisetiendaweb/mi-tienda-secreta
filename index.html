@@ -47,7 +47,10 @@
             <!-- Acciones Derecha -->
             <div class="header-right-actions">
                 <button class="icon-btn" title="Buscar">🔍</button>
-                <button class="icon-btn hide-mobile" title="Favoritos">🖤</button>
+                <button class="icon-btn" id="btn-favorites-trigger" title="Favoritos">
+                    🖤
+                    <span class="cart-badge" id="fav-count">0</span>
+                </button>
                 <button class="icon-btn" title="Carrito">
                     🛒
                     <span class="cart-badge" id="cart-count">0</span>
@@ -110,7 +113,7 @@
         </div>
     </div>
 
-    <!-- 7. MODAL INTERACTIVO DE CONTACTO (REDISEÑO DE LUJO) -->
+    <!-- 7. MODAL INTERACTIVO DE CONTACTO -->
     <div id="contact-modal" class="story-modal-backdrop">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-contact-modal" aria-label="Cerrar">&times;</button>
@@ -136,7 +139,24 @@
         </div>
     </div>
 
-    <!-- 8. VENTANA LOGIN FULLSCREEN (EDITOR) -->
+    <!-- 8. MODAL INTERACTIVO DE FAVORITOS / LISTA DE DESEOS -->
+    <div id="favorites-modal" class="story-modal-backdrop">
+        <div class="story-modal-card contact-modal-card">
+            <button class="story-modal-close" id="close-fav-modal" aria-label="Cerrar">&times;</button>
+
+            <div class="story-header">
+                <span class="gold-subtitle">Selección Personal</span>
+                <h2 class="story-title">Mi Lista de Deseos</h2>
+                <div class="gold-divider"></div>
+            </div>
+
+            <div id="favorites-modal-body">
+                <!-- Se genera dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 9. VENTANA LOGIN FULLSCREEN (EDITOR) -->
     <div id="login-modal" class="fullscreen-modal-backdrop">
         <div class="login-card">
             <button class="fullscreen-modal-close" id="close-login-modal">&times;</button>
@@ -161,7 +181,7 @@
         </div>
     </div>
 
-    <!-- 9. PANEL DE EDITOR EN PANTALLA COMPLETA -->
+    <!-- 10. PANEL DE EDITOR EN PANTALLA COMPLETA -->
     <div id="editor-panel" class="fullscreen-modal-backdrop">
         <div class="editor-dashboard-card">
             <div class="editor-top-bar">
@@ -308,12 +328,12 @@
         </div>
     </div>
 
-    <!-- 10. BOTÓN FLOTANTE DE WHATSAPP -->
+    <!-- 11. BOTÓN FLOTANTE DE WHATSAPP -->
     <a href="https://wa.me/1234567890?text=Hola,%20quisiera%20informaci%C3%B3n%20sobre%20sus%20perfumes" target="_blank" class="whatsapp-btn" id="floating-whatsapp-btn">
         <span>💬</span> ¡Hola!
     </a>
 
-    <!-- 11. FOOTER -->
+    <!-- 12. FOOTER -->
     <footer id="contacto">
         <div class="footer-container">
             <p>&copy; 2026 Mitise - Luxury Fragrance. Todos los derechos reservados.</p>
