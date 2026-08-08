@@ -46,11 +46,39 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     let siteData = JSON.parse(localStorage.getItem('mitise_site_data')) || DEFAULT_DATA;
+    let favoritesList = JSON.parse(localStorage.getItem('mitise_favorites')) || [];
 
     function saveSiteData() {
         localStorage.setItem('mitise_site_data', JSON.stringify(siteData));
         renderAllContent();
     }
+
+    function saveFavorites() {
+        localStorage.setItem('mitise_favorites', JSON.stringify(favoritesList));
+        updateFavBadge();
+        renderCatalog();
+        renderFavoritesModal();
+    }
+
+    function toggleFavorite(productId) {
+        const index = favoritesList.indexOf(productId);
+        if (index === -1) {
+            favoritesList.push(productId);
+        } else {
+            favoritesList.splice(index, 1);
+        }
+        saveFavorites();
+    }
+
+    function updateFavBadge() {
+        const favCountBadge = document.getElementById('fav-count');
+        if (favCountBadge) {
+            favCountBadge.innerText = favoritesList.length;
+        }
+    }
+
+    // Exponer toggleFavorite globalmente para botones inline
+    window.toggleFavorite = toggleFavorite;
 
     // ==========================================
     // 1. MENÚ HAMBURGUESA MÓVIL
@@ -112,6 +140,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Redes
         renderContactGrid();
+
+        // Actualizar Favoritos
+        updateFavBadge();
+        renderFavoritesModal();
     }
 
     function renderBanners() {
@@ -152,10 +184,14 @@ document.addEventListener('DOMContentLoaded', () => {
         container.innerHTML = '';
 
         siteData.products.forEach(product => {
+            const isFav = favoritesList.includes(product.id);
             const card = document.createElement('div');
             card.className = 'product-card';
             card.innerHTML = `
                 <div class="product-img-box">
+                    <button class="btn-fav-card ${isFav ? 'active' : ''}" onclick="toggleFavorite(${product.id})" title="Guardar en Favoritos">
+                        ${isFav ? '❤️' : '🖤'}
+                    </button>
                     <img src="${product.image}" alt="${product.name}" onerror="this.src='IMG/LOGO_ENTERO.png'">
                 </div>
                 <div class="product-details">
@@ -171,6 +207,48 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             container.appendChild(card);
         });
+    }
+
+    function renderFavoritesModal() {
+        const favBody = document.getElementById('favorites-modal-body');
+        if(!favBody) return;
+
+        const favProducts = siteData.products.filter(p => favoritesList.includes(p.id));
+
+        if(favProducts.length === 0) {
+            favBody.innerHTML = `
+                <div class="empty-fav-msg">
+                    <p>Aún no has guardado esencias en tu lista de deseos.</p>
+                    <br>
+                    <a href="#catalogo" onclick="closeAllModals(true)" class="btn-gold">Explorar Colección</a>
+                </div>
+            `;
+            return;
+        }
+
+        favBody.innerHTML = `
+            <div class="fav-items-container">
+                ${favProducts.map(p => `
+                    <div class="fav-item-row">
+                        <div class="fav-item-left">
+                            <img src="${p.image}" alt="${p.name}" class="fav-item-thumb" onerror="this.src='IMG/LOGO_ENTERO.png'">
+                            <div>
+                                <h4 class="fav-item-title">${p.name}</h4>
+                                <p class="fav-item-price">$${Number(p.price).toFixed(2)} USD</p>
+                            </div>
+                        </div>
+                        <div class="fav-item-actions">
+                            <button class="btn-fav-move-cart" onclick="addToCart('${p.name}', ${p.price}); toggleFavorite(${p.id});">
+                                🛒 Carrito
+                            </button>
+                            <button class="btn-fav-remove" onclick="toggleFavorite(${p.id})" title="Quitar">
+                                🗑️
+                            </button>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
     }
 
     function renderContactGrid() {
@@ -192,19 +270,16 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.innerHTML = config.map(item => {
             let url = links[item.key] && links[item.key].trim() !== '' ? links[item.key].trim() : item.defaultUrl;
 
-            // Auto-corrección para TikTok
             if (item.key === 'tiktok' && url !== '#') {
                 if (url.startsWith('@')) url = `https://www.tiktok.com/${url}`;
                 else if (!url.startsWith('http')) url = `https://www.tiktok.com/@${url}`;
             }
 
-            // Auto-corrección para Instagram
             if (item.key === 'instagram' && url !== '#') {
                 if (url.startsWith('@')) url = `https://www.instagram.com/${url.replace('@', '')}/`;
                 else if (!url.startsWith('http')) url = `https://www.instagram.com/${url}/`;
             }
 
-            // Auto-corrección para Gmail
             if (item.key === 'gmail') {
                 const cleanEmail = url.replace('mailto:', '').replace('https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=', '').trim();
                 if (isMobile) {
@@ -214,13 +289,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // Auto-corrección para otras URLs
             if (url !== '#' && !url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('mailto:')) {
                 url = `https://${url}`;
             }
 
-            // En móviles, NO usamos target="_blank" para apps nativas (TikTok, Instagram, Telegram, WhatsApp)
-            // de modo que el sistema operativo (Android/iOS) abra la Aplicación Nativa instalada directamente.
             const isApp = ['tiktok', 'instagram', 'telegram', 'whatsapp'].includes(item.key);
             const useTargetBlank = url !== '#' && !url.startsWith('mailto:') && (!isMobile || !isApp);
 
@@ -433,17 +505,20 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('close-editor-panel').addEventListener('click', () => closeAllModals(true));
 
     // ==========================================
-    // 5. MODALES INTERACTIVOS Y MANEJO DEL BOTÓN "ATRÁS" DEL MÓVIL
+    // 5. MODALES INTERACTIVOS Y MANEJO DEL BOTÓN "ATRÁS"
     // ==========================================
     const storyModal = document.getElementById('story-modal');
     const contactModal = document.getElementById('contact-modal');
+    const favoritesModal = document.getElementById('favorites-modal');
     
     const navAbout = document.getElementById('nav-about');
     const navContact = document.getElementById('nav-contact');
     const btnReadStory = document.getElementById('btn-read-story');
+    const btnFavoritesTrigger = document.getElementById('btn-favorites-trigger');
     
     const closeStoryModal = document.getElementById('close-story-modal');
     const closeContactModal = document.getElementById('close-contact-modal');
+    const closeFavModal = document.getElementById('close-fav-modal');
 
     let modalPushedState = false;
 
@@ -462,7 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function closeAllModals(shouldGoBack = true) {
         let wasOpen = false;
-        const modals = [storyModal, contactModal, loginModal, editorPanel];
+        const modals = [storyModal, contactModal, favoritesModal, loginModal, editorPanel];
         modals.forEach(m => {
             if (m && m.classList.contains('active')) {
                 m.classList.remove('active');
@@ -478,7 +553,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Captura el botón físico o gesto "ATRÁS" del teléfono
+    window.closeAllModals = closeAllModals;
+
     window.addEventListener('popstate', (e) => {
         if (modalPushedState) {
             modalPushedState = false;
@@ -489,12 +565,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if(navAbout) navAbout.onclick = (e) => { e.preventDefault(); openModal(storyModal); };
     if(btnReadStory) btnReadStory.onclick = () => openModal(storyModal);
     if(navContact) navContact.onclick = (e) => { e.preventDefault(); openModal(contactModal); };
+    if(btnFavoritesTrigger) btnFavoritesTrigger.onclick = () => openModal(favoritesModal);
 
     if(closeStoryModal) closeStoryModal.onclick = () => closeAllModals(true);
     if(closeContactModal) closeContactModal.onclick = () => closeAllModals(true);
+    if(closeFavModal) closeFavModal.onclick = () => closeAllModals(true);
 
     window.onclick = (e) => {
-        if(e.target === storyModal || e.target === contactModal || e.target === loginModal) {
+        if(e.target === storyModal || e.target === contactModal || e.target === favoritesModal || e.target === loginModal) {
             closeAllModals(true);
         }
     };
