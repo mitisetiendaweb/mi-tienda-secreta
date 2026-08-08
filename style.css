@@ -21,16 +21,16 @@
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
+html, body {
     width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
 body {
     background-color: var(--bg-black);
     color: var(--text-light);
     font-family: var(--font-body);
-    width: 100%;
 }
 
 a {
@@ -71,17 +71,16 @@ a {
 }
 
 /* ==========================================
-   2. HEADER PRINCIPAL FIJO (ESTÁTICO AL HACER SCROLL)
+   2. HEADER PRINCIPAL Y ESTRUCTURA AGRUPADA
    ========================================== */
 #main-header {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background-color: rgba(11, 11, 11, 0.98);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    background-color: rgba(11, 11, 11, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(212, 175, 55, 0.25);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.85);
     width: 100%;
 }
 
@@ -298,7 +297,7 @@ a {
 }
 
 /* ==========================================
-   4. CATÁLOGO DE PRODUCTOS (8 ESCRITORIO / 3 MÓVIL)
+   4. CATÁLOGO & BOTÓN DE FAVORITOS EN PRODUCTO
    ========================================== */
 .section-container {
     width: 100%;
@@ -343,6 +342,7 @@ a {
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
+    position: relative;
 }
 
 .product-card:hover {
@@ -359,12 +359,43 @@ a {
     justify-content: center;
     overflow: hidden;
     border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    position: relative;
 }
 
 .product-img-box img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* BOTÓN DE CORAZÓN EN CADA TARJETA */
+.btn-fav-card {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: rgba(10, 10, 10, 0.75);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    color: #ffffff;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.82rem;
+    transition: var(--transition);
+    z-index: 5;
+    backdrop-filter: blur(4px);
+}
+
+.btn-fav-card:hover,
+.btn-fav-card.active {
+    background: rgba(212, 175, 55, 0.25);
+    border-color: var(--gold-primary);
+    color: #ff4d4d;
+    transform: scale(1.15);
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
 }
 
 .product-details {
@@ -477,7 +508,7 @@ a {
 }
 
 /* ==========================================
-   6. MODALES Y CERRAR (X)
+   6. MODALES Y ELEMENTOS DE FAVORITOS
    ========================================== */
 .story-modal-backdrop,
 .fullscreen-modal-backdrop {
@@ -587,6 +618,93 @@ a {
     font-weight: 600;
 }
 
+/* LISTA DE FAVORITOS DENTRO DEL MODAL */
+.fav-items-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 55vh;
+    overflow-y: auto;
+    margin-top: 15px;
+    padding-right: 5px;
+}
+
+.fav-item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(20, 20, 20, 0.85);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 8px;
+    padding: 10px 14px;
+    gap: 12px;
+}
+
+.fav-item-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+}
+
+.fav-item-thumb {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.fav-item-title {
+    font-family: var(--font-title);
+    font-size: 0.95rem;
+    color: #fff;
+    margin-bottom: 2px;
+}
+
+.fav-item-price {
+    font-size: 0.85rem;
+    color: var(--gold-light);
+    font-weight: 600;
+}
+
+.fav-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-fav-move-cart {
+    background: var(--gold-primary);
+    color: #000;
+    font-weight: 700;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-fav-remove {
+    background: transparent;
+    border: 1px solid #ff4d4d;
+    color: #ff4d4d;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.empty-fav-msg {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    padding: 30px 10px;
+}
+
+/* Modal de Contacto */
 .contact-modal-card {
     max-width: 600px;
     text-align: center;
@@ -1000,6 +1118,17 @@ footer p {
 
     .story-body p::first-letter {
         font-size: 1.8rem;
+    }
+
+    .fav-item-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .fav-item-actions {
+        width: 100%;
+        justify-content: flex-end;
+        margin-top: 6px;
     }
 
     .footer-container {
