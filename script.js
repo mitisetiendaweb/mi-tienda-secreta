@@ -748,6 +748,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupFileInputReader('new-prod-file', 'new-prod-img', null);
     setupFileInputReader('edit-about-file', 'edit-about-img-path', null);
 
+    // ESCUCHADOR DEDICADO PARA SELECCIÓN DE FOTO EN EL MODAL DE EDICIÓN DE PRODUCTO
+    const editProdFileInput = document.getElementById('edit-prod-file');
+    if (editProdFileInput) {
+        editProdFileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const dataUrl = evt.target.result;
+                    const imgInput = document.getElementById('edit-prod-img');
+                    if (imgInput) imgInput.value = dataUrl;
+
+                    const previewImg = document.getElementById('edit-prod-preview');
+                    if (previewImg) previewImg.src = dataUrl;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
     const tabBtns = document.querySelectorAll('.editor-tab-btn');
     const tabPanes = document.querySelectorAll('.tab-pane');
 
@@ -760,7 +780,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-    // RENDERIZADO Y EDICIÓN DINÁMICA DE TODOS LOS BANNERS CON OPCIÓN DE ELIMINAR
     function renderEditorBannersList() {
         const container = document.getElementById('editor-banners-container');
         if (!container) return;
@@ -801,13 +820,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
         `).join('');
 
-        // Conectar lector de archivos para cada banner
         siteData.banners.forEach((_, idx) => {
             setupFileInputReader(`edit-banner-file-${idx}`, `edit-banner-media-${idx}`, null);
         });
     }
 
-    // ELIMINAR BANNER DEL CMS
     window.deleteBannerFromCMS = function(index) {
         if(confirm(`¿Estás seguro de que deseas eliminar el Banner ${index + 1}?`)) {
             siteData.banners.splice(index, 1);
@@ -816,7 +833,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // RENDERIZADO Y SELECCIÓN DE PRODUCTOS PARA EDICIÓN
     function renderEditorProductsList() {
         const grid = document.getElementById('editor-products-list');
         if(!grid) return;
@@ -854,95 +870,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    function ensureEditProductModalExists() {
-        let modalDiv = document.getElementById('edit-product-modal');
-        if (!modalDiv) {
-            modalDiv = document.createElement('div');
-            modalDiv.id = 'edit-product-modal';
-            modalDiv.className = 'story-modal-backdrop';
-            modalDiv.style.zIndex = '3500';
-            modalDiv.innerHTML = `
-                <div class="story-modal-card contact-modal-card">
-                    <button class="story-modal-close" id="close-edit-prod-modal">&times;</button>
-                    <div class="story-header">
-                        <span class="gold-subtitle">SISTEMA CMS DE GESTIÓN</span>
-                        <h2 class="story-title">Editar Producto</h2>
-                        <div class="gold-divider"></div>
-                    </div>
-                    <form id="form-edit-product" class="checkout-form">
-                        <input type="hidden" id="edit-prod-id">
-                        <div class="form-group-gold">
-                            <label for="edit-prod-brand">Marca:</label>
-                            <input type="text" id="edit-prod-brand" required autocomplete="off">
-                        </div>
-                        <div class="form-group-gold">
-                            <label for="edit-prod-name">Nombre del Perfume:</label>
-                            <input type="text" id="edit-prod-name" required autocomplete="off">
-                        </div>
-                        <div class="form-group-gold">
-                            <label for="edit-prod-price">Precio ($ USD):</label>
-                            <input type="number" id="edit-prod-price" step="0.01" required autocomplete="off">
-                        </div>
-                        <div class="form-group-gold">
-                            <label>Seleccionar Nueva Foto desde el Equipo:</label>
-                            <input type="file" id="edit-prod-file" accept="image/*" class="file-input-gold">
-                        </div>
-                        <div class="form-group-gold">
-                            <label for="edit-prod-img">O Ruta Relativa de la Foto:</label>
-                            <input type="text" id="edit-prod-img" required autocomplete="off">
-                        </div>
-                        <div class="editor-preview-box" style="margin-bottom: 15px;">
-                            <p class="editor-preview-title">Vista Previa de la Foto:</p>
-                            <img id="edit-prod-preview" src="" alt="Preview Perfume" class="editor-img-thumb" onerror="this.src='IMG/LOGO_ENTERO.png'">
-                        </div>
-                        <div class="modal-actions-row">
-                            <button type="submit" class="btn-gold">Guardar Cambios de Producto</button>
-                            <button type="button" class="btn-outline-gold" id="btn-cancel-edit-prod">Cancelar</button>
-                        </div>
-                    </form>
-                </div>
-            `;
-            document.body.appendChild(modalDiv);
-
-            setupFileInputReader('edit-prod-file', 'edit-prod-img', 'edit-prod-preview');
-        } else {
-            modalDiv.style.zIndex = '3500';
-        }
-
-        const formEdit = document.getElementById('form-edit-product');
-        if (formEdit && !formEdit.dataset.bound) {
-            formEdit.dataset.bound = "true";
-            formEdit.addEventListener('submit', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                const prodId = parseInt(document.getElementById('edit-prod-id').value);
-                const prod = siteData.products.find(p => p.id === prodId);
-
-                if (prod) {
-                    prod.brand = document.getElementById('edit-prod-brand').value.trim();
-                    prod.name = document.getElementById('edit-prod-name').value.trim();
-                    prod.price = parseFloat(document.getElementById('edit-prod-price').value) || 0;
-                    prod.image = document.getElementById('edit-prod-img').value.trim();
-
-                    saveSiteDataLocal();
-                    renderEditorProductsList();
-                    closeEditProductModal();
-                    alert('¡Producto actualizado localmente! Recuerda hacer clic en "🚀 Publicar Cambios Globales" para guardar el cambio en GitHub.');
-                }
-            });
-        }
-
-        const closeBtn = document.getElementById('close-edit-prod-modal');
-        if (closeBtn) closeBtn.onclick = (e) => { e.preventDefault(); e.stopPropagation(); closeEditProductModal(); };
-
-        const cancelBtn = document.getElementById('btn-cancel-edit-prod');
-        if (cancelBtn) cancelBtn.onclick = (e) => { e.preventDefault(); e.stopPropagation(); closeEditProductModal(); };
-    }
-
     window.openEditProductModal = function(productId) {
-        ensureEditProductModalExists();
-
         const prod = siteData.products.find(p => p.id === productId);
         if (!prod) return;
 
@@ -952,20 +880,57 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('edit-prod-price').value = prod.price || 0;
         document.getElementById('edit-prod-img').value = prod.image || '';
 
+        const fileInput = document.getElementById('edit-prod-file');
+        if (fileInput) fileInput.value = '';
+
         const preview = document.getElementById('edit-prod-preview');
         if (preview) preview.src = prod.image || 'IMG/LOGO_ENTERO.png';
 
         const editModal = document.getElementById('edit-product-modal');
         if (editModal) {
+            editModal.style.zIndex = '3500';
             editModal.classList.add('active');
         }
     };
+
+    // FORMULARIO DE EDICIÓN DE PRODUCTOS
+    const formEditProd = document.getElementById('form-edit-product');
+    if (formEditProd) {
+        formEditProd.addEventListener('submit', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const prodId = parseInt(document.getElementById('edit-prod-id').value);
+            const prod = siteData.products.find(p => p.id === prodId);
+
+            if (prod) {
+                prod.brand = document.getElementById('edit-prod-brand').value.trim();
+                prod.name = document.getElementById('edit-prod-name').value.trim();
+                prod.price = parseFloat(document.getElementById('edit-prod-price').value) || 0;
+                prod.image = document.getElementById('edit-prod-img').value.trim();
+
+                saveSiteDataLocal();
+                renderEditorProductsList();
+                renderCatalog();
+
+                closeEditProductModal();
+                alert('¡Producto actualizado localmente! Recuerda hacer clic en "🚀 Publicar Cambios Globales" para guardar el cambio en GitHub.');
+            }
+        });
+    }
+
+    const closeEditBtn = document.getElementById('close-edit-prod-modal');
+    if (closeEditBtn) closeEditBtn.onclick = (e) => { e.preventDefault(); e.stopPropagation(); closeEditProductModal(); };
+
+    const cancelEditBtn = document.getElementById('btn-cancel-edit-prod');
+    if (cancelEditBtn) cancelEditBtn.onclick = (e) => { e.preventDefault(); e.stopPropagation(); closeEditProductModal(); };
 
     window.deleteProductFromCMS = function(productId) {
         if(confirm('¿Estás seguro de que deseas eliminar este producto del catálogo?')) {
             siteData.products = siteData.products.filter(p => p.id !== productId);
             saveSiteDataLocal();
             renderEditorProductsList();
+            renderCatalog();
         }
     };
 
@@ -1044,7 +1009,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             let rawLogo = document.getElementById('edit-logo-path').value;
             siteData.logoPath = await processAndUploadImageIfBase64(rawLogo, 'logo');
 
-            // ACTUALIZAR TODOS LOS BANNERS DE LA LISTA DINÁMICA
+            // ACTUALIZAR BANNERS
             for (let i = 0; i < siteData.banners.length; i++) {
                 const tagElem = document.getElementById(`edit-banner-tag-${i}`);
                 const titleElem = document.getElementById(`edit-banner-title-${i}`);
@@ -1077,6 +1042,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             siteData.contactLinks.gmail = document.getElementById('link-gmail').value;
             siteData.contactLinks.whatsapp = document.getElementById('link-whatsapp').value;
 
+            // PROCESAR FOTOS DE PRODUCTOS INDIVIDUALMENTE CON NOMBRE ÚNICO POR ID
             for (let i = 0; i < siteData.products.length; i++) {
                 if (siteData.products[i].image.startsWith('data:')) {
                     siteData.products[i].image = await processAndUploadImageIfBase64(siteData.products[i].image, `prod_${siteData.products[i].id}`);
@@ -1099,14 +1065,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // AÑADIR NUEVO BANNER CON VALIDACIÓN OBLIGATORIA DE CAMPOS
     document.getElementById('btn-add-banner').addEventListener('click', async () => {
         const tag = document.getElementById('new-banner-tag').value.trim();
         const title = document.getElementById('new-banner-title').value.trim();
         const desc = document.getElementById('new-banner-desc').value.trim();
         let media = document.getElementById('new-banner-media').value.trim();
 
-        // VALIDACIÓN OBLIGATORIA DE CAMPOS
         if (!tag || !title || !desc || !media) {
             alert("⚠️ Todos los campos son OBLIGATORIOS para agregar un nuevo banner:\n\n1. Etiqueta / Tag\n2. Título Principal\n3. Descripción\n4. Fondo (Archivo subido o Ruta de texto)");
             return;
