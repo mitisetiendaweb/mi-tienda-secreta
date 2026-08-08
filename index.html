@@ -352,16 +352,26 @@
         </div>
     </div>
 
-    <!-- 14. PANEL DE EDITOR CMS DE GESTIÓN (CON CARGA LOCAL DE IMÁGENES) -->
+    <!-- 14. PANEL DE EDITOR CMS DE GESTIÓN (CON CONEXIÓN GITHUB API) -->
     <div id="editor-panel" class="fullscreen-modal-backdrop">
         <div class="editor-dashboard-card">
+            
+            <!-- OVERLAY DE CARGA PARA PUBLICACIÓN GLOBAL EN GITHUB -->
+            <div id="github-loading-overlay" class="editor-loading-overlay" style="display: none;">
+                <div class="editor-loading-box">
+                    <div class="spinner-gold"></div>
+                    <h3 class="editor-loading-title">Publicando Cambios Globales...</h3>
+                    <p class="editor-loading-sub">Subiendo imágenes y datos a GitHub.com. En 1-2 minutos la web estará actualizada para todos los clientes del mundo.</p>
+                </div>
+            </div>
+
             <div class="editor-top-bar">
                 <div>
-                    <span class="gold-subtitle">SISTEMA CMS DE GESTIÓN</span>
+                    <span class="gold-subtitle">SISTEMA CMS DE GESTIÓN GLOBAL</span>
                     <h2 class="editor-title">Panel de Control Mitise (<span id="active-editor-name"></span>)</h2>
                 </div>
                 <div class="editor-top-actions">
-                    <button class="btn-gold-small" id="btn-save-all">💾 Guardar Cambios</button>
+                    <button class="btn-gold-small" id="btn-save-all">🚀 Publicar Cambios Globales</button>
                     <button class="btn-outline-gold-small" id="btn-logout-editor">Cerrar Sesión</button>
                     <button class="story-modal-close-static" id="close-editor-panel">&times;</button>
                 </div>
@@ -369,7 +379,8 @@
 
             <div class="editor-body-layout">
                 <div class="editor-tabs">
-                    <button class="editor-tab-btn active" data-tab="tab-ticker">📢 Anuncios</button>
+                    <button class="editor-tab-btn active" data-tab="tab-github">🔑 GitHub API</button>
+                    <button class="editor-tab-btn" data-tab="tab-ticker">📢 Anuncios</button>
                     <button class="editor-tab-btn" data-tab="tab-logo">👑 Logo</button>
                     <button class="editor-tab-btn" data-tab="tab-banners">🎬 Banners</button>
                     <button class="editor-tab-btn" data-tab="tab-catalog">🛍️ Productos</button>
@@ -378,8 +389,36 @@
                 </div>
 
                 <div class="editor-content-area">
+                    
+                    <!-- PANE 0: CONFIGURACIÓN GITHUB API -->
+                    <div id="tab-github" class="tab-pane active">
+                        <h3>Conexión para Publicación Global Automática</h3>
+                        <p class="editor-hint">Configura tu Token de GitHub para que cada cambio o foto que subas desde este panel se publique automáticamente en la web para todos tus clientes.</p>
+                        
+                        <div class="editor-section-card">
+                            <div class="form-group-gold">
+                                <label>Usuario o Organización de GitHub:</label>
+                                <input type="text" id="gh-owner" value="mitisetiendaweb">
+                            </div>
+                            <div class="form-group-gold">
+                                <label>Nombre del Repositorio:</label>
+                                <input type="text" id="gh-repo" value="mi-tienda-secreta">
+                            </div>
+                            <div class="form-group-gold">
+                                <label>Rama Principal (Branch):</label>
+                                <input type="text" id="gh-branch" value="main">
+                            </div>
+                            <div class="form-group-gold">
+                                <label>Personal Access Token (PAT):</label>
+                                <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+                            </div>
+                            <button class="btn-gold" id="btn-save-gh-config">🔒 Guardar Token Localmente</button>
+                            <p class="editor-hint" style="margin-top: 10px; color: var(--gold-primary);" id="gh-status-msg">Estado: Esperando token de GitHub...</p>
+                        </div>
+                    </div>
+
                     <!-- PANE 1: ANUNCIOS TICKER -->
-                    <div id="tab-ticker" class="tab-pane active">
+                    <div id="tab-ticker" class="tab-pane">
                         <h3>Gestión del Ticker de Anuncios</h3>
                         <p class="editor-hint">Separa cada mensaje promocional con una coma (,).</p>
                         <div class="form-group-gold">
@@ -392,11 +431,11 @@
                     <div id="tab-logo" class="tab-pane">
                         <h3>Gestión del Logo Principal</h3>
                         <div class="form-group-gold">
-                            <label>Cargar Imagen desde su Equipo (Eliminará la anterior):</label>
+                            <label>Cargar Imagen desde su Equipo (Se subirá a la carpeta IMG/ de GitHub):</label>
                             <input type="file" id="edit-logo-file" accept="image/*" class="file-input-gold">
                         </div>
                         <div class="form-group-gold">
-                            <label>O ingresar Ruta Relativa en la carpeta IMG:</label>
+                            <label>O Ruta Relativa en la carpeta IMG:</label>
                             <input type="text" id="edit-logo-path" placeholder="IMG/LOGO FN.png">
                         </div>
                         <div class="editor-preview-box">
