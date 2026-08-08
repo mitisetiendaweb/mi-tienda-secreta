@@ -22,16 +22,15 @@
 </head>
 <body>
 
-    <!-- 1. ENCABEZADO COMPLETO FIJO PERMANENTE -->
-    <header id="main-header">
-        <!-- Barra de Anuncios Ticker -->
-        <div class="top-announcement-bar">
-            <div class="ticker-track" id="ticker-track-container">
-                <!-- Cargado Dinámicamente -->
-            </div>
+    <!-- 1. BARRA SUPERIOR DE ANUNCIOS -->
+    <div class="top-announcement-bar">
+        <div class="ticker-track" id="ticker-track-container">
+            <!-- Cargado Dinámicamente -->
         </div>
+    </div>
 
-        <!-- Renglón del Logo, Secciones y Carrito -->
+    <!-- 2. HEADER PRINCIPAL -->
+    <header id="main-header">
         <div class="header-container">
             <!-- Logo Oficial -->
             <a href="#" class="logo-area">
@@ -45,13 +44,13 @@
                 <li><a href="#contacto" class="nav-link" id="nav-contact">Contacto</a></li>
             </ul>
 
-            <!-- Acciones Derecha (Sin $0.00) -->
+            <!-- Acciones Derecha -->
             <div class="header-right-actions">
                 <button class="icon-btn" id="btn-favorites-trigger" title="Favoritos">
                     🖤
                     <span class="cart-badge" id="fav-count">0</span>
                 </button>
-                <button class="icon-btn" title="Carrito">
+                <button class="icon-btn" id="btn-cart-trigger" title="Carrito">
                     🛒
                     <span class="cart-badge" id="cart-count">0</span>
                 </button>
@@ -60,7 +59,7 @@
         </div>
     </header>
 
-    <!-- 2. BANNER SLIDER PRINCIPAL DINÁMICO -->
+    <!-- 3. BANNER SLIDER PRINCIPAL DINÁMICO -->
     <section class="hero-slider" id="hero-slider-container">
         <button class="slider-arrow arrow-left" id="prevSlide">&#10094;</button>
         <button class="slider-arrow arrow-right" id="nextSlide">&#10095;</button>
@@ -68,7 +67,7 @@
         <div id="slides-wrapper" style="width: 100%; height: 100%; position: relative;"></div>
     </section>
 
-    <!-- 3. CATÁLOGO DE PRODUCTOS -->
+    <!-- 4. CATÁLOGO DE PRODUCTOS -->
     <section id="catalogo" class="section-container">
         <div class="section-header">
             <h2 class="section-title">Nuestra Colección Exclusiva</h2>
@@ -79,7 +78,7 @@
         <div class="products-grid" id="products-container"></div>
     </section>
 
-    <!-- 4. SECCIÓN SOBRE NOSOTROS -->
+    <!-- 5. SECCIÓN SOBRE NOSOTROS -->
     <section id="sobre-nosotros" class="bg-dark-soft">
         <div class="section-container split-layout">
             <div class="split-text">
@@ -97,7 +96,7 @@
         </div>
     </section>
 
-    <!-- 5. MODAL INTERACTIVO DE HISTORIA MITISE -->
+    <!-- 6. MODAL HISTORIA DE MITISE -->
     <div id="story-modal" class="story-modal-backdrop">
         <div class="story-modal-card">
             <button class="story-modal-close" id="close-story-modal" aria-label="Cerrar">&times;</button>
@@ -112,7 +111,7 @@
         </div>
     </div>
 
-    <!-- 6. MODAL INTERACTIVO DE CONTACTO -->
+    <!-- 7. MODAL DE CONTACTO -->
     <div id="contact-modal" class="story-modal-backdrop">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-contact-modal" aria-label="Cerrar">&times;</button>
@@ -126,7 +125,6 @@
             <div class="contact-modal-body">
                 <p class="contact-modal-desc">Conéctate con nuestro universo oficial para realizar pedidos personalizados, asesoría olfativa y consultas generales.</p>
 
-                <!-- Tarjeta Ejecutiva Comercial -->
                 <div class="contact-executive-info">
                     <h3 class="executive-name">Rubén D. Zapata Palmo</h3>
                     <p class="executive-role">Director Comercial</p>
@@ -138,7 +136,7 @@
         </div>
     </div>
 
-    <!-- 7. MODAL INTERACTIVO DE FAVORITOS -->
+    <!-- 8. MODAL DE FAVORITOS -->
     <div id="favorites-modal" class="story-modal-backdrop">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-fav-modal" aria-label="Cerrar">&times;</button>
@@ -153,7 +151,191 @@
         </div>
     </div>
 
-    <!-- 8. VENTANA LOGIN FULLSCREEN (EDITOR) -->
+    <!-- ====================================================
+         MÓDULOS DE CARRITO Y CHECKOUT EN 4 PASOS
+         ==================================================== -->
+
+    <!-- PASO 1: MODAL SELECCIÓN DE CANTIDAD -->
+    <div id="quantity-modal" class="story-modal-backdrop">
+        <div class="story-modal-card contact-modal-card">
+            <button class="story-modal-close" id="close-qty-modal">&times;</button>
+
+            <div class="story-header">
+                <span class="gold-subtitle" id="qty-modal-brand">Mitise Fragrance</span>
+                <h2 class="story-title" id="qty-modal-title">Nombre del Perfume</h2>
+                <div class="gold-divider"></div>
+            </div>
+
+            <div class="qty-modal-body">
+                <!-- Foto Agrandada -->
+                <div class="qty-img-preview-box">
+                    <img id="qty-modal-img" src="IMG/LOGO_ENTERO.png" alt="Perfume Preview">
+                </div>
+
+                <p class="qty-unit-price">Precio Unitario: <span id="qty-modal-unit-price">$0.00</span> USD</p>
+
+                <!-- Campo Selector de Cantidad -->
+                <div class="qty-selector-group">
+                    <label for="qty-modal-input">Cantidad deseada:</label>
+                    <div class="qty-input-controls">
+                        <button class="qty-btn" id="qty-btn-minus">-</button>
+                        <input type="number" id="qty-modal-input" value="1" min="1" max="99">
+                        <button class="qty-btn" id="qty-btn-plus">+</button>
+                    </div>
+                </div>
+
+                <p class="qty-subtotal-display">Subtotal: <span id="qty-modal-subtotal">$0.00</span> USD</p>
+
+                <!-- Botones de Acción -->
+                <div class="modal-actions-row">
+                    <button class="btn-gold" id="btn-qty-accept">Aceptar</button>
+                    <button class="btn-outline-gold" id="btn-qty-cancel">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PASO 2: MODAL DEL CARRITO DE COMPRAS -->
+    <div id="cart-modal" class="story-modal-backdrop">
+        <div class="story-modal-card contact-modal-card">
+            <button class="story-modal-close" id="close-cart-modal">&times;</button>
+
+            <div class="story-header">
+                <span class="gold-subtitle">Selección Actual</span>
+                <h2 class="story-title">Carrito de Compras</h2>
+                <div class="gold-divider"></div>
+            </div>
+
+            <div class="cart-modal-body">
+                <!-- Lista de Productos -->
+                <div id="cart-items-list-container"></div>
+
+                <!-- Total a Pagar -->
+                <div class="cart-grand-total-box">
+                    <span>Monto Total a Pagar:</span>
+                    <strong id="cart-grand-total-amount">$0.00 USD</strong>
+                </div>
+
+                <!-- Botones de Acción -->
+                <div class="modal-actions-row">
+                    <button class="btn-gold" id="btn-cart-checkout-start">Aceptar y Comprar</button>
+                    <button class="btn-outline-gold" id="btn-cart-cancel">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PASO 3: MODAL DATOS DEL CLIENTE, PAGO Y ENVÍO -->
+    <div id="checkout-info-modal" class="story-modal-backdrop">
+        <div class="story-modal-card contact-modal-card">
+            <button class="story-modal-close" id="close-info-modal">&times;</button>
+
+            <div class="story-header">
+                <span class="gold-subtitle">Paso 1 de 2</span>
+                <h2 class="story-title">Datos del Pedido</h2>
+                <div class="gold-divider"></div>
+            </div>
+
+            <form id="checkout-info-form" class="checkout-form">
+                <!-- Nombre / Razón Social -->
+                <div class="form-group-gold">
+                    <label for="cust-fullname">Nombres y Apellidos (o Razón Social):</label>
+                    <input type="text" id="cust-fullname" placeholder="Ej: Maria Fernández" required autocomplete="off">
+                </div>
+
+                <!-- Teléfono con Código de País -->
+                <div class="form-group-gold">
+                    <label for="cust-phone">Número Telefónico:</label>
+                    <div class="phone-input-wrapper">
+                        <select id="cust-country-code" class="select-gold-phone">
+                            <option value="+34">🇪🇸 +34 (España)</option>
+                            <option value="+1">🇺🇸 +1 (EE.UU. / PR)</option>
+                            <option value="+58" selected>🇻🇪 +58 (Venezuela)</option>
+                            <option value="+52">🇲🇽 +52 (México)</option>
+                            <option value="+57">🇨🇴 +57 (Colombia)</option>
+                            <option value="+54">🇦🇷 +54 (Argentina)</option>
+                            <option value="+56">🇨🇱 +56 (Chile)</option>
+                            <option value="+51">🇵🇪 +51 (Perú)</option>
+                            <option value="+593">🇪🇨 +593 (Ecuador)</option>
+                            <option value="+507">🇵🇦 +507 (Panamá)</option>
+                            <option value="+1">🇩🇴 +1 (Rep. Dominicana)</option>
+                        </select>
+                        <input type="tel" id="cust-phone" placeholder="4121234567" required autocomplete="off">
+                    </div>
+                </div>
+
+                <!-- Método de Pago -->
+                <div class="form-group-gold">
+                    <label for="cust-payment-method">Método de Pago:</label>
+                    <select id="cust-payment-method" class="select-gold-full">
+                        <option value="Efectivo">Efectivo</option>
+                        <option value="Cash App">Cash App</option>
+                        <option value="Venmo">Venmo</option>
+                        <option value="PayPal">PayPal</option>
+                        <option value="Zelle">Zelle</option>
+                        <option value="Bizum">Bizum</option>
+                    </select>
+                </div>
+
+                <!-- Método de Entrega -->
+                <div class="form-group-gold">
+                    <label for="cust-delivery-method">Método de Entrega:</label>
+                    <select id="cust-delivery-method" class="select-gold-full">
+                        <option value="Delivery">Delivery</option>
+                        <option value="Envíos nacionales">Envíos nacionales</option>
+                        <option value="Envíos internacionales">Envíos internacionales</option>
+                    </select>
+                </div>
+
+                <!-- Campo Condicional: Empresa de Paquetería -->
+                <div class="form-group-gold" id="courier-field-group" style="display: none;">
+                    <label for="cust-courier-company">Empresa de Paquetería deseada:</label>
+                    <input type="text" id="cust-courier-company" placeholder="Ej: MRW, Zoom, Tealca, DHL, FedEx">
+                </div>
+
+                <!-- Botones de Acción -->
+                <div class="modal-actions-row">
+                    <button type="submit" class="btn-gold">Siguiente</button>
+                    <button type="button" class="btn-outline-gold" id="btn-info-back">Atrás</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- PASO 4: MODAL RESUMEN Y WHATSAPP -->
+    <div id="checkout-summary-modal" class="story-modal-backdrop">
+        <div class="story-modal-card contact-modal-card">
+            <button class="story-modal-close" id="close-summary-modal">&times;</button>
+
+            <div class="story-header">
+                <span class="gold-subtitle">Paso 2 de 2</span>
+                <h2 class="story-title">Resumen de la Compra</h2>
+                <div class="gold-divider"></div>
+            </div>
+
+            <div class="summary-modal-body">
+                <!-- Resumen de Datos -->
+                <div class="summary-info-card" id="summary-data-card"></div>
+
+                <!-- Desglose de Productos -->
+                <div class="summary-items-list" id="summary-items-list"></div>
+
+                <!-- Total -->
+                <div class="cart-grand-total-box">
+                    <span>Monto Total a Pagar:</span>
+                    <strong id="summary-grand-total-amount">$0.00 USD</strong>
+                </div>
+
+                <!-- Botones de Acción -->
+                <div class="modal-actions-row">
+                    <button class="btn-gold" id="btn-summary-accept">Aceptar y Enviar Pedido</button>
+                    <button class="btn-outline-gold" id="btn-summary-back">Atrás</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 9. VENTANA LOGIN FULLSCREEN (EDITOR) -->
     <div id="login-modal" class="fullscreen-modal-backdrop">
         <div class="login-card">
             <button class="fullscreen-modal-close" id="close-login-modal">&times;</button>
@@ -178,7 +360,7 @@
         </div>
     </div>
 
-    <!-- 9. PANEL DE EDITOR EN PANTALLA COMPLETA -->
+    <!-- 10. PANEL DE EDITOR -->
     <div id="editor-panel" class="fullscreen-modal-backdrop">
         <div class="editor-dashboard-card">
             <div class="editor-top-bar">
@@ -325,12 +507,12 @@
         </div>
     </div>
 
-    <!-- 10. BOTÓN FLOTANTE DE WHATSAPP -->
+    <!-- 11. BOTÓN FLOTANTE DE WHATSAPP -->
     <a href="https://wa.me/1234567890?text=Hola,%20quisiera%20informaci%C3%B3n%20sobre%20sus%20perfumes" target="_blank" class="whatsapp-btn" id="floating-whatsapp-btn">
         <span>💬</span> ¡Hola!
     </a>
 
-    <!-- 11. FOOTER -->
+    <!-- 12. FOOTER -->
     <footer id="contacto">
         <div class="footer-container">
             <p>&copy; 2026 Mitise - Luxury Fragrance. Todos los derechos reservados.</p>
