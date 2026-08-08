@@ -77,7 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Exponer toggleFavorite globalmente para botones inline
     window.toggleFavorite = toggleFavorite;
 
     // ==========================================
@@ -505,7 +504,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('close-editor-panel').addEventListener('click', () => closeAllModals(true));
 
     // ==========================================
-    // 5. MODALES INTERACTIVOS Y MANEJO DEL BOTÓN "ATRÁS"
+    // 5. MODALES INTERACTIVOS
     // ==========================================
     const storyModal = document.getElementById('story-modal');
     const contactModal = document.getElementById('contact-modal');
@@ -580,6 +579,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderAllContent();
 });
 
+// Carrito de compras
 let itemCount = 0;
 let totalPrice = 0;
 
@@ -587,6 +587,6 @@ function addToCart(name, price) {
     itemCount++;
     totalPrice += price;
     
-    document.getElementById('cart-count').innerText = itemCount;
-    document.getElementById('cart-price').innerText = `$${totalPrice.toFixed(2)}`;
+    const cartCountElem = document.getElementById('cart-count');
+    if (cartCountElem) cartCountElem.innerText = itemCount;
 }
