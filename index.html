@@ -67,15 +67,11 @@
         <div id="slides-wrapper" style="width: 100%; height: 100%; position: relative;"></div>
     </section>
 
-    <!-- 4. CATÁLOGO DE PRODUCTOS -->
+    <!-- 4. CATÁLOGO DE PRODUCTOS (SECCIONES Y REJILLA) -->
     <section id="catalogo" class="section-container">
-        <div class="section-header">
-            <h2 class="section-title">Nuestra Colección Exclusiva</h2>
-            <div class="gold-divider"></div>
+        <div id="catalog-sections-wrapper">
+            <!-- Cargado Dinámicamente por Secciones -->
         </div>
-
-        <div id="catalog-subsections-container"></div>
-        <div class="products-grid" id="products-container"></div>
     </section>
 
     <!-- 5. SECCIÓN SOBRE NOSOTROS -->
@@ -483,9 +479,30 @@
                         <button class="btn-gold" id="btn-add-banner">+ Agregar Banner</button>
                     </div>
 
-                    <!-- PANE 4: PRODUCTOS Y CATÁLOGO -->
+                    <!-- PANE 4: PRODUCTOS Y SECCIONES DEL CATÁLOGO -->
                     <div id="tab-catalog" class="tab-pane">
+                        
+                        <!-- GESTIÓN DE SECCIONES DEL CATÁLOGO -->
+                        <h3>Gestión de Secciones del Catálogo</h3>
+                        <p class="editor-hint">Crea o elimina secciones para clasificar los perfumes en la tienda:</p>
+                        <div class="editor-section-card">
+                            <div class="form-group-gold">
+                                <label>Nombre de la Nueva Sección:</label>
+                                <div class="phone-input-wrapper">
+                                    <input type="text" id="new-section-name" placeholder="Ej: Línea Árabe, Perfumes Femeninos, etc.">
+                                    <button class="btn-gold" id="btn-add-section" style="flex-shrink: 0; padding: 12px 20px;">+ Crear Sección</button>
+                                </div>
+                            </div>
+                            <div id="editor-sections-list" class="editor-products-grid" style="margin-top: 10px;"></div>
+                        </div>
+
+                        <hr class="editor-divider">
+
                         <h3>Añadir Nuevo Producto al Catálogo</h3>
+                        <div class="form-group-gold">
+                            <label>Sección / Colección a la que Pertenece:</label>
+                            <select id="new-prod-section" class="select-gold-full"></select>
+                        </div>
                         <div class="form-group-gold">
                             <label>Marca:</label>
                             <input type="text" id="new-prod-brand" placeholder="Ej: Lattafa Exclusif">
@@ -577,7 +594,33 @@
         </div>
     </div>
 
-    <!-- 15. MODAL EDICIÓN COMPLETA DE PRODUCTO EXISTENTE -->
+    <!-- 15. MODAL VISTA AGRANDADA DE IMAGEN (LIGHTBOX DEL PRODUCTO) -->
+    <div id="product-lightbox-modal" class="story-modal-backdrop" style="z-index: 2500;">
+        <div class="story-modal-card contact-modal-card lightbox-card">
+            <button class="story-modal-close" id="close-lightbox-modal">&times;</button>
+
+            <div class="story-header">
+                <span class="gold-subtitle" id="lightbox-brand">Mitise Fragrance</span>
+                <h2 class="story-title" id="lightbox-title">Nombre del Perfume</h2>
+                <div class="gold-divider"></div>
+            </div>
+
+            <div class="lightbox-body">
+                <div class="lightbox-img-preview-box">
+                    <img id="lightbox-img" src="IMG/LOGO_ENTERO.png" alt="Perfume Agrandado">
+                </div>
+
+                <p class="lightbox-price-display" id="lightbox-price">$0.00 USD</p>
+
+                <div class="modal-actions-row">
+                    <button class="btn-gold" id="lightbox-btn-add-cart">🛒 Añadir al Carrito</button>
+                    <button class="btn-outline-gold" id="lightbox-btn-close">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 16. MODAL EDICIÓN COMPLETA DE PRODUCTO EXISTENTE -->
     <div id="edit-product-modal" class="story-modal-backdrop" style="z-index: 3500;">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-edit-prod-modal">&times;</button>
@@ -590,6 +633,11 @@
 
             <form id="form-edit-product" class="checkout-form">
                 <input type="hidden" id="edit-prod-id">
+
+                <div class="form-group-gold">
+                    <label for="edit-prod-section">Sección / Colección:</label>
+                    <select id="edit-prod-section" class="select-gold-full"></select>
+                </div>
 
                 <div class="form-group-gold">
                     <label for="edit-prod-brand">Marca:</label>
@@ -629,12 +677,12 @@
         </div>
     </div>
 
-    <!-- 16. BOTÓN FLOTANTE DE WHATSAPP -->
+    <!-- 17. BOTÓN FLOTANTE DE WHATSAPP -->
     <a href="https://wa.me/1234567890?text=Hola,%20quisiera%20informaci%C3%B3n%20sobre%20sus%20perfumes" target="_blank" class="whatsapp-btn" id="floating-whatsapp-btn">
         <span>💬</span> ¡Hola!
     </a>
 
-    <!-- 17. FOOTER -->
+    <!-- 18. FOOTER -->
     <footer id="contacto">
         <div class="footer-container">
             <p>&copy; 2026 Mitise - Luxury Fragrance. Todos los derechos reservados.</p>
