@@ -108,23 +108,23 @@
       "brand": "CALVIN KLEIN",
       "name": "CK1",
       "price": 10,
-      "image": "IMG/prod_1786229021111_1786229268546.png"
+      "image": "IMG/prod_1786229021111_1786229421589.png"
     },
     {
       "id": 1786229023614,
-      "section": "Nuestra Colección Exclusiva",
-      "brand": "Mitise",
-      "name": "Nuevo Perfume",
-      "price": 90,
-      "image": "IMG/LOGO_ENTERO.png"
+      "section": "PARA ELLOS",
+      "brand": "POLO",
+      "name": "RED",
+      "price": 10,
+      "image": "IMG/prod_1786229023614_1786229423935.png"
     },
     {
       "id": 1786229025030,
-      "section": "Nuestra Colección Exclusiva",
-      "brand": "Mitise",
-      "name": "Nuevo Perfume",
-      "price": 90,
-      "image": "IMG/LOGO_ENTERO.png"
+      "section": "PARA ELLOS",
+      "brand": "LACOSTE",
+      "name": "BLANC",
+      "price": 10,
+      "image": "IMG/prod_1786229025030_1786229425587.png"
     },
     {
       "id": 1786229026470,
