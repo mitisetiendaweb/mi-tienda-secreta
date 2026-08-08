@@ -101,7 +101,7 @@
       "brand": "POLO",
       "name": "BLACK",
       "price": 10,
-      "image": "IMG/prod_1786229018534_1786229265934.png"
+      "image": "IMG/prod_1786229018534_1786231268688.jpeg"
     },
     {
       "id": 1786229021111,
@@ -109,7 +109,7 @@
       "brand": "CALVIN KLEIN",
       "name": "CK1",
       "price": 10,
-      "image": "IMG/prod_1786229021111_1786229421589.png"
+      "image": "IMG/prod_1786229021111_1786231271253.jpeg"
     },
     {
       "id": 1786229023614,
@@ -117,7 +117,7 @@
       "brand": "POLO",
       "name": "RED",
       "price": 10,
-      "image": "IMG/prod_1786229023614_1786229423935.png"
+      "image": "IMG/prod_1786229023614_1786231272892.jpeg"
     },
     {
       "id": 1786229025030,
@@ -125,7 +125,7 @@
       "brand": "LACOSTE",
       "name": "BLANC",
       "price": 10,
-      "image": "IMG/prod_1786229025030_1786229921508.png"
+      "image": "IMG/prod_1786229025030_1786231274679.jpeg"
     },
     {
       "id": 1786229026470,
@@ -133,7 +133,7 @@
       "brand": "JANEIRO CHEIROSA",
       "name": "SOL 40",
       "price": 10,
-      "image": "IMG/prod_1786229026470_1786230386763.png"
+      "image": "IMG/prod_1786229026470_1786231276552.jpeg"
     },
     {
       "id": 1786229582629,
@@ -141,7 +141,7 @@
       "brand": "PRADA",
       "name": "CANDY",
       "price": 10,
-      "image": "IMG/prod_1786229582629_1786230391081.png"
+      "image": "IMG/prod_1786229582629_1786231280026.jpeg"
     },
     {
       "id": 1786229586684,
@@ -149,7 +149,7 @@
       "brand": "SMELLS LIKE",
       "name": "FLOWER BOMB",
       "price": 10,
-      "image": "IMG/LOGO_ENTERO.png"
+      "image": "IMG/prod_1786229586684_1786231281617.jpeg"
     },
     {
       "id": 1786229588796,
@@ -157,7 +157,7 @@
       "brand": "FLORAL FRUTAL GOURMAND",
       "name": "VIVA LA JUICY",
       "price": 10,
-      "image": "IMG/LOGO_ENTERO.png"
+      "image": "IMG/prod_1786229588796_1786231283082.jpeg"
     },
     {
       "id": 1786229765332,
@@ -165,7 +165,7 @@
       "brand": "HAVE A SCENT",
       "name": "COACH FLORAL",
       "price": 10,
-      "image": "IMG/LOGO_ENTERO.png"
+      "image": "IMG/prod_1786229765332_1786231284526.jpeg"
     },
     {
       "id": 1786229768196,
@@ -173,7 +173,7 @@
       "brand": "JENNUFER LOPEZ",
       "name": "POUR FEMME",
       "price": 10,
-      "image": "IMG/LOGO_ENTERO.png"
+      "image": "IMG/prod_1786229768196_1786231286153.jpeg"
     }
   ],
   "about": {
