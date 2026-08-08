@@ -151,11 +151,7 @@
         </div>
     </div>
 
-    <!-- ====================================================
-         MÓDULOS DE CARRITO Y CHECKOUT EN 4 PASOS
-         ==================================================== -->
-
-    <!-- PASO 1: MODAL SELECCIÓN DE CANTIDAD -->
+    <!-- 9. PASO 1: SELECCIÓN DE CANTIDAD -->
     <div id="quantity-modal" class="story-modal-backdrop">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-qty-modal">&times;</button>
@@ -167,14 +163,12 @@
             </div>
 
             <div class="qty-modal-body">
-                <!-- Foto Agrandada -->
                 <div class="qty-img-preview-box">
                     <img id="qty-modal-img" src="IMG/LOGO_ENTERO.png" alt="Perfume Preview">
                 </div>
 
                 <p class="qty-unit-price">Precio Unitario: <span id="qty-modal-unit-price">$0.00</span> USD</p>
 
-                <!-- Campo Selector de Cantidad -->
                 <div class="qty-selector-group">
                     <label for="qty-modal-input">Cantidad deseada:</label>
                     <div class="qty-input-controls">
@@ -186,7 +180,6 @@
 
                 <p class="qty-subtotal-display">Subtotal: <span id="qty-modal-subtotal">$0.00</span> USD</p>
 
-                <!-- Botones de Acción -->
                 <div class="modal-actions-row">
                     <button class="btn-gold" id="btn-qty-accept">Aceptar</button>
                     <button class="btn-outline-gold" id="btn-qty-cancel">Cancelar</button>
@@ -195,7 +188,7 @@
         </div>
     </div>
 
-    <!-- PASO 2: MODAL DEL CARRITO DE COMPRAS -->
+    <!-- 10. PASO 2: CARRITO DE COMPRAS -->
     <div id="cart-modal" class="story-modal-backdrop">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-cart-modal">&times;</button>
@@ -207,16 +200,13 @@
             </div>
 
             <div class="cart-modal-body">
-                <!-- Lista de Productos -->
                 <div id="cart-items-list-container"></div>
 
-                <!-- Total a Pagar -->
                 <div class="cart-grand-total-box">
                     <span>Monto Total a Pagar:</span>
                     <strong id="cart-grand-total-amount">$0.00 USD</strong>
                 </div>
 
-                <!-- Botones de Acción -->
                 <div class="modal-actions-row">
                     <button class="btn-gold" id="btn-cart-checkout-start">Aceptar y Comprar</button>
                     <button class="btn-outline-gold" id="btn-cart-cancel">Cancelar</button>
@@ -225,7 +215,7 @@
         </div>
     </div>
 
-    <!-- PASO 3: MODAL DATOS DEL CLIENTE, PAGO Y ENVÍO -->
+    <!-- 11. PASO 3: FORMULARIO DATOS DEL PEDIDO (CON BANDERAS Y FORMULARIO VERTICAL) -->
     <div id="checkout-info-modal" class="story-modal-backdrop">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-info-modal">&times;</button>
@@ -237,28 +227,36 @@
             </div>
 
             <form id="checkout-info-form" class="checkout-form">
-                <!-- Nombre / Razón Social -->
+                <!-- Nombres -->
                 <div class="form-group-gold">
                     <label for="cust-fullname">Nombres y Apellidos (o Razón Social):</label>
                     <input type="text" id="cust-fullname" placeholder="Ej: Maria Fernández" required autocomplete="off">
                 </div>
 
-                <!-- Teléfono con Código de País -->
+                <!-- Teléfono con Banderas -->
                 <div class="form-group-gold">
                     <label for="cust-phone">Número Telefónico:</label>
                     <div class="phone-input-wrapper">
                         <select id="cust-country-code" class="select-gold-phone">
-                            <option value="+34">🇪🇸 +34 (España)</option>
-                            <option value="+1">🇺🇸 +1 (EE.UU. / PR)</option>
-                            <option value="+58" selected>🇻🇪 +58 (Venezuela)</option>
-                            <option value="+52">🇲🇽 +52 (México)</option>
-                            <option value="+57">🇨🇴 +57 (Colombia)</option>
-                            <option value="+54">🇦🇷 +54 (Argentina)</option>
-                            <option value="+56">🇨🇱 +56 (Chile)</option>
-                            <option value="+51">🇵🇪 +51 (Perú)</option>
-                            <option value="+593">🇪🇨 +593 (Ecuador)</option>
-                            <option value="+507">🇵🇦 +507 (Panamá)</option>
-                            <option value="+1">🇩🇴 +1 (Rep. Dominicana)</option>
+                            <option value="+58" selected>🇻🇪 Venezuela (+58)</option>
+                            <option value="+34">🇪🇸 España (+34)</option>
+                            <option value="+1">🇺🇸 EE.UU. / PR (+1)</option>
+                            <option value="+52">🇲🇽 México (+52)</option>
+                            <option value="+57">🇨🇴 Colombia (+57)</option>
+                            <option value="+54">🇦🇷 Argentina (+54)</option>
+                            <option value="+56">🇨🇱 Chile (+56)</option>
+                            <option value="+51">🇵🇪 Perú (+51)</option>
+                            <option value="+593">🇪🇨 Ecuador (+593)</option>
+                            <option value="+507">🇵🇦 Panamá (+507)</option>
+                            <option value="+506">🇨🇷 Costa Rica (+506)</option>
+                            <option value="+502">🇬🇹 Guatemala (+502)</option>
+                            <option value="+1">🇩🇴 Rep. Dominicana (+1)</option>
+                            <option value="+598">🇺🇾 Uruguay (+598)</option>
+                            <option value="+595">🇵🇾 Paraguay (+595)</option>
+                            <option value="+591">🇧🇴 Bolivia (+591)</option>
+                            <option value="+503">🇸🇻 El Salvador (+503)</option>
+                            <option value="+504">🇭🇳 Honduras (+504)</option>
+                            <option value="+505">🇳🇮 Nicaragua (+505)</option>
                         </select>
                         <input type="tel" id="cust-phone" placeholder="4121234567" required autocomplete="off">
                     </div>
@@ -287,13 +285,12 @@
                     </select>
                 </div>
 
-                <!-- Campo Condicional: Empresa de Paquetería -->
+                <!-- Empresa de Paquetería Condicional -->
                 <div class="form-group-gold" id="courier-field-group" style="display: none;">
                     <label for="cust-courier-company">Empresa de Paquetería deseada:</label>
                     <input type="text" id="cust-courier-company" placeholder="Ej: MRW, Zoom, Tealca, DHL, FedEx">
                 </div>
 
-                <!-- Botones de Acción -->
                 <div class="modal-actions-row">
                     <button type="submit" class="btn-gold">Siguiente</button>
                     <button type="button" class="btn-outline-gold" id="btn-info-back">Atrás</button>
@@ -302,7 +299,7 @@
         </div>
     </div>
 
-    <!-- PASO 4: MODAL RESUMEN Y WHATSAPP -->
+    <!-- 12. PASO 4: RESUMEN Y WHATSAPP -->
     <div id="checkout-summary-modal" class="story-modal-backdrop">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-summary-modal">&times;</button>
@@ -314,19 +311,14 @@
             </div>
 
             <div class="summary-modal-body">
-                <!-- Resumen de Datos -->
                 <div class="summary-info-card" id="summary-data-card"></div>
-
-                <!-- Desglose de Productos -->
                 <div class="summary-items-list" id="summary-items-list"></div>
 
-                <!-- Total -->
                 <div class="cart-grand-total-box">
                     <span>Monto Total a Pagar:</span>
                     <strong id="summary-grand-total-amount">$0.00 USD</strong>
                 </div>
 
-                <!-- Botones de Acción -->
                 <div class="modal-actions-row">
                     <button class="btn-gold" id="btn-summary-accept">Aceptar y Enviar Pedido</button>
                     <button class="btn-outline-gold" id="btn-summary-back">Atrás</button>
@@ -335,7 +327,7 @@
         </div>
     </div>
 
-    <!-- 9. VENTANA LOGIN FULLSCREEN (EDITOR) -->
+    <!-- 13. VENTANA LOGIN FULLSCREEN (LOGIN REPARADO) -->
     <div id="login-modal" class="fullscreen-modal-backdrop">
         <div class="login-card">
             <button class="fullscreen-modal-close" id="close-login-modal">&times;</button>
@@ -360,7 +352,7 @@
         </div>
     </div>
 
-    <!-- 10. PANEL DE EDITOR -->
+    <!-- 14. PANEL DE EDITOR -->
     <div id="editor-panel" class="fullscreen-modal-backdrop">
         <div class="editor-dashboard-card">
             <div class="editor-top-bar">
@@ -507,12 +499,12 @@
         </div>
     </div>
 
-    <!-- 11. BOTÓN FLOTANTE DE WHATSAPP -->
+    <!-- 15. BOTÓN FLOTANTE DE WHATSAPP -->
     <a href="https://wa.me/1234567890?text=Hola,%20quisiera%20informaci%C3%B3n%20sobre%20sus%20perfumes" target="_blank" class="whatsapp-btn" id="floating-whatsapp-btn">
         <span>💬</span> ¡Hola!
     </a>
 
-    <!-- 12. FOOTER -->
+    <!-- 16. FOOTER -->
     <footer id="contacto">
         <div class="footer-container">
             <p>&copy; 2026 Mitise - Luxury Fragrance. Todos los derechos reservados.</p>
