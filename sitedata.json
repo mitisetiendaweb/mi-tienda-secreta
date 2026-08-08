@@ -19,7 +19,8 @@
   ],
   "sections": [
     "Nuestra Colección Exclusiva",
-    "PARA ELLOS"
+    "PARA ELLOS",
+    "PARA ELLAS"
   ],
   "products": [
     {
@@ -124,14 +125,54 @@
       "brand": "LACOSTE",
       "name": "BLANC",
       "price": 10,
-      "image": "IMG/prod_1786229025030_1786229425587.png"
+      "image": "IMG/prod_1786229025030_1786229921508.png"
     },
     {
       "id": 1786229026470,
-      "section": "Nuestra Colección Exclusiva",
-      "brand": "Mitise",
-      "name": "Nuevo Perfume",
-      "price": 90,
+      "section": "PARA ELLAS",
+      "brand": "JANEIRO CHEIROSA",
+      "name": "SOL 40",
+      "price": 10,
+      "image": "IMG/LOGO_ENTERO.png"
+    },
+    {
+      "id": 1786229582629,
+      "section": "PARA ELLAS",
+      "brand": "PRADA",
+      "name": "CANDY",
+      "price": 10,
+      "image": "IMG/LOGO_ENTERO.png"
+    },
+    {
+      "id": 1786229586684,
+      "section": "PARA ELLAS",
+      "brand": "SMELLS LIKE",
+      "name": "FLOWER BOMB",
+      "price": 10,
+      "image": "IMG/LOGO_ENTERO.png"
+    },
+    {
+      "id": 1786229588796,
+      "section": "PARA ELLAS",
+      "brand": "FLORAL FRUTAL GOURMAND",
+      "name": "VIVA LA JUICY",
+      "price": 10,
+      "image": "IMG/LOGO_ENTERO.png"
+    },
+    {
+      "id": 1786229765332,
+      "section": "PARA ELLAS",
+      "brand": "HAVE A SCENT",
+      "name": "COACH FLORAL",
+      "price": 10,
+      "image": "IMG/LOGO_ENTERO.png"
+    },
+    {
+      "id": 1786229768196,
+      "section": "PARA ELLAS",
+      "brand": "JENNUFER LOPEZ",
+      "name": "POUR FEMME",
+      "price": 10,
       "image": "IMG/LOGO_ENTERO.png"
     }
   ],
