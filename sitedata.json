@@ -18,40 +18,81 @@
     }
   ],
   "sections": [
-    "Nuestra Colección Exclusiva"
+    "Nuestra Colección Exclusiva",
+    "PARA ELLOS"
   ],
   "products": [
     {
       "id": 1,
-      "brand": "Lattafa Exclusif",
-      "name": "Atheeri Gold Edition",
-      "price": 85.00,
-      "image": "IMG/LOGO_ENTERO.png",
+      "brand": "ARMANI",
+      "name": "ACQUA DI GIO GIORGIO",
+      "price": 10,
+      "image": "IMG/prod_1_1786226120150.webp",
       "section": "Nuestra Colección Exclusiva"
     },
     {
       "id": 2,
-      "brand": "Haute Parfumerie",
-      "name": "Élixir de Nuit",
-      "price": 120.00,
-      "image": "IMG/LOGO_ENTERO.png",
+      "brand": "DIOR",
+      "name": "SUAVAGE",
+      "price": 10,
+      "image": "IMG/prod_2_1786226121257.webp",
       "section": "Nuestra Colección Exclusiva"
     },
     {
       "id": 3,
-      "brand": "Royal Collection",
-      "name": "Velours Imperial",
-      "price": 95.00,
-      "image": "IMG/LOGO_ENTERO.png",
+      "brand": "DIOR",
+      "name": "MISS DIOR",
+      "price": 10,
+      "image": "IMG/prod_3_1786226122189.webp",
       "section": "Nuestra Colección Exclusiva"
     },
     {
       "id": 4,
-      "brand": "Oriental Oud",
-      "name": "Oud Royal Gold",
-      "price": 140.00,
-      "image": "IMG/LOGO_ENTERO.png",
+      "brand": "LANCOME",
+      "name": "LA VIE EST BELLE",
+      "price": 10,
+      "image": "IMG/prod_4_1786226123177.webp",
       "section": "Nuestra Colección Exclusiva"
+    },
+    {
+      "id": 1786225943199,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "INVICTUS",
+      "name": "INVICTUS",
+      "price": 10,
+      "image": "IMG/prod_1786225943199_1786226124153.webp"
+    },
+    {
+      "id": 1786225946791,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "GUCCI",
+      "name": "BLOOM",
+      "price": 10,
+      "image": "IMG/prod_1786225946791_1786226125093.webp"
+    },
+    {
+      "id": 1786226007375,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "CAROLINA HERRERA",
+      "name": "GOOD GIRL",
+      "price": 10,
+      "image": "IMG/prod_1786226007375_1786226126045.webp"
+    },
+    {
+      "id": 1786226039494,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "DOLCE GABBANA",
+      "name": "LIGHT BLUE",
+      "price": 10,
+      "image": "IMG/prod_1786226039494_1786226127056.webp"
+    },
+    {
+      "id": 1786226085278,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "ARMANI",
+      "name": "EAU POUR HOME",
+      "price": 10,
+      "image": "IMG/prod_1786226085278_1786226128002.webp"
     }
   ],
   "about": {
