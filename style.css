@@ -69,7 +69,7 @@ a {
 }
 
 /* ==========================================
-   2. HEADER PRINCIPAL
+   2. HEADER PRINCIPAL 100% FIJO
    ========================================== */
 #main-header {
     position: fixed;
@@ -312,7 +312,7 @@ a {
 }
 
 /* ==========================================
-   4. CATÁLOGO DE PRODUCTOS
+   4. CATÁLOGO Y PRODUCTOS
    ========================================== */
 .section-container {
     width: 100%;
@@ -464,15 +464,81 @@ a {
 }
 
 /* ==========================================
-   5. MODALES DE CARRITO Y CHECKOUT
+   5. ESTRUCTURA Y ESTILOS DE FORMULARIOS DE LUJO (REPARADO)
    ========================================== */
-.modal-actions-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    margin-top: 20px;
-    flex-wrap: wrap;
+.form-group-gold {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    width: 100% !important;
+    margin-bottom: 18px !important;
+}
+
+.form-group-gold label {
+    display: block !important;
+    font-size: 0.8rem !important;
+    color: var(--gold-light) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 8px !important;
+    font-weight: 600 !important;
+}
+
+.form-group-gold input,
+.form-group-gold select,
+.form-group-gold textarea {
+    width: 100% !important;
+    background: #111111 !important;
+    border: 1px solid rgba(212, 175, 55, 0.4) !important;
+    color: #FFFFFF !important;
+    padding: 12px 15px !important;
+    border-radius: 6px !important;
+    font-family: var(--font-body) !important;
+    font-size: 0.92rem !important;
+    box-sizing: border-box !important;
+}
+
+.form-group-gold input:focus,
+.form-group-gold select:focus,
+.form-group-gold textarea:focus {
+    outline: none !important;
+    border-color: var(--gold-primary) !important;
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.4) !important;
+}
+
+.phone-input-wrapper {
+    display: flex !important;
+    width: 100% !important;
+    gap: 10px !important;
+    align-items: center !important;
+}
+
+.select-gold-phone {
+    flex: 0 0 200px !important;
+    background: #111111 !important;
+    border: 1px solid rgba(212, 175, 55, 0.4) !important;
+    color: #FFFFFF !important;
+    padding: 12px 10px !important;
+    border-radius: 6px !important;
+    font-size: 0.88rem !important;
+    cursor: pointer !important;
+}
+
+.select-gold-full {
+    width: 100% !important;
+    background: #111111 !important;
+    border: 1px solid rgba(212, 175, 55, 0.4) !important;
+    color: #FFFFFF !important;
+    padding: 12px 15px !important;
+    border-radius: 6px !important;
+    font-size: 0.92rem !important;
+    cursor: pointer !important;
+}
+
+.checkout-form {
+    width: 100%;
+    margin-top: 15px;
 }
 
 /* Paso 1: Selección de Cantidad */
@@ -544,7 +610,7 @@ a {
     margin-top: 5px;
 }
 
-/* Paso 2: Carrito y Totales */
+/* Paso 2: Carrito */
 #cart-items-list-container,
 #summary-items-list {
     display: flex;
@@ -597,32 +663,6 @@ a {
     font-size: 1.3rem;
 }
 
-/* Paso 3: Formularios */
-.phone-input-wrapper {
-    display: flex;
-    gap: 8px;
-}
-
-.select-gold-phone {
-    background: #111;
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    color: #fff;
-    padding: 10px 8px;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    width: 140px;
-}
-
-.select-gold-full {
-    width: 100%;
-    background: #111;
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    color: #fff;
-    padding: 10px;
-    border-radius: 6px;
-    font-size: 0.9rem;
-}
-
 .summary-info-card {
     background: rgba(212, 175, 55, 0.05);
     border: 1px solid rgba(212, 175, 55, 0.25);
@@ -632,6 +672,15 @@ a {
     margin-bottom: 15px;
     font-size: 0.9rem;
     line-height: 1.6;
+}
+
+.modal-actions-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
 }
 
 /* ==========================================
@@ -691,7 +740,7 @@ a {
     object-fit: contain;
 }
 
-/* Modales Base */
+/* Modales */
 .story-modal-backdrop,
 .fullscreen-modal-backdrop {
     position: fixed;
@@ -863,7 +912,166 @@ a {
     width: auto;
 }
 
-/* Footer */
+.fav-items-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 55vh;
+    overflow-y: auto;
+    margin-top: 15px;
+}
+
+.fav-item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(20, 20, 20, 0.85);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 8px;
+    padding: 10px 14px;
+    gap: 12px;
+}
+
+.fav-item-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+}
+
+.fav-item-thumb {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.btn-fav-move-cart {
+    background: var(--gold-primary);
+    color: #000;
+    font-weight: 700;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.btn-fav-remove {
+    background: transparent;
+    border: 1px solid #ff4d4d;
+    color: #ff4d4d;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+/* Editor & Login */
+.login-card {
+    background: #141414;
+    border: 1px solid var(--gold-primary);
+    padding: 35px 25px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    text-align: center;
+}
+
+.editor-dashboard-card {
+    background: #0d0d0d;
+    border: 1px solid var(--gold-primary);
+    width: 96vw;
+    height: 94vh;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.editor-top-bar {
+    background: #141414;
+    padding: 12px 18px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.editor-body-layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.editor-tabs {
+    width: 200px;
+    background: #111;
+    border-right: 1px solid rgba(212, 175, 55, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.editor-tab-btn {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: var(--text-muted);
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 0.82rem;
+    cursor: pointer;
+}
+
+.editor-tab-btn.active {
+    background: rgba(212, 175, 55, 0.15);
+    color: var(--gold-primary);
+    font-weight: 600;
+}
+
+.editor-content-area {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+.btn-gold-small {
+    background: var(--gold-primary);
+    color: #000;
+    font-weight: 700;
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-outline-gold-small {
+    background: transparent;
+    border: 1px solid var(--gold-primary);
+    color: var(--gold-primary);
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.story-modal-close-static {
+    background: transparent;
+    border: none;
+    color: var(--gold-primary);
+    font-size: 1.8rem;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+/* ==========================================
+   7. FOOTER CON BOTÓN DISCRETO "MI CUENTA"
+   ========================================== */
 footer {
     background-color: #050505;
     border-top: 1px solid rgba(212, 175, 55, 0.15);
@@ -892,11 +1100,19 @@ footer p {
     color: #383838;
     font-size: 0.72rem;
     cursor: pointer;
+    transition: var(--transition);
     font-family: var(--font-body);
     padding: 2px 6px;
+    letter-spacing: 0.5px;
 }
 
-/* Media Queries Responsivas */
+.footer-admin-btn:hover {
+    color: #555555;
+}
+
+/* ==========================================
+   8. MEDIA QUERIES RESPONSIVAS
+   ========================================== */
 @media (max-width: 1200px) {
     .products-grid {
         grid-template-columns: repeat(5, 1fr);
@@ -933,6 +1149,10 @@ footer p {
         left: 0;
     }
 
+    .nav-menu a {
+        font-size: 1.1rem;
+    }
+
     .hero-slider {
         height: 60vh;
         min-height: 400px;
@@ -948,6 +1168,17 @@ footer p {
     .contact-buttons-grid {
         grid-template-columns: 1fr;
     }
+
+    .editor-body-layout {
+        flex-direction: column;
+    }
+
+    .editor-tabs {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
 }
 
 @media (max-width: 768px) {
@@ -959,6 +1190,22 @@ footer p {
         max-height: 42px;
     }
 
+    .header-right-actions {
+        gap: 10px;
+    }
+
+    .icon-btn {
+        font-size: 1.1rem;
+    }
+
+    .hide-mobile {
+        display: none !important;
+    }
+
+    .section-container {
+        padding: 30px 6px;
+    }
+
     .products-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 5px;
@@ -968,8 +1215,39 @@ footer p {
         height: 105px;
     }
 
+    .product-details {
+        padding: 5px 2px;
+    }
+
+    .product-brand {
+        font-size: 0.52rem;
+    }
+
+    .product-name {
+        font-size: 0.72rem;
+    }
+
+    .product-price {
+        font-size: 0.72rem;
+    }
+
+    .btn-add-cart {
+        padding: 4px 2px;
+        font-size: 0.55rem;
+    }
+
     .story-modal-card {
         padding: 55px 15px 20px 15px;
+    }
+
+    .gold-subtitle {
+        font-size: 0.7rem;
+        letter-spacing: 1.5px;
+        padding: 0 15px;
+    }
+
+    .story-title {
+        font-size: 1.7rem;
     }
 
     .story-body {
@@ -978,15 +1256,27 @@ footer p {
         text-align: left;
     }
 
+    .story-body p::first-letter {
+        font-size: 1.8rem;
+    }
+
     .phone-input-wrapper {
-        flex-direction: column;
+        flex-direction: column !important;
     }
 
     .select-gold-phone {
-        width: 100%;
+        width: 100% !important;
+        flex: 1 1 auto !important;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
     }
 }
 
+/* Botón WhatsApp Flotante */
 .whatsapp-btn {
     position: fixed;
     bottom: 20px;
@@ -997,5 +1287,6 @@ footer p {
     border-radius: 50px;
     font-weight: 600;
     font-size: 0.85rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     z-index: 999;
 }
