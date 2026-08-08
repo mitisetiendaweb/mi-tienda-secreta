@@ -50,6 +50,54 @@ document.addEventListener('DOMContentLoaded', async () => {
     let favoritesList = JSON.parse(localStorage.getItem('mitise_favorites')) || [];
     let cartList = JSON.parse(localStorage.getItem('mitise_cart_items')) || [];
 
+    // FUNCIÓN PARA COMPRIMIR Y OPTIMIZAR IMÁGENES EN CANVA (PREVIENE QUOTA EXCEEDED ERROR)
+    function compressImage(file, maxWidth = 600, maxHeight = 600, quality = 0.8) {
+        return new Promise((resolve, reject) => {
+            if (!file.type.startsWith('image/')) {
+                // Si no es imagen (ej. video mp4), leer directamente
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.onerror = (e) => reject(e);
+                reader.readAsDataURL(file);
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (event) => {
+                const img = new Image();
+                img.src = event.target.result;
+                img.onload = () => {
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > maxWidth) {
+                            height = Math.round((height * maxWidth) / width);
+                            width = maxWidth;
+                        }
+                    } else {
+                        if (height > maxHeight) {
+                            width = Math.round((width * maxHeight) / height);
+                            height = maxHeight;
+                        }
+                    }
+
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+                    resolve(compressedDataUrl);
+                };
+                img.onerror = (err) => reject(err);
+            };
+            reader.onerror = (err) => reject(err);
+        });
+    }
+
     // Cargar la configuración remota publicada globalmente en GitHub al iniciar
     async function fetchRemoteSiteData() {
         try {
@@ -58,7 +106,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const remoteData = await response.json();
                 if (remoteData && typeof remoteData === 'object') {
                     siteData = remoteData;
-                    localStorage.setItem('mitise_site_data', JSON.stringify(siteData));
+                    try {
+                        localStorage.setItem('mitise_site_data', JSON.stringify(siteData));
+                    } catch (e) {
+                        console.warn("Memoria local llena, usando datos remotos en RAM.");
+                    }
                 }
             }
         } catch (error) {
@@ -78,7 +130,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     function saveSiteDataLocal() {
-        localStorage.setItem('mitise_site_data', JSON.stringify(siteData));
+        try {
+            localStorage.setItem('mitise_site_data', JSON.stringify(siteData));
+        } catch (e) {
+            console.warn("Aviso de almacenamiento: Memoria llena temporalmente. Los cambios se mantienen en pantalla y listos para '🚀 Publicar Cambios Globales'.", e);
+        }
         renderAllContent();
     }
 
@@ -212,7 +268,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         initSliderLogic();
     }
 
-    // RENDERIZADO DEL CATÁLOGO AGRUPADO POR SECCIONES
     function renderCatalog() {
         const wrapper = document.getElementById('catalog-sections-wrapper');
         if (!wrapper) return;
@@ -265,7 +320,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // ABRIR LIGHTBOX / MODAL DE FOTO AGRANDADA DEL PRODUCTO
     window.openProductLightbox = function(productId) {
         const prod = siteData.products.find(p => p.id === productId);
         if (!prod) return;
@@ -853,26 +907,27 @@ document.addEventListener('DOMContentLoaded', async () => {
         openModal(editorPanel);
     }
 
+    // HELPER CON COMPRESIÓN AUTOMÁTICA DE IMÁGENES
     function setupFileInputReader(fileInputId, targetInputId, previewImgId) {
         const fileInput = document.getElementById(fileInputId);
         if (!fileInput) return;
 
-        fileInput.addEventListener('change', (e) => {
+        fileInput.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (file) {
-                const reader = new FileReader();
-                reader.onload = function(evt) {
-                    const dataUrl = evt.target.result;
+                try {
+                    const compressedDataUrl = await compressImage(file, 600, 600, 0.8);
                     if (targetInputId) {
                         const targetInput = document.getElementById(targetInputId);
-                        if (targetInput) targetInput.value = dataUrl;
+                        if (targetInput) targetInput.value = compressedDataUrl;
                     }
                     if (previewImgId) {
                         const previewImg = document.getElementById(previewImgId);
-                        if (previewImg) previewImg.src = dataUrl;
+                        if (previewImg) previewImg.src = compressedDataUrl;
                     }
-                };
-                reader.readAsDataURL(file);
+                } catch (err) {
+                    console.error("Error al comprimir imagen:", err);
+                }
             }
         });
     }
@@ -884,19 +939,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const editProdFileInput = document.getElementById('edit-prod-file');
     if (editProdFileInput) {
-        editProdFileInput.addEventListener('change', (e) => {
+        editProdFileInput.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (file) {
-                const reader = new FileReader();
-                reader.onload = function(evt) {
-                    const dataUrl = evt.target.result;
+                try {
+                    const compressedDataUrl = await compressImage(file, 600, 600, 0.8);
                     const imgInput = document.getElementById('edit-prod-img');
-                    if (imgInput) imgInput.value = dataUrl;
+                    if (imgInput) imgInput.value = compressedDataUrl;
 
                     const previewImg = document.getElementById('edit-prod-preview');
-                    if (previewImg) previewImg.src = dataUrl;
-                };
-                reader.readAsDataURL(file);
+                    if (previewImg) previewImg.src = compressedDataUrl;
+                } catch (err) {
+                    console.error("Error al comprimir foto del producto:", err);
+                }
             }
         });
     }
