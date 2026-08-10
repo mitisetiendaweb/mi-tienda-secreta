@@ -311,26 +311,33 @@ a {
     color: var(--gold-light);
 }
 
-/* FILTROS DE CONTRASTE Y COLOR PARA ÍCONOS EN BOTONES */
-.btn-icon-dark {
+/* FILTROS DE CONTRASTE ESPECÍFICOS ÚNICAMENTE PARA COMPARTIR.WEBP */
+.share-btn-icon-dark {
     height: 20px;
     width: auto;
     object-fit: contain;
-    filter: brightness(0); /* Convierte ícono a negro puro sobre botón dorado */
+    filter: brightness(0); /* Hace COMPARTIR.webp negra sólida sobre botón dorado */
 }
 
-.btn-icon-gold {
+.share-btn-icon-gold {
     height: 18px;
     width: auto;
     object-fit: contain;
-    filter: invert(75%) sepia(85%) saturate(450%) hue-rotate(5deg) brightness(105%); /* Convierte ícono a Dorado Metálico */
+    filter: invert(75%) sepia(85%) saturate(450%) hue-rotate(5deg) brightness(105%); /* Hace COMPARTIR.webp dorada brillante sobre botón oscuro */
 }
 
-.btn-icon-white {
-    height: 18px;
+.share-btn-icon-card {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    filter: brightness(0) invert(1); /* Hace COMPARTIR.webp blanca brillante sobre la foto */
+}
+
+/* ÍCONOS DE REDES SOCIALES ORIGINALES RESTAURADOS */
+.btn-social-icon {
+    height: 26px;
     width: auto;
     object-fit: contain;
-    filter: brightness(0) invert(1); /* Convierte ícono a Blanco Puro */
 }
 
 /* ==========================================
@@ -468,13 +475,6 @@ a {
     z-index: 5;
     backdrop-filter: blur(4px);
     padding: 0;
-}
-
-.btn-share-card img {
-    width: 16px;
-    height: 16px;
-    object-fit: contain;
-    filter: brightness(0) invert(1); /* Hace la imagen de compartir blanca sobre la foto */
 }
 
 .btn-share-card:hover {
@@ -1048,7 +1048,6 @@ a {
     height: 26px;
     width: auto;
     object-fit: contain;
-    filter: brightness(0); /* Hace los íconos de redes sociales 100% negros sobre botón de oro */
 }
 
 .fav-items-container {
