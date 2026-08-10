@@ -311,6 +311,28 @@ a {
     color: var(--gold-light);
 }
 
+/* FILTROS DE CONTRASTE Y COLOR PARA ÍCONOS EN BOTONES */
+.btn-icon-dark {
+    height: 20px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0); /* Convierte ícono a negro puro sobre botón dorado */
+}
+
+.btn-icon-gold {
+    height: 18px;
+    width: auto;
+    object-fit: contain;
+    filter: invert(75%) sepia(85%) saturate(450%) hue-rotate(5deg) brightness(105%); /* Convierte ícono a Dorado Metálico */
+}
+
+.btn-icon-white {
+    height: 18px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1); /* Convierte ícono a Blanco Puro */
+}
+
 /* ==========================================
    4. CATÁLOGO Y PRODUCTOS POR SECCIONES
    ========================================== */
@@ -426,7 +448,7 @@ a {
     transform: scale(1.15);
 }
 
-/* BOTÓN COMPARTIR EN TARJETA DE PRODUCTO CON IMAGEN OFICIAL */
+/* BOTÓN COMPARTIR EN TARJETA DE PRODUCTO */
 .btn-share-card {
     position: absolute;
     top: 6px;
@@ -452,6 +474,7 @@ a {
     width: 16px;
     height: 16px;
     object-fit: contain;
+    filter: brightness(0) invert(1); /* Hace la imagen de compartir blanca sobre la foto */
 }
 
 .btn-share-card:hover {
@@ -1022,8 +1045,10 @@ a {
 }
 
 .btn-social-icon {
-    height: 30px;
+    height: 26px;
     width: auto;
+    object-fit: contain;
+    filter: brightness(0); /* Hace los íconos de redes sociales 100% negros sobre botón de oro */
 }
 
 .fav-items-container {
