@@ -426,7 +426,7 @@ a {
     transform: scale(1.15);
 }
 
-/* BOTÓN COMPARTIR EN TARJETA DE PRODUCTO */
+/* BOTÓN COMPARTIR EN TARJETA DE PRODUCTO CON IMAGEN OFICIAL */
 .btn-share-card {
     position: absolute;
     top: 6px;
@@ -445,6 +445,13 @@ a {
     transition: var(--transition);
     z-index: 5;
     backdrop-filter: blur(4px);
+    padding: 0;
+}
+
+.btn-share-card img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
 }
 
 .btn-share-card:hover {
