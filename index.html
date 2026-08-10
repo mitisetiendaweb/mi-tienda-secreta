@@ -22,15 +22,15 @@
 </head>
 <body>
 
-    <!-- 1. BARRA SUPERIOR DE ANUNCIOS -->
-    <div class="top-announcement-bar">
-        <div class="ticker-track" id="ticker-track-container">
-            <!-- Cargado Dinámicamente -->
-        </div>
-    </div>
-
-    <!-- 2. HEADER PRINCIPAL -->
+    <!-- 1. HEADER PRINCIPAL CON TICKER INTEGRADO (100% FIJO) -->
     <header id="main-header">
+        <!-- BARRA SUPERIOR DE ANUNCIOS (TICKER) -->
+        <div class="top-announcement-bar">
+            <div class="ticker-track" id="ticker-track-container">
+                <!-- Cargado Dinámicamente -->
+            </div>
+        </div>
+
         <div class="header-container">
             <!-- Logo Oficial -->
             <a href="#" class="logo-area">
@@ -59,7 +59,7 @@
         </div>
     </header>
 
-    <!-- 3. BANNER SLIDER PRINCIPAL DINÁMICO -->
+    <!-- 2. BANNER SLIDER PRINCIPAL DINÁMICO -->
     <section class="hero-slider" id="hero-slider-container">
         <button class="slider-arrow arrow-left" id="prevSlide">&#10094;</button>
         <button class="slider-arrow arrow-right" id="nextSlide">&#10095;</button>
@@ -67,14 +67,14 @@
         <div id="slides-wrapper" style="width: 100%; height: 100%; position: relative;"></div>
     </section>
 
-    <!-- 4. CATÁLOGO DE PRODUCTOS (SECCIONES Y REJILLA) -->
+    <!-- 3. CATÁLOGO DE PRODUCTOS (SECCIONES Y REJILLA) -->
     <section id="catalogo" class="section-container">
         <div id="catalog-sections-wrapper">
             <!-- Cargado Dinámicamente por Secciones -->
         </div>
     </section>
 
-    <!-- 5. SECCIÓN SOBRE NOSOTROS -->
+    <!-- 4. SECCIÓN SOBRE NOSOTROS -->
     <section id="sobre-nosotros" class="bg-dark-soft">
         <div class="section-container split-layout">
             <div class="split-text">
@@ -92,7 +92,7 @@
         </div>
     </section>
 
-    <!-- 6. MODAL HISTORIA DE MITISE -->
+    <!-- 5. MODAL HISTORIA DE MITISE -->
     <div id="story-modal" class="story-modal-backdrop">
         <div class="story-modal-card">
             <button class="story-modal-close" id="close-story-modal" aria-label="Cerrar">&times;</button>
@@ -107,7 +107,7 @@
         </div>
     </div>
 
-    <!-- 7. MODAL DE CONTACTO EXCLUSIVO -->
+    <!-- 6. MODAL DE CONTACTO EXCLUSIVO -->
     <div id="contact-modal" class="story-modal-backdrop">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-contact-modal" aria-label="Cerrar">&times;</button>
@@ -143,7 +143,7 @@
         </div>
     </div>
 
-    <!-- 8. MODAL DE FAVORITOS -->
+    <!-- 7. MODAL DE FAVORITOS -->
     <div id="favorites-modal" class="story-modal-backdrop">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-fav-modal" aria-label="Cerrar">&times;</button>
@@ -158,7 +158,7 @@
         </div>
     </div>
 
-    <!-- 9. PASO 1: SELECCIÓN DE CANTIDAD -->
+    <!-- 8. PASO 1: SELECCIÓN DE CANTIDAD -->
     <div id="quantity-modal" class="story-modal-backdrop">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-qty-modal">&times;</button>
@@ -195,7 +195,7 @@
         </div>
     </div>
 
-    <!-- 10. PASO 2: CARRITO DE COMPRAS -->
+    <!-- 9. PASO 2: CARRITO DE COMPRAS -->
     <div id="cart-modal" class="story-modal-backdrop">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-cart-modal">&times;</button>
@@ -222,7 +222,7 @@
         </div>
     </div>
 
-    <!-- 11. PASO 3: FORMULARIO DATOS DEL PEDIDO -->
+    <!-- 10. PASO 3: FORMULARIO DATOS DEL PEDIDO -->
     <div id="checkout-info-modal" class="story-modal-backdrop">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-info-modal">&times;</button>
@@ -306,7 +306,7 @@
         </div>
     </div>
 
-    <!-- 12. PASO 4: RESUMEN Y WHATSAPP -->
+    <!-- 11. PASO 4: RESUMEN Y WHATSAPP -->
     <div id="checkout-summary-modal" class="story-modal-backdrop">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-summary-modal">&times;</button>
@@ -334,7 +334,7 @@
         </div>
     </div>
 
-    <!-- 13. VENTANA LOGIN FULLSCREEN -->
+    <!-- 12. VENTANA LOGIN FULLSCREEN -->
     <div id="login-modal" class="fullscreen-modal-backdrop">
         <div class="login-card">
             <button class="fullscreen-modal-close" id="close-login-modal">&times;</button>
@@ -359,7 +359,7 @@
         </div>
     </div>
 
-    <!-- 14. PANEL DE EDITOR CMS DE GESTIÓN GLOBAL -->
+    <!-- 13. PANEL DE EDITOR CMS DE GESTIÓN GLOBAL -->
     <div id="editor-panel" class="fullscreen-modal-backdrop">
         <div class="editor-dashboard-card">
             
@@ -605,7 +605,7 @@
         </div>
     </div>
 
-    <!-- 15. MODAL VISTA AGRANDADA DE IMAGEN (LIGHTBOX) -->
+    <!-- 14. MODAL VISTA AGRANDADA DE IMAGEN (LIGHTBOX) -->
     <div id="product-lightbox-modal" class="story-modal-backdrop" style="z-index: 2500;">
         <div class="story-modal-card contact-modal-card lightbox-card">
             <button class="story-modal-close" id="close-lightbox-modal">&times;</button>
@@ -635,7 +635,7 @@
         </div>
     </div>
 
-    <!-- 16. MODAL EDICIÓN COMPLETA DE PRODUCTO EXISTENTE -->
+    <!-- 15. MODAL EDICIÓN COMPLETA DE PRODUCTO EXISTENTE -->
     <div id="edit-product-modal" class="story-modal-backdrop" style="z-index: 3500;">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-edit-prod-modal">&times;</button>
@@ -692,12 +692,12 @@
         </div>
     </div>
 
-    <!-- 17. BOTÓN FLOTANTE DE WHATSAPP -->
+    <!-- 16. BOTÓN FLOTANTE DE WHATSAPP -->
     <a href="https://wa.me/1234567890?text=Hola,%20quisiera%20informaci%C3%B3n%20sobre%20sus%20perfumes" target="_blank" class="whatsapp-btn" id="floating-whatsapp-btn">
         <span>💬</span> ¡Hola!
     </a>
 
-    <!-- 18. FOOTER -->
+    <!-- 17. FOOTER -->
     <footer id="contacto">
         <div class="footer-container">
             <p>&copy; 2026 Mitise - Luxury Fragrance. Todos los derechos reservados.</p>
