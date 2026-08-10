@@ -40,14 +40,14 @@ a {
    1. BARRA SUPERIOR DE ANUNCIOS (TICKER)
    ========================================== */
 .top-announcement-bar {
-    background: linear-gradient(90deg, #111, #222, #111);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    background: linear-gradient(90deg, #0b0b0b, #1a1a1a, #0b0b0b);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.25);
     color: var(--gold-light);
     font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 1.2px;
     text-transform: uppercase;
-    padding: 7px 0;
+    padding: 6px 0;
     overflow: hidden;
     white-space: nowrap;
     width: 100%;
@@ -178,7 +178,7 @@ a {
     min-height: 480px;
     background-color: #000;
     overflow: hidden;
-    margin-top: 108px;
+    margin-top: 110px;
 }
 
 .slide {
@@ -1434,10 +1434,10 @@ footer p {
 
     .nav-menu {
         position: fixed;
-        top: 65px;
+        top: 95px;
         left: -100%;
         width: 100%;
-        height: calc(100vh - 65px);
+        height: calc(100vh - 95px);
         background-color: rgba(10, 10, 10, 0.98);
         backdrop-filter: blur(15px);
         flex-direction: column;
@@ -1459,7 +1459,7 @@ footer p {
     .hero-slider {
         height: 60vh;
         min-height: 400px;
-        margin-top: 85px;
+        margin-top: 95px;
     }
 
     .split-layout {
