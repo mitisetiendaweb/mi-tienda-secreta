@@ -297,11 +297,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         renderContactGrid();
+        updateFloatingWhatsAppBtn();
 
         updateFavBadge();
         updateCartBadge();
         renderFavoritesModal();
         renderCartModal();
+    }
+
+    // ACTUALIZAR DINÁMICAMENTE EL BOTÓN FLOTANTE DE WHATSAPP CON EL NÚMERO DEL CMS
+    function updateFloatingWhatsAppBtn() {
+        const floatBtn = document.getElementById('floating-whatsapp-btn');
+        if (!floatBtn) return;
+
+        let rawWa = (siteData.contactLinks && siteData.contactLinks.whatsapp) ? siteData.contactLinks.whatsapp.trim() : 'https://wa.me/+584242032510';
+        let waNumber = rawWa.replace(/[^0-9]/g, '');
+        if (!waNumber) waNumber = '584242032510';
+
+        floatBtn.href = `https://wa.me/${waNumber}?text=Hola,%20quisiera%20informaci%C3%B3n%20sobre%20sus%20perfumes`;
     }
 
     function renderBanners() {
