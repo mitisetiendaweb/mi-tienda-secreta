@@ -115,6 +115,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log("Cargando datos locales o predeterminados:", error);
         }
         renderAllContent();
+        checkUrlForProductShare();
     }
 
     let currentSelectedProduct = null;
@@ -171,6 +172,75 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     window.toggleFavorite = toggleFavorite;
+
+    // ==========================================
+    // COMPARTIR SITIO WEB Y PRODUCTOS INDIVIDUALES
+    // ==========================================
+    window.shareWebsite = async function() {
+        const shareData = {
+            title: 'Mitise | LUXURY FRAGRANCE',
+            text: '✨ ¡Ayúdanos a llegar más lejos! Descubre la colección exclusiva de perfumería en aceite de alta fijación de Mitise - Luxury Fragrance 👑',
+            url: window.location.origin + window.location.pathname
+        };
+
+        if (navigator.share) {
+            try {
+                await navigator.share(shareData);
+            } catch (err) {
+                console.log("Compartido cancelado por el usuario.");
+            }
+        } else {
+            const fullText = `${shareData.text}\n${shareData.url}`;
+            navigator.clipboard.writeText(fullText).then(() => {
+                alert('✨ ¡Mensaje y enlace copiados al portapapeles! Ya puedes pegarlo y compartirlo con tus amigos.');
+            }).catch(() => {
+                prompt('Copia este enlace para compartir la tienda:', shareData.url);
+            });
+        }
+    };
+
+    window.shareProduct = async function(productId) {
+        const prod = siteData.products.find(p => p.id === productId);
+        if (!prod) return;
+
+        const productUrl = `${window.location.origin}${window.location.pathname}?prod=${prod.id}#catalogo`;
+        const shareData = {
+            title: `${prod.name} - Mitise | LUXURY FRAGRANCE`,
+            text: `👑 ¡Mira esta esencia exclusiva en Mitise! *${prod.brand} - ${prod.name}* ($${Number(prod.price).toFixed(2)} USD). Aceites concentrados de altísima fijación. ✨`,
+            url: productUrl
+        };
+
+        if (navigator.share) {
+            try {
+                await navigator.share(shareData);
+            } catch (err) {
+                console.log("Compartido cancelado por el usuario.");
+            }
+        } else {
+            const fullText = `${shareData.text}\n${shareData.url}`;
+            navigator.clipboard.writeText(fullText).then(() => {
+                alert(`✨ ¡Enlace de ${prod.name} copiado al portapapeles! Ya puedes compartirlo con quien desees.`);
+            }).catch(() => {
+                prompt(`Copia el enlace de ${prod.name} para compartirlo:`, productUrl);
+            });
+        }
+    };
+
+    function checkUrlForProductShare() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const sharedProdId = urlParams.get('prod');
+        if (sharedProdId) {
+            const prodId = parseInt(sharedProdId);
+            if (!isNaN(prodId)) {
+                setTimeout(() => {
+                    openProductLightbox(prodId);
+                }, 400);
+            }
+        }
+    }
+
+    const btnShareWeb = document.getElementById('btn-share-website');
+    if (btnShareWeb) btnShareWeb.onclick = shareWebsite;
 
     // ==========================================
     // 1. MENÚ HAMBURGUESA MÓVIL
@@ -293,6 +363,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                             return `
                                 <div class="product-card">
                                     <div class="product-img-box" onclick="openProductLightbox(${product.id})" title="Haz clic para agrandar foto">
+                                        <button class="btn-share-card" onclick="event.stopPropagation(); shareProduct(${product.id})" title="Compartir producto">
+                                            📤
+                                        </button>
                                         <button class="btn-fav-card ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite(${product.id})" title="Guardar en Favoritos">
                                             ${isFav ? '❤️' : '🖤'}
                                         </button>
@@ -337,6 +410,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             addCartBtn.onclick = () => {
                 closeAllModals(false);
                 triggerQuantityModal(prod.id);
+            };
+        }
+
+        const shareBtn = document.getElementById('lightbox-btn-share');
+        if (shareBtn) {
+            shareBtn.onclick = () => {
+                shareProduct(prod.id);
             };
         }
 
@@ -1124,7 +1204,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // SUBIR ARCHIVO A GITHUB API CON NOMBRE ÚNICO Y LIMPIO POR ARCHIVO
+    // SUBIR ARCHIVO A GITHUB API
     async function commitFileToGitHub(pathInRepo, base64Content, commitMessage) {
         const config = getGitHubConfig();
         if(!config.token) {
@@ -1235,7 +1315,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             siteData.contactLinks.gmail = document.getElementById('link-gmail').value;
             siteData.contactLinks.whatsapp = document.getElementById('link-whatsapp').value;
 
-            // NOMBRES DE ARCHIVOS ÚNICOS E INDEPENDIENTES POR ID DE PRODUCTO
             for (let i = 0; i < siteData.products.length; i++) {
                 if (siteData.products[i].image && siteData.products[i].image.startsWith('data:')) {
                     siteData.products[i].image = await processAndUploadImageIfBase64(siteData.products[i].image, `prod_${siteData.products[i].id}`);
