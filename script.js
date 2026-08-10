@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 <div class="product-card">
                                     <div class="product-img-box" onclick="openProductLightbox(${product.id})" title="Haz clic para agrandar foto">
                                         <button class="btn-share-card" onclick="event.stopPropagation(); shareProduct(${product.id})" title="Compartir producto">
-                                            📤
+                                            <img src="IMG/COMPARTIR.webp" alt="Compartir" style="width: 16px; height: 16px; object-fit: contain;">
                                         </button>
                                         <button class="btn-fav-card ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite(${product.id})" title="Guardar en Favoritos">
                                             ${isFav ? '❤️' : '🖤'}
