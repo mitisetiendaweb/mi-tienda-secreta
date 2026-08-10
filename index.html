@@ -107,7 +107,7 @@
         </div>
     </div>
 
-    <!-- 7. MODAL DE CONTACTO -->
+    <!-- 7. MODAL DE CONTACTO EXCLUSIVO CON BOTÓN DE COMPARTIR SITIO WEB -->
     <div id="contact-modal" class="story-modal-backdrop">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-contact-modal" aria-label="Cerrar">&times;</button>
@@ -128,6 +128,14 @@
                 </div>
 
                 <div class="contact-buttons-grid" id="contact-links-grid"></div>
+
+                <!-- SECCIÓN DE DIFUSIÓN / COMPARTIR SITIO WEB -->
+                <div class="contact-share-box" style="margin-top: 22px; border-top: 1px solid rgba(212,175,55,0.25); padding-top: 16px;">
+                    <p class="contact-modal-desc" style="font-size: 0.85rem; color: var(--gold-light); margin-bottom: 12px;">
+                        ✨ ¡Ayúdanos a llegar más lejos! Comparte nuestra tienda secreta de lujo con tus amigos y familiares.
+                    </p>
+                    <button class="btn-gold" id="btn-share-website" style="width: 100%;">📤 Compartir Sitio Web</button>
+                </div>
             </div>
         </div>
     </div>
@@ -594,7 +602,7 @@
         </div>
     </div>
 
-    <!-- 15. MODAL VISTA AGRANDADA DE IMAGEN (LIGHTBOX DEL PRODUCTO) -->
+    <!-- 15. MODAL VISTA AGRANDADA DE IMAGEN (LIGHTBOX DEL PRODUCTO CON BOTÓN COMPARTIR) -->
     <div id="product-lightbox-modal" class="story-modal-backdrop" style="z-index: 2500;">
         <div class="story-modal-card contact-modal-card lightbox-card">
             <button class="story-modal-close" id="close-lightbox-modal">&times;</button>
@@ -614,6 +622,7 @@
 
                 <div class="modal-actions-row">
                     <button class="btn-gold" id="lightbox-btn-add-cart">🛒 Añadir al Carrito</button>
+                    <button class="btn-outline-gold" id="lightbox-btn-share">📤 Compartir</button>
                     <button class="btn-outline-gold" id="lightbox-btn-close">Cerrar</button>
                 </div>
             </div>
