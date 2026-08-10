@@ -107,7 +107,7 @@
         </div>
     </div>
 
-    <!-- 7. MODAL DE CONTACTO EXCLUSIVO CON BOTÓN DE COMPARTIR SITIO WEB -->
+    <!-- 7. MODAL DE CONTACTO EXCLUSIVO CON BOTÓN DE COMPARTIR CON IMAGEN OFICIAL -->
     <div id="contact-modal" class="story-modal-backdrop">
         <div class="story-modal-card contact-modal-card">
             <button class="story-modal-close" id="close-contact-modal" aria-label="Cerrar">&times;</button>
@@ -129,12 +129,15 @@
 
                 <div class="contact-buttons-grid" id="contact-links-grid"></div>
 
-                <!-- SECCIÓN DE DIFUSIÓN / COMPARTIR SITIO WEB -->
+                <!-- SECCIÓN DE COMPARTIR CON IMAGEN OFICIAL COMPARTIR.webp -->
                 <div class="contact-share-box" style="margin-top: 22px; border-top: 1px solid rgba(212,175,55,0.25); padding-top: 16px;">
                     <p class="contact-modal-desc" style="font-size: 0.85rem; color: var(--gold-light); margin-bottom: 12px;">
                         ✨ ¡Ayúdanos a llegar más lejos! Comparte nuestra tienda secreta de lujo con tus amigos y familiares.
                     </p>
-                    <button class="btn-gold" id="btn-share-website" style="width: 100%;">📤 Compartir Sitio Web</button>
+                    <button class="btn-gold" id="btn-share-website" style="width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+                        <img src="IMG/COMPARTIR.webp" alt="Compartir" class="btn-social-icon" style="height: 22px; width: auto;" onerror="this.style.display='none'">
+                        <span>Compartir Sitio Web</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -602,7 +605,7 @@
         </div>
     </div>
 
-    <!-- 15. MODAL VISTA AGRANDADA DE IMAGEN (LIGHTBOX DEL PRODUCTO CON BOTÓN COMPARTIR) -->
+    <!-- 15. MODAL VISTA AGRANDADA DE IMAGEN (LIGHTBOX DEL PRODUCTO CON IMAGEN OFICIAL DE COMPARTIR) -->
     <div id="product-lightbox-modal" class="story-modal-backdrop" style="z-index: 2500;">
         <div class="story-modal-card contact-modal-card lightbox-card">
             <button class="story-modal-close" id="close-lightbox-modal">&times;</button>
@@ -622,7 +625,10 @@
 
                 <div class="modal-actions-row">
                     <button class="btn-gold" id="lightbox-btn-add-cart">🛒 Añadir al Carrito</button>
-                    <button class="btn-outline-gold" id="lightbox-btn-share">📤 Compartir</button>
+                    <button class="btn-outline-gold" id="lightbox-btn-share" style="display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
+                        <img src="IMG/COMPARTIR.webp" alt="Compartir" style="height: 18px; width: auto;" onerror="this.style.display='none'">
+                        <span>Compartir</span>
+                    </button>
                     <button class="btn-outline-gold" id="lightbox-btn-close">Cerrar</button>
                 </div>
             </div>
