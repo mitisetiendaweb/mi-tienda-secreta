@@ -110,6 +110,38 @@
       "name": "Prada Candy",
       "price": 10,
       "image": "IMG/prod_1786447345080.jpg"
+    },
+    {
+      "id": 1786447431093,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Si",
+      "name": "Sì By Armani",
+      "price": 10,
+      "image": "IMG/prod_1786447431093.jpg"
+    },
+    {
+      "id": 1786447526011,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Xerba Pura",
+      "name": "Xerba Pura By XERJOFF",
+      "price": 10,
+      "image": "IMG/prod_1786447526011.jpg"
+    },
+    {
+      "id": 1786447566569,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Gucci Guilty",
+      "name": "Gucci Guilty ",
+      "price": 10,
+      "image": "IMG/prod_1786447566569.jpg"
+    },
+    {
+      "id": 1786447621095,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Bain Of Champagne ",
+      "name": "Bain of Champagne ",
+      "price": 10,
+      "image": "IMG/prod_1786447621095.jpg"
     }
   ],
   "about": {
