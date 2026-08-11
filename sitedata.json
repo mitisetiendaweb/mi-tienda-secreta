@@ -94,6 +94,22 @@
       "name": "EAU POUR HOME",
       "price": 10,
       "image": "IMG/prod_1786226085278_1786226128002.webp"
+    },
+    {
+      "id": 1786447295096,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Sol40",
+      "name": "Sol40",
+      "price": 10,
+      "image": "IMG/prod_1786447295096.jpg"
+    },
+    {
+      "id": 1786447345080,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Prada Candy",
+      "name": "Prada Candy",
+      "price": 10,
+      "image": "IMG/prod_1786447345080.jpg"
     }
   ],
   "about": {
