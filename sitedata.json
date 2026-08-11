@@ -238,6 +238,46 @@
       "name": "Bharara by Bharara beauty ",
       "price": 10,
       "image": "IMG/prod_1786448293788.jpg"
+    },
+    {
+      "id": 1786449210129,
+      "section": "PARA ELLOS",
+      "brand": "Polo Red  by  Ralph Laurent",
+      "name": "Polo Red",
+      "price": 10,
+      "image": "IMG/prod_1786449210129.jpg"
+    },
+    {
+      "id": 1786449294079,
+      "section": "PARA ELLOS",
+      "brand": "Drakkar Noir by  Guy Laroche",
+      "name": "Drakkar Noir ",
+      "price": 10,
+      "image": "IMG/prod_1786449294079.jpg"
+    },
+    {
+      "id": 1786449376887,
+      "section": "PARA ELLOS",
+      "brand": "CK1 by Calvin klein",
+      "name": "CK1",
+      "price": 90,
+      "image": "IMG/prod_1786449376887.jpg"
+    },
+    {
+      "id": 1786449423764,
+      "section": "PARA ELLOS",
+      "brand": "Imagination by LV",
+      "name": "Imagination by LV ",
+      "price": 10,
+      "image": "IMG/prod_1786449423764.jpg"
+    },
+    {
+      "id": 1786449484106,
+      "section": "PARA ELLOS",
+      "brand": "Black Code by Armani ",
+      "name": "Black Code ",
+      "price": 10,
+      "image": "IMG/prod_1786449484106.jpg"
     }
   ],
   "about": {
