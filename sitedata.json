@@ -184,14 +184,6 @@
       "image": "IMG/prod_1786447895015.jpg"
     },
     {
-      "id": 1786447897826,
-      "section": "Nuestra Colección Exclusiva",
-      "brand": "Mitise",
-      "name": "Nuevo Perfume",
-      "price": 90,
-      "image": "IMG/LOGO_ENTERO.png"
-    },
-    {
       "id": 1786447971572,
       "section": "Nuestra Colección Exclusiva",
       "brand": "Imgination LV",
@@ -242,8 +234,8 @@
     {
       "id": 1786449641845,
       "section": "PARA ELLOS",
-      "brand": "Blank Lacoste ",
-      "name": "Blank ",
+      "brand": "Blanc Lacoste",
+      "name": "Blanc",
       "price": 10,
       "image": "IMG/prod_1786449641845.jpg"
     },
