@@ -278,6 +278,14 @@
       "name": "Drakkar ",
       "price": 10,
       "image": "IMG/prod_1786449898613.jpg"
+    },
+    {
+      "id": 1786449963332,
+      "section": "PARA ELLOS",
+      "brand": "Blue by Dolce+Gabbana ",
+      "name": "Blue ",
+      "price": 10,
+      "image": "IMG/prod_1786449963332.jpg"
     }
   ],
   "about": {
