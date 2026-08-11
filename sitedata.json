@@ -286,6 +286,14 @@
       "name": "Blue ",
       "price": 10,
       "image": "IMG/prod_1786449963332.jpg"
+    },
+    {
+      "id": 1786450047843,
+      "section": "PARA ELLOS",
+      "brand": "CK1 by Calvin Klain",
+      "name": "CK1 ",
+      "price": 10,
+      "image": "IMG/prod_1786450047843.jpg"
     }
   ],
   "about": {
