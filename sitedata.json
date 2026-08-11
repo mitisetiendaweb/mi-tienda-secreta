@@ -270,6 +270,14 @@
       "name": "Polo Red ",
       "price": 10,
       "image": "IMG/prod_1786449832763.jpg"
+    },
+    {
+      "id": 1786449898613,
+      "section": "PARA ELLOS",
+      "brand": "Drakkar by Guylarouche",
+      "name": "Drakkar ",
+      "price": 10,
+      "image": "IMG/prod_1786449898613.jpg"
     }
   ],
   "about": {
