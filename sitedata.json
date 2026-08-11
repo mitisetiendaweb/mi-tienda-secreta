@@ -190,6 +190,54 @@
       "name": "Nuevo Perfume",
       "price": 90,
       "image": "IMG/LOGO_ENTERO.png"
+    },
+    {
+      "id": 1786447971572,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Imgination LV",
+      "name": "Imagination LV",
+      "price": 10,
+      "image": "IMG/prod_1786447971572.jpg"
+    },
+    {
+      "id": 1786448001601,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Curve",
+      "name": "Curve By",
+      "price": 10,
+      "image": "IMG/prod_1786448001601.jpg"
+    },
+    {
+      "id": 1786448103878,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Flower Bomb",
+      "name": "Flower Bomb by Viktor&Rolf ",
+      "price": 10,
+      "image": "IMG/prod_1786448103878.jpg"
+    },
+    {
+      "id": 1786448195369,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Black opium",
+      "name": "Black Opium by Saint Laurent",
+      "price": 10,
+      "image": "IMG/prod_1786448195369.jpg"
+    },
+    {
+      "id": 1786448244201,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Viva la Juicy",
+      "name": "Viva la Juicy By Juicy Couture ",
+      "price": 10,
+      "image": "IMG/prod_1786448244201.jpg"
+    },
+    {
+      "id": 1786448293788,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Bharara",
+      "name": "Bharara by Bharara beauty ",
+      "price": 10,
+      "image": "IMG/prod_1786448293788.jpg"
     }
   ],
   "about": {
