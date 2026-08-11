@@ -350,6 +350,54 @@
       "name": "Xerba Pura",
       "price": 10,
       "image": "IMG/prod_1786472123988.jpg"
+    },
+    {
+      "id": 1786481839532,
+      "section": "PARA ELLOS",
+      "brand": "Coach",
+      "name": "Man",
+      "price": 10,
+      "image": "IMG/prod_1786481839532.jpg"
+    },
+    {
+      "id": 1786482085727,
+      "section": "PARA ELLOS",
+      "brand": "Christian Dior",
+      "name": "Savage",
+      "price": 10,
+      "image": "IMG/prod_1786482085727.jpg"
+    },
+    {
+      "id": 1786482167924,
+      "section": "PARA ELLOS",
+      "brand": "Prada",
+      "name": "Luna Rossa",
+      "price": 10,
+      "image": "IMG/prod_1786482167924.jpg"
+    },
+    {
+      "id": 1786482338876,
+      "section": "PARA ELLOS",
+      "brand": "Yves Saint Laurent",
+      "name": "L’ Homme",
+      "price": 10,
+      "image": "IMG/prod_1786482338876.jpg"
+    },
+    {
+      "id": 1786482563967,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Yves Saint Laurent",
+      "name": "L’Homme",
+      "price": 10,
+      "image": "IMG/prod_1786482563967.jpg"
+    },
+    {
+      "id": 1786482618293,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Christian Dior",
+      "name": "Savage",
+      "price": 10,
+      "image": "IMG/prod_1786482618293.jpg"
     }
   ],
   "about": {
