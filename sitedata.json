@@ -280,20 +280,12 @@
       "image": "IMG/prod_1786449898613.jpg"
     },
     {
-      "id": 1786449963332,
+      "id": 1786450203352,
       "section": "PARA ELLOS",
-      "brand": "Blue by Dolce+Gabbana ",
-      "name": "Blue ",
+      "brand": "Toy Boy by Moschimo ",
+      "name": "Toy Boy ",
       "price": 10,
-      "image": "IMG/prod_1786449963332.jpg"
-    },
-    {
-      "id": 1786450047843,
-      "section": "PARA ELLOS",
-      "brand": "CK1 by Calvin Klain",
-      "name": "CK1 ",
-      "price": 10,
-      "image": "IMG/prod_1786450047843.jpg"
+      "image": "IMG/prod_1786450203352.jpg"
     }
   ],
   "about": {
