@@ -254,6 +254,22 @@
       "name": "Imagination LV ",
       "price": 10,
       "image": "IMG/prod_1786449713154.jpg"
+    },
+    {
+      "id": 1786449771424,
+      "section": "PARA ELLOS",
+      "brand": "Black Code by Armani",
+      "name": "Black Code ",
+      "price": 10,
+      "image": "IMG/prod_1786449771424.jpg"
+    },
+    {
+      "id": 1786449832763,
+      "section": "PARA ELLOS",
+      "brand": "Polo Red by Ralph Laurent ",
+      "name": "Polo Red ",
+      "price": 10,
+      "image": "IMG/prod_1786449832763.jpg"
     }
   ],
   "about": {
