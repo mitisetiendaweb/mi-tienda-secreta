@@ -142,6 +142,54 @@
       "name": "Bain of Champagne ",
       "price": 10,
       "image": "IMG/prod_1786447621095.jpg"
+    },
+    {
+      "id": 1786447681609,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Blank Lacoste ",
+      "name": "Blank Lacoste ",
+      "price": 10,
+      "image": "IMG/prod_1786447681609.jpg"
+    },
+    {
+      "id": 1786447737169,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Blue Dolce + Gabbana",
+      "name": "Blue Dolce+Gabbana",
+      "price": 10,
+      "image": "IMG/prod_1786447737169.jpg"
+    },
+    {
+      "id": 1786447807629,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "I want Choo",
+      "name": "I want Choo  by Jimmy Choo",
+      "price": 10,
+      "image": "IMG/prod_1786447807629.jpg"
+    },
+    {
+      "id": 1786447871491,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Toy boy by Moschimo ",
+      "name": "Toy Boy by Moschimo ",
+      "price": 10,
+      "image": "IMG/prod_1786447871491.jpg"
+    },
+    {
+      "id": 1786447895015,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "jL",
+      "name": "jL",
+      "price": 10,
+      "image": "IMG/prod_1786447895015.jpg"
+    },
+    {
+      "id": 1786447897826,
+      "section": "Nuestra Colección Exclusiva",
+      "brand": "Mitise",
+      "name": "Nuevo Perfume",
+      "price": 90,
+      "image": "IMG/LOGO_ENTERO.png"
     }
   ],
   "about": {
