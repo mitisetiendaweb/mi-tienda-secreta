@@ -286,6 +286,70 @@
       "name": "Toy Boy ",
       "price": 10,
       "image": "IMG/prod_1786450330900.jpg"
+    },
+    {
+      "id": 1786471465053,
+      "section": "PARA ELLAS",
+      "brand": "Gucci",
+      "name": "Gucci Bloom",
+      "price": 10,
+      "image": "IMG/prod_1786471465053.jpg"
+    },
+    {
+      "id": 1786471596747,
+      "section": "PARA ELLAS",
+      "brand": "Sol 40",
+      "name": "Sol de Janeiro 40",
+      "price": 10,
+      "image": "IMG/prod_1786471596747.jpg"
+    },
+    {
+      "id": 1786471659869,
+      "section": "PARA ELLAS",
+      "brand": "Gucci",
+      "name": "Gucci Guilty",
+      "price": 10,
+      "image": "IMG/prod_1786471659869.jpg"
+    },
+    {
+      "id": 1786471763382,
+      "section": "PARA ELLAS",
+      "brand": "Prada",
+      "name": "Candy",
+      "price": 10,
+      "image": "IMG/prod_1786471763382.jpg"
+    },
+    {
+      "id": 1786471880897,
+      "section": "PARA ELLAS",
+      "brand": "Francesa Caron",
+      "name": "Bain De Champagne",
+      "price": 10,
+      "image": "IMG/prod_1786471880897.jpg"
+    },
+    {
+      "id": 1786471946584,
+      "section": "PARA ELLAS",
+      "brand": "Gucci",
+      "name": "Gucci Rush",
+      "price": 10,
+      "image": "IMG/prod_1786471946584.jpg"
+    },
+    {
+      "id": 1786472022070,
+      "section": "PARA ELLAS",
+      "brand": "Jennifer Lopez",
+      "name": "JLO",
+      "price": 10,
+      "image": "IMG/prod_1786472022070.jpg"
+    },
+    {
+      "id": 1786472123988,
+      "section": "PARA ELLAS",
+      "brand": "Xerjoff",
+      "name": "Xerba Pura",
+      "price": 10,
+      "image": "IMG/prod_1786472123988.jpg"
     }
   ],
   "about": {
